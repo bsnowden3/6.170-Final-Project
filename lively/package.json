@@ -9,8 +9,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "aws-sdk": "^2.358.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.2",
+    "bcrypt-nodejs": "0.0.3",
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "debug": "^4.1.0",

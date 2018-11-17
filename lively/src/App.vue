@@ -2,28 +2,48 @@
   <div id="app" class=''>
     <h1>Lively</h1>
     <!-- Children Components -->
-    <CreateShortForm/>
-    <ShortList/>
+    <div v-if="loginPage" class="mainView">
+      <LoginPage/>
+    </div>
+    
   </div>
 </template>
 
 <script>
-import CreateShortForm from "./components/CreateShortForm.vue";
-import ShortList from "./components/ShortList.vue";
+import LoginPage from "./components/LoginPage.vue";
 
 export default {
   name: "app",
   components: {
-    CreateShortForm,
-    ShortList
-  }
+    LoginPage,
+
+  },
+  data() {
+    return {
+      loginPage: true,
+
+    };
+  },
 };
 </script>
 
 <!-- global styles -->
 <style>
-* {
-  box-sizing: border-box;
+
+#app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainView {
+  display: flex;
+  height: 85%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 body {
@@ -31,26 +51,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: lightblue;
-}
-
-.success-message {
-  color: green;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px !important;
+  padding: 0px !important;
 }
 
 .error-message {
   color: red;
+  margin: 2em;
 }
 
-.component {
-  background-color: whitesmoke;
-  padding: 1rem;
-}
 </style>
 
 <style scoped>
-  .horiz-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+  h1 {
+    height: 15%;
+    width: 100%;
   }
+
 </style>
