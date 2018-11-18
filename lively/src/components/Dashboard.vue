@@ -1,21 +1,27 @@
 
 <template>
      <div class="dashboard">
-         <div v-if="onboarding">
-            <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
+         <div class="navbar">
+             <ul class="navbar-item">
+                 <li>Lively</li>
+             </ul>
          </div>
+         <div class="mainSection">
+            <div v-if="onboarding">
+                <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
+                <button v-on:click="signOut" class="button">Sign Out</button>
 
-         <div v-else>
-            <button v-on:click="editDrugs" class="button">Edit Drugs</button>
-            <button v-on:click="editActivities" class="button">Edit Activites</button>
-        </div>
-    
-        <div v-show="onboardingButtonClicked">
-            <Drug></Drug>
-        </div>
+            </div>
+        
+            <div v-if="onboardingButtonClicked">
+                <Drug></Drug>
+            </div>
 
-        <div v-show="drugsSavedFlag">
-
+            <!-- this will appear after the onboarding process is complete -->
+            <div v-if="drugsSavedFlag">
+                <button v-on:click="editDrugs" class="button">Edit Drugs</button>
+                <button v-on:click="editActivities" class="button">Edit Activites</button>
+            </div>
         </div>
      </div>
 </template>
@@ -52,6 +58,7 @@ export default {
          */
         startOnboarding:function(){
             this.onboardingButtonClicked = true;
+            this.onboarding = false;
         },
     }
 
@@ -60,7 +67,8 @@ export default {
 
 <style>
 
-  
-  
+  .mainSection{
+  margin-top:5em;
+}
 
 </style>
