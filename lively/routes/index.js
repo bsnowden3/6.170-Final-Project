@@ -1,10 +1,9 @@
 const express = require('express');
-
 const router = express.Router();
-
 const bcrypt = require('bcrypt-nodejs');
-
 const Users = require('../models/Users');
+const uuidv1 = require('uuid/v1');
+
 
 /**
  * Serves homepage.
@@ -20,27 +19,25 @@ router.get('/', (req, res) => {
  * @name POST/signUp
  */
 router.post("/signUp", async function(req, res) {
-  const user = req.body.username;
-  const pass = req.body.password;
-
-  if(!user || !pass){
-
-    res.status(400);
-    res.json({message: "Missing Credentials"});
+  const username = req.body.username;
+  const password = req.body.password;
+  const userId = getRandomId();
+  if(!username || !password){
+    res.status(400).json({
+      error: `Missing Credentials` 
+    }).end();
   }
-  else if (Users.checkUser(user)) {
-    res.status(409);
-    res.json({message: "User Already Exists"});
+  else if (Users.findUser(username)) {
+    res.status(409).json({
+      error: `username already exists` 
+    }).end();
   }
   else {
-
-    Users.addOne(user, pass)
-    
-    req.session.name = user;
+    Users.addOne(userId,username, password)
+    req.session.userId = userId
+    req.session.username = req.body.username;
     req.session.save();
-    res.status(200);
-    res.json({message: "Signed In!"});
-    
+    res.status(200).json({message: "Signed In!"}).end();
   }
 });
 
@@ -50,30 +47,38 @@ router.post("/signUp", async function(req, res) {
  * @name POST/logIn
  */
 router.post("/logIn", async function(req, res) {
-  let user = req.body.username;
-  let pass = req.body.password;
+  let username = req.body.username;
+  let password = req.body.password;
   
-  if(!user || !pass){
-
-    res.status(400);
-    res.json({message: "Missing Credentials"});
-  } 
-  else if (!(Users.checkUser(user))) {
-    res.status(404);
-    res.json({message: "User Does Not Exist"});
+  if(!username || !password){
+    res.status(400).json({
+      error: `Missing Credentials` 
+    }).end();
+  }
+  else if (Users.findUser(username) === undefined) {
+    res.status(404).json({message: "User Does Not Exist"}).end();
   }
 
-  else if(!bcrypt.compareSync(pass, Users.getPass(user)) ){
+  else if(!bcrypt.compareSync(password, Users.getPass(username)) ){
     res.status(404);
-    res.json({message: "Wrong Password"});
+    res.json({message: "Wrong Password"}).end();
   }
   else {
-    req.session.name = user;
+    const user = Users.findUser(username);
+    req.session.name = user.username;
+    req.session.id = user.id;
     req.session.save();
     res.status(200);
     res.json({message: "Signed In!"});
   }
 });
+
+/**
+ * helper function for getting a random unique id
+ */
+var getRandomId = function(){
+  return uuidv1();
+}
 
 
 module.exports = router;

@@ -1,40 +1,34 @@
 <template>
-
-
-  <div id="logPage">
     <!-- TODO: Fix Form -->
     <!-- TODO: ERROR CORRECTION -->
     <!-- TODO: UPDATE FUNCTION TO GO TO USERS API -->
-    <form id="loginBox">
-      <div id="signLabel">
-        Sign In
-      </div>
-        <div class="credBox">
-          <label for="username">Username:</label>
-          <input name="username" v-model.trim="username" id="username" placeholder="Username" required>
+     <form class="component">
+          <h1 class="logoStyle">Lively</h1>
+          <div class="form-group">
+              <label for="username">Username</label>
+              <input class="form-input" id="username" v-model.trim="username" type="text" name="username" required>
+
+              <label for="password">Password</label>
+              <input class="form-input" id="password" v-model.trim="password" type="password" name="password" required>
+          </div>
+          <div class="form-group">
+              <input class="form-button" type="button" value="Login" v-on:click="logIn()">
+              <input class="form-button" type="button" value="Sign Up" v-on:click="signUp()">
+          </div>
+      
+         <div v-if="success" class="success-message">
+             {{success}}
+         </div>
+
+        <div v-if="errors.length" class="error-message">
+            <b>Please correct the following error(s):</b>
+            <ul>
+                <li v-for="error in errors" v-bind:key="error.id">
+                    {{error}}
+                </li>
+            </ul>
         </div>
-        <div class="credBox">
-          <label for="password">Password:</label>
-          <input name="password" v-model.trim="password" id="password" placeholder="Password" required>
-        </div>
-        <div id="btnBox">
-          <button v-on:click="logIn()">Log In</button>
-          <button v-on:click="signUp()">Sign Up</button>
-        </div>
-
-    </form>
-
-    <div v-if="errors.length" class="error-message">
-      <b> Please correct the folowing error(s): </b>
-      <ul>
-        <li v-for="error in errors" v-bind:key="error.id">
-          {{error}}
-        </li>
-      </ul>
-    </div>
-
-
-  </div>
+     </form>
 
 </template>
 
@@ -55,6 +49,7 @@ export default {
     return {
       username: "",
       password: "",
+      success: "",
       errors: []
 
     };
@@ -66,20 +61,24 @@ export default {
       let hash = bcrypt.hashSync(this.password);
       axios.post('/signUp', {'username': this.username, 'password': hash})
       .then(response => {
-        serverBus.$emit('signed', true);
+        this.success = "User created successfully!"
+        eventBus.$emit('signed', true);
+        console.log(response);
       })
-      .catch((errorMessage) => {
+      .catch(errorMessage => {
         const fullResponse = errorMessage.response === undefined
-          ? errorMessage
-          : errorMessage.response;
+            ? errorMessage
+            : errorMessage.response;
         const abridgedResponse = {
-          data: fullResponse.data,
-          status: fullResponse.status,
-          statusTest: fullResponse.statusText
+            data: fullResponse.data,
+            status: fullResponse.status,
+            statusText: fullResponse.statusText,
         };
         let messageText = JSON.stringify(abridgedResponse.data);
-        this.errors.push(JSON.parse(messageText).error);
-      })
+        this.errors.push(messageText);
+        console.log("------");
+        console.log(errorMessage);
+            })
       .then( () => {
         this.resetForm();
         this.clearMessages();
@@ -89,7 +88,8 @@ export default {
     logIn: function() {
        axios.post('/login', {'username': this.username, 'password': this.password})
        .then(response => {
-         serverBus.$emit('signed', true);
+          this.success = "User signed-in successfully!"
+          eventBus.$emit('signed', true);
        })
        .catch(errorMessage => {
           const fullResponse = errorMessage.response === undefined
@@ -101,7 +101,9 @@ export default {
             statusTest: fullResponse.statusText
           };
           let messageText = JSON.stringify(abridgedResponse.data);
-          this.errors.push(JSON.parse(messageText).error);
+          this.errors.push(messageText);
+          console.log("------");
+          console.log(errorMessage);
         })
         .then( () => {
           this.resetForm();
@@ -121,26 +123,13 @@ export default {
       }, 5000)
     },
 
-    showErrors: function(errorMessage) {
-        const fullResponse = errorMessage.response === undefined
-          ? errorMessage
-          : errorMessage.response;
-        const abridgedResponse = {
-          data: fullResponse.data,
-          status: fullResponse.status,
-          statusTest: fullResponse.statusText
-        };
-        let messageText = JSON.stringify(abridgedResponse.data);
-        this.errors.push(JSON.parse(messageText).error);
-    }
-
   }
 };
 </script>
 
 <style>
 
-  #loginBox {
+  .credBox {
     /* display: flex; */
     /* flex-direction: column; */
     background-color: whitesmoke;
@@ -159,6 +148,11 @@ export default {
     align-items: center;
   }
 
-  
+  .logoStyle{
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    font-family: cursive;
+  }
 
 </style>
