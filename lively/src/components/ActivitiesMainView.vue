@@ -11,12 +11,10 @@
         <SleepActivity />
       </div>
     </div>
-
     <div class='selected-activites-section'>
       <h2> Current Schedule </h2>
 
     </div>
-
   </div>
 </template>
 

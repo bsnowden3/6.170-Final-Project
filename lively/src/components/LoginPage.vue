@@ -1,7 +1,4 @@
 <template>
-    <!-- TODO: Fix Form -->
-    <!-- TODO: ERROR CORRECTION -->
-    <!-- TODO: UPDATE FUNCTION TO GO TO USERS API -->
      <form class="component">
           <h1 class="logoStyle">Lively</h1>
           <div class="form-group">
@@ -62,7 +59,7 @@ export default {
       axios.post('/signUp', {'username': this.username, 'password': hash})
       .then(response => {
         this.success = "User created successfully!"
-        eventBus.$emit('signed', true);
+        eventBus.$emit('signed-in', this.username);
         console.log(response);
       })
       .catch(errorMessage => {
@@ -89,7 +86,7 @@ export default {
        axios.post('/login', {'username': this.username, 'password': this.password})
        .then(response => {
           this.success = "User signed-in successfully!"
-          eventBus.$emit('signed', true);
+        eventBus.$emit('signed-in', this.username);
        })
        .catch(errorMessage => {
           const fullResponse = errorMessage.response === undefined
