@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Shorts = require('../models/Shorts');
+const Shorts = require('../models/Users');
 
 const router = express.Router();
 
