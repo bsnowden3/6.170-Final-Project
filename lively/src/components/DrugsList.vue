@@ -1,18 +1,17 @@
 <template>
-  <div>
-    <h3>All Shorts</h3>
-    <div v-if='success' class="success-message">
-      {{ success }}
+  <div id="controlPanel">
+    <div id="drugList">
+      <div class="drugCard" v-if="drugs" v-bind:key='drug' v-for="drug in drugs">
+        <div class="drugInfo">
+          <div class="picHolder">{{ drug }}</div>
+          <div class="infoBox">{{ descriptions[drug] }}</div>
+        </div>
+        <button v-on:click="removeDrug(drug)">Remove Drug</button>
+      </div> 
     </div>
-    <div v-if='error' class="error-message">
-      {{ error }}
-    </div>
-
-    <div class="short-list">
-      <!-- TODO: Step 3: View All Shorts -->
-      <shortListItem v-for="short in shorts" v-bind:key='short.name' v-bind:short='short'/>
-    </div>
+    <button v-on:click="saveDrugs()">Next Step</button>
   </div>
+
 </template>
 
 <script>
@@ -21,57 +20,57 @@ import axios from "axios";
 // eslint-disable-next-line
 import { eventBus } from "../main";
 
-import ShortListItem from "./ShortListItem";
-
 export default {
-  name: "ShortList",
+  name: "DrugsList",
 
   data() {
     return {
-      error: "",
-      success: "",
-      shorts: []
+      drugs: [],
+      descriptions: {"Metformin": "descrip1",
+                     "Sulfonylureas": "descrip2",
+                     "Thiazolidinediones": "descrip3",
+                     "GLP-1 receptor agonists": "descrip4",
+                     "Prandin": "descrip5"}
+
     };
   },
-  components:{
-    ShortListItem
-  },
-  created: function() {
-    // TODO: Step 4 - Refresh Shorts
 
-  },
-
-  mounted: function() {
-    this.loadShorts();
+  created() {
+    eventBus.$on('select-drug', (data) => {
+      this.drugs.push(data);
+      this.drugs.sort();
+    });
   },
 
   methods: {
-    loadShorts: function() {
-      // TODO: Step 3 - View All Shorts
-      axios.get('/api/shorts')
-      .then((res) =>{
-        this.shorts = res.data;
-        //console.log(this.shorts);
-      });
+    removeDrug: function(drug) {
+      let newDrugs = [];
+
+      for( var i = 0; i < this.drugs.length; i++){ 
+        if ( this.drugs[i] != drug) {
+           newDrugs.push(this.drugs[i])
+        }
+      }
+
+      this.drugs = newDrugs;
+
+      this.drugs.sort();
+      eventBus.$emit('remove-drug', drug);
     },
 
-    clearMessages: function() {
-      setInterval(() => {
-        this.success = "";
-        this.error = "";
-      }, 5000);
+    saveDrugs: function() {
+      axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
+      .then(response => {
+        serverBus.$emit('drugsSaved', this.drugs);
+      })
+      .catch((errorMessage) => {
+
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-.short-list {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.short-list > * {
-  margin: 0.5rem;
-}
 </style>
