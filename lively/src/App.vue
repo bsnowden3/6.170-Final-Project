@@ -4,14 +4,10 @@
     <div v-if="loginPage" class="mainView">
       <LoginPage/>
     </div>
-<<<<<<< HEAD
-
-=======
     <div v-else>
       <dashboard/>
     </div>
-    
->>>>>>> 4b16abafa1bebc539eb5032a10744edda2b1b462
+
   </div>
 </template>
 
@@ -111,7 +107,7 @@ form {
   font-size:14px;
 }
 .button{
-  cursor: pointer;  
+  cursor: pointer;
   border-radius: 4px;
   font-size:14px;
 }
