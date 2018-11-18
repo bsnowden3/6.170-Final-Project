@@ -4,18 +4,23 @@
     <div v-if="loginPage" class="mainView">
       <LoginPage/>
     </div>
+    <div v-else>
+      <dashboard/>
+    </div>
     
   </div>
 </template>
 
 <script>
 import LoginPage from "./components/LoginPage.vue";
+import Dashboard from "./components/Dashboard";
+import { eventBus } from "./main";
 
 export default {
   name: "app",
   components: {
     LoginPage,
-
+    Dashboard
   },
   data() {
     return {
@@ -23,7 +28,20 @@ export default {
 
     };
   },
+
+  created: function(){
+    /**
+     * updating ui after creating user or logging in user
+     */
+    eventBus.$on("signed-in", (username) =>{
+        this.loginPage = false;
+    });
+
+  }
 };
+
+
+
 </script>
 
 <!-- global styles -->
@@ -86,6 +104,11 @@ form {
   cursor: pointer;  
   border-radius: 4px;
   margin:3px;
+  font-size:14px;
+}
+.button{
+  cursor: pointer;  
+  border-radius: 4px;
   font-size:14px;
 }
 
