@@ -7,6 +7,8 @@ const uuidv1 = require('uuid/v1');
 
 const router = express.Router();
 
+var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
 
 /**
  * Post meal activity to user schedule
@@ -21,16 +23,20 @@ router.post('/addmeal', (req, res) => {
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
-    startTime: startTime, endTime: endTime, daysOfWeek: daysOfWeek};
-  const response = { message: "Successfully created meal", meal: meal, activitySuccess: true}
-
-  if(userId) {
-    Meals.addMeal(meal);
-    res.status(200).json(response).end();
-  } else {
+  let response = { message: "Successfully created meal", meal: mealId, activitySuccess: true}
+  if (!userId) {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
+
+  daysOfWeek.foreach(e => {
+    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
+      startTime: startTime, endTime: endTime, day: e};
+
+      Meals.addMeal(meal);
+  })
+    res.status(200).json(response).end();
+
+
 });
 
 /**
@@ -45,8 +51,8 @@ router.post('/addsleep', (req, res) => {
   const day = req.body.day;
 
   const sleep = { name: name, userId: userId, sleepId: sleepId,
-    wakeUpTime: wakeUpTime, day: day};
-  const response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
+    wakeUpTime: startTime, day: day};
+  let response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
 
   if(userId) {
     Sleeps.addSleep(sleep);
@@ -68,17 +74,44 @@ router.post('/addexercise', (req, res) => {
   const endTime = endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  const exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId,
-    exerciseId: exerciseId, days: daysOfWeek};
-  const response = { message: "Successfully created meal", exercise: exerciseActivity, activitySuccess: true}
 
-  if(userId) {
-    Exercises.addExercise(exercise);
-    res.status(200).json(response).end();
-  } else {
+  if(!userId){
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
+
+  daysOfWeek.foreach(e => {
+    let exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId, startTime: startTime,
+      day: e};
+
+    Exercises.addExercise(exerciseActivity);
+
+  });
+  let response = { message: "Successfully created exercise", activitySuccess: true}
+
+  res.status(200).json(response).end();
 });
 
+  function errorCheck() {
+    let sleep = Sleeps.findUserSleeps(express.session.userId);
+    let meal = Meals.findUserMeals(express.session.userId);
+    let exercise = Exercises.findUserExercises(express.session.userId);
+
+    week.forEach(e => {
+
+    })
+
+  }
+
+  function sleepActivityCheck() {
+
+  }
+
+  function midnightCheck() {
+
+  }
+
+  function exerciseCheck() {
+
+  }
 
 module.exports = router;

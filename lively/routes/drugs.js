@@ -5,8 +5,8 @@ const Drugs = require('../models/Drugs');
 const router = express.Router();
 
 /**
- * Create a short.
- * @name POST/api/drugs
+ * Saves the drug selection the user made
+ * @name POST/api/drugs/saveDrugs
  */
 router.post('/saveDrugs', (req, res) => {
   const data = req.body.data;

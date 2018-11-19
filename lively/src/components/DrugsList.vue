@@ -9,6 +9,7 @@
         <button v-on:click="removeDrug(drug)">Remove Drug</button>
       </div> 
     </div>
+    <button v-on:click="goBack()">Back</button>
     <button v-on:click="saveDrugs()">Next Step</button>
   </div>
 
@@ -66,6 +67,9 @@ export default {
       .catch((errorMessage) => {
 
       });
+    },
+    goBack: function() {
+      eventBus.$emit('drugs-back', true);
     }
   }
 };
