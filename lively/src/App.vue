@@ -37,6 +37,11 @@ export default {
         this.loginPage = false;
     });
 
+    eventBus.$on("signOut-success", () =>{
+        this.loginPage = true;
+    });
+
+
   }
 };
 
@@ -72,15 +77,18 @@ export default {
     left:0%;
     width: 100%;
     height:8vh;
-    background:rgb(235, 235, 236);
+    background:whitesmoke;
     margin-bottom:10px;
     position: absolute;
     padding: 0;
 
 }
 
-.navbar-item{
+.navbar-list{
     list-style-type: none;
+    font-size:18px;
+    margin:0;
+    padding:0;
 }
   
 
