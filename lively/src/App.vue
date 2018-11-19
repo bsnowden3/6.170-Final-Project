@@ -64,6 +64,25 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+.dashboard{
+  width: 100%;
+}
+.navbar{
+    top:0%;
+    left:0%;
+    width: 100%;
+    height:8vh;
+    background:rgb(235, 235, 236);
+    margin-bottom:10px;
+    position: absolute;
+    padding: 0;
+
+}
+
+.navbar-item{
+    list-style-type: none;
+}
+  
 
 .success-message {
   color: green;
