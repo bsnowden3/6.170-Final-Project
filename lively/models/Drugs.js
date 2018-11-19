@@ -1,4 +1,4 @@
-drugData = {};
+var drugData = {};
 /**
  * @typedef Drugs
  */

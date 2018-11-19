@@ -3,12 +3,14 @@
 
   <div id="drugPage">
     <div id="drugSelection">
-      <select id="selectedDrugs">
-        <option v-bind:key='drug' v-for="drug in drugs">
-          {{ drug }}
-        </option>
-      </select>
-      <button v-on:click="addDrug()">Add Drug</button>
+      <div id="selectionBackground">
+        <select id="selectedDrugs">
+          <option v-bind:key='drug' v-for="drug in drugs">
+            {{ drug }}
+          </option>
+        </select>
+        <button v-on:click="addDrug()">Add Drug</button>
+      </div>
 
     </div>
 
@@ -86,6 +88,16 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  #selectionBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px; 
+    min-height: 75px;
+    max-width: 250px;
+    background-color: #f2f2f2;
   }
 
   #steps {
