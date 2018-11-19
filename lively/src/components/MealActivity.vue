@@ -121,7 +121,7 @@ export default {
 
       axios.post("api/activities/addmeal", mealObj).then(response => {
         if (response.data.activitySuccess) {
-          successMessage = "Successfully added meal!"
+          this.successMessage = "Successfully added meal!"
         }
       });
       eventBus.$emit('postedActivity', []);

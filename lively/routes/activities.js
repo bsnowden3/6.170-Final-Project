@@ -23,13 +23,13 @@ router.post('/addmeal', (req, res) => {
 
   const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
     startTime: startTime, endTime: endTime, daysOfWeek: daysOfWeek};
-  response = { message: "Successfully created meal", meal: meal, activitySuccess: true}
+  const response = { message: "Successfully created meal", meal: meal, activitySuccess: true}
 
   if(userId) {
     Meals.addMeal(meal);
     res.status(200).json(response).end();
   } else {
-    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."})
+    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 });
 
@@ -46,13 +46,13 @@ router.post('/addsleep', (req, res) => {
 
   const sleep = { name: name, userId: userId, sleepId: sleepId,
     wakeUpTime: wakeUpTime, day: day};
-  response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
+  const response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
 
   if(userId) {
     Sleeps.addSleep(sleep);
     res.status(200).json(response).end();
   } else {
-    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."});
+    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 });
 
@@ -68,15 +68,15 @@ router.post('/addexercise', (req, res) => {
   const endTime = endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId,
+  const exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId,
     exerciseId: exerciseId, days: daysOfWeek};
-  response = { message: "Successfully created meal", exercise: exerciseActivity, activitySuccess: true}
+  const response = { message: "Successfully created meal", exercise: exerciseActivity, activitySuccess: true}
 
   if(userId) {
     Exercises.addExercise(exercise);
     res.status(200).json(response).end();
   } else {
-    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."})
+    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 });
 
