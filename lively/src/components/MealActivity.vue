@@ -94,11 +94,11 @@ export default {
 
   data() {
     return {
-      name: '';
+      name: '',
       startTime: '',
       endTime: '',
       mealSize: '',
-      checkedDays: [];
+      checkedDays: [],
       successMessage: '',
       errorMessage: '',
       times: ["0:00", "0:30", "1:00", "1:30","2:00", "2:30", "3:00", "3:30",

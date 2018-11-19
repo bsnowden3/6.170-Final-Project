@@ -7,6 +7,13 @@ const app = require('../app');
 const debug = require('debug')('fritter-starter:server');
 const http = require('http');
 
+const database = require('../database');
+
+/**
+ * Create database and tables.
+ */
+database.createTables();
+
 /**
  * Normalize a port into a number, string, or false.
  */
