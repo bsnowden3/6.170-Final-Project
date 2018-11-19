@@ -9,6 +9,14 @@
       </div>
 
         <div class='form-group'>
+          <label for='mealType'>Meal Type:</label>
+          <input type="text" v-model="mealType" list="mealTypes">
+          <datalist id="mealTypes">
+            <option v-for="mealType in mealTypes">{{mealType}}</option>
+          </datalist>
+        </div>
+
+        <div class='form-group'>
           <label for='start-time'>Start Time:</label>
           <input type="text" v-model="startTime" list="times">
           <datalist id="times">

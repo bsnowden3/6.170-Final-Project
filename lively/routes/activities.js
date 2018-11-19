@@ -7,9 +7,6 @@ const uuidv1 = require('uuid/v1');
 
 const router = express.Router();
 
-var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-
 /**
  * Post meal activity to user schedule
  * @name POST/ meal
@@ -28,13 +25,25 @@ router.post('/addmeal', (req, res) => {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 
-  daysOfWeek.forEach(e => {
-    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
-      startTime: startTime, endTime: endTime, day: e};
+  let fail = false;
 
-      Meals.addMeal(meal);
-  })
-    res.status(200).json(response).end();
+  for(let i; i < daysOfWeek.length; i++) {
+    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
+      startTime: startTime, endTime: endTime, day: daysOfWeek[i]};
+
+      if(!sleepActivityCheck(meal, userId)){
+          Meals.addMeal(meal);
+      }
+      else{
+        fail = true;
+        res.status(400).json({message: "Unsuccessful activity creation! Shedule Conflicts!."}).end();
+        break;
+      }
+  }
+    if(!fail) {
+      res.status(200).json(response).end();
+    }
+
 });
 
 /**
@@ -93,27 +102,34 @@ router.post('/addexercise', (req, res) => {
   res.status(200).json(response).end();
 });
 
-  function errorCheck() {
-    let sleep = Sleeps.findUserSleeps(express.session.userId);
-    let meal = Meals.findUserMeals(express.session.userId);
-    let exercise = Exercises.findUserExercises(express.session.userId);
+  function sleepActivityCheck(addition, userId) {
+    let currentSleep = Sleeps.findUserSleeps(userId);
 
-    week.forEach(e => {
 
-    })
+    for(let i = 0; i < currentSleep.length; i++) {
+      if(currentSleep[i].day == addition.day){
+        if (milToInt(currentSleep[i].startTime) >= milToInt(addition.startTime)){
+          return true;
+        }
+      }
+    }
+    return false;
+
+  }
+  //TODO WARN USERS OF OVERWRITING
+  function activityCheckMeal(addition, userId) {
 
   }
 
-  function sleepActivityCheck() {
+  function milToInt(mil) {
+    let string = "";
+    string += mil[0];
+    string += mil[1];
+    string += mil[3];
+    string += mil[4];
 
+    return parseInt(string, 10);
   }
 
-  function midnightCheck() {
-
-  }
-
-  function exerciseCheck() {
-
-  }
 
 module.exports = router;
