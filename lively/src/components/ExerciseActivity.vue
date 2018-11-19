@@ -3,7 +3,7 @@
 <template>
 <!-- the submit event will no longer reload the page -->
   <div class="activityContainer">
-    <form>
+    <div>
       <div class="titleContainer">
         <h2> Exercise</h2>
       </div>
@@ -23,7 +23,7 @@
 
         <div class='form-group'>
           <label for='end-time'>End Time:</label>
-          <input type="text" v-model="endTime" list="times">
+          <input type="text" v-model.trim="endTime" list="times">
           <datalist id="times">
             <option v-for="endTime in times">{{endTime}}</option>
           </datalist>
@@ -32,42 +32,42 @@
         <div class="days-form-group">
           <div class='day-selection'>
             <label for='sun'>Sun</label>
-            <input id='sun' type='checkbox'>
+            <input id='sun' value="Sunday" type='checkbox'>
           </div>
 
           <div class='day-selection'>
             <label for='mon'>Mon</label>
-            <input id='mon' type='checkbox'>
+            <input id='mon' value="Monday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
             <label for='tues'>Tues</label>
-            <input id='tues' type='checkbox'>
+            <input id='tues' value="Tuesday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
             <label for='wed'>Wed</label>
-            <input id='wed' type='checkbox'>
+            <input id='wed' value="Wednesday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
             <label for='thurs'>Th</label>
-            <input id='thurs' type='checkbox'>
+            <input id='thurs' value="Thursday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class="day-selection">
             <label for='fri'>Fri</label>
-            <input id='fri' type='checkbox'>
+            <input id='fri' value="Friday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class="day-selection">
             <label for='Sat'>Sat</label>
-            <input id='Sat' type='checkbox'>
+            <input id='Sat' value="Saturday" v-model="checkedDays" type='checkbox'>
           </div>
         </div>
 
       <button> Add </button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -77,12 +77,15 @@ import axios from "axios";
 import { eventBus } from "../main";
 
 export default {
-  name: "MealActivity",
+  name: "ExerciseActivity",
 
   data() {
     return {
       startTime: '',
       endTime: '',
+      checkedDays: [],
+      successMessage: '',
+      errorMessage: '',
       times: ["0:00", "0:30", "1:00", "1:30","2:00", "2:30", "3:00", "3:30",
   "4:00", "4:30", "5:00", "5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30",
   "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
@@ -92,10 +95,32 @@ export default {
     };
   },
 
-  methods: {
+    methods: {
+      addExercise: function() {
+        const exerciseObj = {
+          name: name, startTime: this.startTime,
+          endTime: this.endTime, daysOfWeek: this.daysOfWeek,
+        };
 
-  }
-};
+        axios.post("/api/activities/addexercise", exerciseObj)
+        .then(response => {
+          if (response.data.activitySuccess) {
+            this.successMessage = "Successfully added exercise!"
+            console.log(response);
+            eventBus.$emit('postedActivity', []);
+            setTimeout(this.clearEntries(), 3000);
+          }
+        }).catch(error => { console.log(errorResponse)});
+    },
+    clearEntries: function() {
+      this.name = "";
+      this.startTime = "";
+      this.endTime = "";
+      this.checkedDays = [];
+      this.successMessage = "";
+    }
+   }
+}
 </script>
 
 <style scoped>

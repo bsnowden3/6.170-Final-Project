@@ -7,13 +7,15 @@
         <!-- Children Components -->
         <MealActivity/>
         <ExerciseActivity/>
-        <JobActivity/>
         <SleepActivity />
       </div>
     </div>
     <div class='selected-activites-section'>
       <h2> Current Schedule </h2>
 
+    </div>
+    <div>
+      <button> Save Schedule! </button>
     </div>
   </div>
 </template>
@@ -22,7 +24,6 @@
 
 import MealActivity from "./MealActivity.vue";
 import ExerciseActivity from "./ExerciseActivity.vue";
-import JobActivity from "./JobActivity.vue";
 import SleepActivity from "./SleepActivity.vue";
 
 export default {
@@ -30,7 +31,6 @@ export default {
   components: {
     MealActivity,
     ExerciseActivity,
-    JobActivity,
     SleepActivity
   }
 };
@@ -39,7 +39,6 @@ export default {
 <style scoped>
   .activities-main-view {
     flex-wrap: wrap;
-    background-color: white;
   }
   .main-content {
     display: flex;

@@ -3,7 +3,7 @@
 <template>
 <!-- the submit event will no longer reload the page -->
   <div class="activityContainer">
-    <form>
+    <div>
       <div class="titleContainer">
         <h2> Meals</h2>
       </div>
@@ -74,10 +74,10 @@
           </div>
         </div>
 
-      <button v-on:submit="addMeal"> Add </button>
-    </form>
+      <button v-on:click="addMeal"> Add </button>
+    </div>
 
-    <div v-if="success-message">
+    <div class="success" v-if="successMessage">
       {{ successMessage }}
     </div>
   </div>
@@ -112,20 +112,33 @@ export default {
   },
 
   methods: {
-    addMeal: function() {
+    addMeals: function() {
      const mealObj =  { name: name,
        startTime: this.startTime,
        endTime: this.endTime,
        mealSize: this.mealSize,
        daysOfWeek: this.checkedDays };
 
-      axios.post("api/activities/addmeal", mealObj).then(response => {
+      axios.post("/api/activities/addmeal", mealObj)
+      .then(response => {
         if (response.data.activitySuccess) {
           this.successMessage = "Successfully added meal!"
+          console.log(response);
         }
-      });
-      eventBus.$emit('postedActivity', []);
-      setTimeout(this.clearEntries(), 1000);
+        eventBus.$emit('postedActivity', []);
+        setTimeout(this.clearEntries(), 3000);
+      })
+      .catch(errorMessage => {
+        const fullResponse = errorMessage.response === undefined
+            ? errorMessage
+            : errorMessage.response;
+        const abridgedResponse = {
+            data: fullResponse.data,
+            status: fullResponse.status,
+            statusText: fullResponse.statusText,
+        };
+        console.log(errorMessage);
+      })
     },
     clearEntries: function() {
       this.name = "";
@@ -171,6 +184,10 @@ export default {
  .days-form-group {
    display: flex;
    flex-wrap: wrap;
+ }
+
+ .success {
+   color: green;
  }
 
  label {
