@@ -108,7 +108,6 @@ export default {
         },
 
         generateSchedule: function(){
-            
 
             /*
             1. look at a user's sleep first to determine length of day for each day of the week
