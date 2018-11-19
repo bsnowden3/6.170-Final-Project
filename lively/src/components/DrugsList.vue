@@ -73,4 +73,55 @@ export default {
 
 <style scoped>
 
+  #drugList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .drugCard {
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 250px;
+    margin: 20px;
+    flex: 0 0 auto;
+    border: black 4px solid;
+    
+  }
+
+  #controlPanel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .picHolder {
+    height: 25%;
+    width: 80%;
+    margin-bottom: 4px;
+    border: black 1px solid;
+  }
+
+  .infoBox{
+    height: 65%;
+    width: 90%;
+    border: black 1px solid;
+  }
+
+  .drugInfo {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
 </style>

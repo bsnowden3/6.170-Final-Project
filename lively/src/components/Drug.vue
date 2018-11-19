@@ -2,7 +2,6 @@
 
 
   <div id="drugPage">
-
     <div id="drugSelection">
       <select id="selectedDrugs">
         <option v-bind:key='drug' v-for="drug in drugs">
@@ -78,11 +77,20 @@ export default {
   }
 };
 </script>
+  
+
 
 <style>
 
+  #drugSelection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  #steps {
+    background-color: grey;
+  }
 
-  
 
 </style>
