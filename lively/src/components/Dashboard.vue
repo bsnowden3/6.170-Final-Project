@@ -11,11 +11,10 @@
             <div v-if="onboarding">
                 <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
                 <button v-on:click="signOut" class="button">Sign Out</button>
-
             </div>
         
             <div v-if="onboardingButtonClicked">
-                <Drug></Drug>
+                <Drug/>>
             </div>
 
             <!-- this will appear after the onboarding process is complete -->
@@ -61,6 +60,9 @@ export default {
             this.onboardingButtonClicked = true;
             this.onboarding = false;
         },
+        signOut:function(){
+            //TODO
+        }
     }
 
 };
