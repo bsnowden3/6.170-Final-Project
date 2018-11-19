@@ -61,7 +61,7 @@ export default {
     saveDrugs: function() {
       axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
       .then(response => {
-        serverBus.$emit('drugsSaved', this.drugs);
+        eventBus.$emit('drugsSaved', this.drugs);
       })
       .catch((errorMessage) => {
 
