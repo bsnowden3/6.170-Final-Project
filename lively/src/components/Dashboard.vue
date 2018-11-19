@@ -108,6 +108,8 @@ export default {
         },
 
         generateSchedule: function(){
+            
+
             /*
             1. look at a user's sleep first to determine length of day for each day of the week
             2. create an array for each day of the week (maybe do a ForEach for an array of days of the week?)
@@ -117,7 +119,7 @@ export default {
                     -Length of day: subtract End of day time - Start day time
                     -DayMins: convert hours to minutes (length of day * 60 mins)
                     -arraySize = DayMins/30 
-            3. put things into the array based on their start time
+            3. put things into the array based on their start time and add the event and slot into a dictionary
                 -How to figure out where to insert the event into the array:
                     1. pointInDay: subtract start time of event - wake time
                     2. pointInDay will equal nth hour of the day this event starts
