@@ -12,7 +12,7 @@
                 <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
                 <button v-on:click="signOut" class="button">Sign Out</button>
             </div>
-        
+
             <div v-if="onboardingButtonClicked">
                 <Drug/>>
             </div>
@@ -31,6 +31,7 @@ import axios from "axios";
 import { eventBus } from "../main";
 import { setInterval } from "timers";
 import Drug  from "./Drug"
+import ActivitiesMainView from "./ActivitiesMainView"
 
 export default {
   name: "Dashboard",
