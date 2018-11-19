@@ -14,7 +14,11 @@
             </div>
 
             <div v-if="onboardingButtonClicked">
-                <Drug/>>
+                <Drug/>
+            </div>
+
+            <div v-if="drugsSavedFlag">
+              <ActivitiesMainView/>
             </div>
 
             <!-- this will appear after the onboarding process is complete -->
@@ -36,7 +40,8 @@ import ActivitiesMainView from "./ActivitiesMainView"
 export default {
   name: "Dashboard",
   components: {
-    Drug
+    Drug,
+    ActivitiesMainView,
   },
   data() {
     return {
@@ -51,7 +56,6 @@ export default {
         this.onboardingButtonClicked = false;
         drugsSavedFlag = true;
     });
-
 
   },
 

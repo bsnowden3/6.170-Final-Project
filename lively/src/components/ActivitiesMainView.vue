@@ -36,36 +36,10 @@ export default {
 };
 </script>
 
-<!-- global styles -->
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: lightblue;
-}
-
-.success-message {
-  color: green;
-}
-
-.error-message {
-  color: red;
-}
-
-.component {
-  background-color: whitesmoke;
-  padding: 1rem;
-}
-</style>
-
 <style scoped>
   .activities-main-view {
     flex-wrap: wrap;
+    background-color: white;
   }
   .main-content {
     display: flex;

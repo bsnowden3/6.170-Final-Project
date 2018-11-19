@@ -12,7 +12,7 @@ const router = express.Router();
  * Post meal activity to user schedule
  * @name POST/ meal
  */
-router.post('api/activities/addmeal', (req, res) => {
+router.post('/addmeal', (req, res) => {
   const name = req.body.name;
   const userId = req.session.userId;
   const mealId = uuidv1();
@@ -21,12 +21,12 @@ router.post('api/activities/addmeal', (req, res) => {
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
+  const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
     startTime: startTime, endTime: endTime, daysOfWeek: daysOfWeek};
   response = { message: "Successfully created meal", meal: meal, activitySuccess: true}
 
   if(userId) {
-    Meals.addOne()
+    Meals.addMeal(meal);
     res.status(200).json(response).end();
   } else {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."})
@@ -37,22 +37,22 @@ router.post('api/activities/addmeal', (req, res) => {
  * Post sleep activity to user schedule
  * @name POST/ meal
  */
-router.post('api/activities/addsleep', (req, res) => {
+router.post('/addsleep', (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
   const sleepId = uuidv1();
   const startTime = req.body.wakeUpTime;
   const day = req.body.day;
 
-  meal = { name: name, userId: userId, sleepId: sleepId,
+  const sleep = { name: name, userId: userId, sleepId: sleepId,
     wakeUpTime: wakeUpTime, day: day};
   response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
 
   if(userId) {
-    Sleeps.addSleep(Sleep);
+    Sleeps.addSleep(sleep);
     res.status(200).json(response).end();
   } else {
-    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."})
+    res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."});
   }
 });
 
@@ -60,7 +60,7 @@ router.post('api/activities/addsleep', (req, res) => {
  * Post exercise activity to user schedule
  * @name POST/ meal
  */
-router.post('api/activities/addexercise', (req, res) => {
+router.post('/addexercise', (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
   const exerciseId = uuidv1();
@@ -73,7 +73,7 @@ router.post('api/activities/addexercise', (req, res) => {
   response = { message: "Successfully created meal", exercise: exerciseActivity, activitySuccess: true}
 
   if(userId) {
-    Exercises.addExercise(exercise)
+    Exercises.addExercise(exercise);
     res.status(200).json(response).end();
   } else {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."})
