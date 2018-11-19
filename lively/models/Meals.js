@@ -31,7 +31,7 @@ class Meals {
    *  @param {Array(string)} daysOfWeek array of strings that includes days of week activity occurs
    */
   static addMeal(name, userId, mealId, mealSize,startTime, endTime, daysOfWeek) {
-    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize
+    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
       startTime: startTime, endTime: endTime}
     mealData.push(meal);
     return meal;

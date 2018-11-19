@@ -13,7 +13,6 @@ const router = express.Router();
  * @name POST/ meal
  */
 router.post('api/activities/addmeal', (req, res) => {
-  const userId = req.session.userId;
   const name = req.body.name;
   const userId = req.session.userId;
   const mealId = uuidv1();
@@ -22,7 +21,7 @@ router.post('api/activities/addmeal', (req, res) => {
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize
+  meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
     startTime: startTime, endTime: endTime, daysOfWeek: daysOfWeek};
   response = { message: "Successfully created meal", meal: meal, activitySuccess: true}
 
@@ -41,7 +40,6 @@ router.post('api/activities/addmeal', (req, res) => {
 router.post('api/activities/addsleep', (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
-  const userId = req.session.userId;
   const sleepId = uuidv1();
   const startTime = req.body.wakeUpTime;
   const day = req.body.day;
@@ -65,7 +63,6 @@ router.post('api/activities/addsleep', (req, res) => {
 router.post('api/activities/addexercise', (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
-  const userId = req.session.userId;
   const exerciseId = uuidv1();
   const startTime = req.body.startTime;
   const endTime = endTime;
