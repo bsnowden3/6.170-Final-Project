@@ -5,7 +5,6 @@ const logger = require('morgan');
 const session = require('express-session');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const drugsRouter = require('./routes/drugs');
 const activitiesRouter = require('./routes/activities');
 
@@ -20,7 +19,6 @@ app.use(express.static(path.join(__dirname, '/dist')));
 app.use(session({ secret: 'super-secret-password', saveUninitialized: false, resave: true }));
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
 app.use('/api/activities', activitiesRouter)
 app.use('/api/drugs', drugsRouter);
 
