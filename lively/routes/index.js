@@ -24,12 +24,12 @@ router.post("/signUp", async function(req, res) {
   const userId = getRandomId();
   if(!username || !password){
     res.status(400).json({
-      error: `Missing Credentials` 
+      error: `Missing Credentials`
     }).end();
   }
   else if (Users.findUser(username)) {
     res.status(409).json({
-      error: `username already exists` 
+      error: `username already exists`
     }).end();
   }
   else {
@@ -49,10 +49,10 @@ router.post("/signUp", async function(req, res) {
 router.post("/logIn", async function(req, res) {
   let username = req.body.username;
   let password = req.body.password;
-  
+
   if(!username || !password){
     res.status(400).json({
-      error: `Missing Credentials` 
+      error: `Missing Credentials`
     }).end();
   }
   else if (Users.findUser(username) === undefined) {
