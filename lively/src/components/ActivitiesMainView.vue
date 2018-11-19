@@ -31,7 +31,7 @@ export default {
   components: {
     MealActivity,
     ExerciseActivity,
-    SleepActivity
+    SleepActivity,
   }
 };
 </script>

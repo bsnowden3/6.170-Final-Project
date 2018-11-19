@@ -9,11 +9,6 @@
       </div>
 
         <div class='form-group'>
-          <label for='name'> Name: </label>
-          <input id='name' v-model="name" type='text' name='name'>
-        </div>
-
-        <div class='form-group'>
           <label for='start-time'>Start Time:</label>
           <input type="text" v-model="startTime" list="times">
           <datalist id="times">
@@ -74,11 +69,10 @@
           </div>
         </div>
 
-      <button v-on:click="addMeal"> Add </button>
-    </div>
-
-    <div class="success" v-if="successMessage">
-      {{ successMessage }}
+      <button v-on:click="addMeals"> Add </button>
+      <div class="success" v-if="successMessage">
+        {{ successMessage }}
+      </div>
     </div>
   </div>
 </template>
@@ -91,13 +85,13 @@ import { eventBus } from "../main";
 
 export default {
   name: "MealActivity",
-
   data() {
     return {
-      name: '',
       startTime: '',
       endTime: '',
       mealSize: '',
+      mealType: '',
+      mealTypes: ["Breakfast", "Lunch", "Dinner"],
       checkedDays: [],
       successMessage: '',
       errorMessage: '',
@@ -110,10 +104,9 @@ export default {
       mealSizes: ["small", "medium", "large"],
     };
   },
-
   methods: {
     addMeals: function() {
-     const mealObj =  { name: name,
+     const mealObj =  { name: this.mealType,
        startTime: this.startTime,
        endTime: this.endTime,
        mealSize: this.mealSize,
@@ -129,14 +122,6 @@ export default {
         setTimeout(this.clearEntries(), 3000);
       })
       .catch(errorMessage => {
-        const fullResponse = errorMessage.response === undefined
-            ? errorMessage
-            : errorMessage.response;
-        const abridgedResponse = {
-            data: fullResponse.data,
-            status: fullResponse.status,
-            statusText: fullResponse.statusText,
-        };
         console.log(errorMessage);
       })
     },
@@ -146,8 +131,9 @@ export default {
       this.endTime = "";
       this.mealSize = "";
       this.checkedDays = [];
+      this.mealType = '';
       this.successMessage = "";
-    }
+    },
   }
 };
 </script>

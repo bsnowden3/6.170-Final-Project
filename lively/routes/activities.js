@@ -23,20 +23,18 @@ router.post('/addmeal', (req, res) => {
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
-  let response = { message: "Successfully created meal", meal: mealId, activitySuccess: true}
+  let response = { message: "Successfully created meal", meal: mealId, activitySuccess: true};
   if (!userId) {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 
-  daysOfWeek.foreach(e => {
+  daysOfWeek.forEach(e => {
     const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
       startTime: startTime, endTime: endTime, day: e};
 
       Meals.addMeal(meal);
   })
     res.status(200).json(response).end();
-
-
 });
 
 /**
@@ -48,18 +46,22 @@ router.post('/addsleep', (req, res) => {
   const name = req.body.name;
   const sleepId = uuidv1();
   const startTime = req.body.wakeUpTime;
-  const day = req.body.day;
+  const daysOfWeek = req.body.daysOfWeek;
 
-  const sleep = { name: name, userId: userId, sleepId: sleepId,
-    wakeUpTime: startTime, day: day};
-  let response = { message: "Successfully created meal", sleep: sleep, activitySuccess: true}
-
-  if(userId) {
-    Sleeps.addSleep(sleep);
-    res.status(200).json(response).end();
-  } else {
+  if(!userId){
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
+
+    daysOfWeek.forEach(e => {
+      let sleep = { name: name, userId: userId, sleepId: sleepId,
+        wakeUpTime: startTime, day: e};
+
+      Sleeps.addSleep(sleep);
+
+    });
+    let response = { message: "Successfully created sleep activity", activitySuccess: true};
+
+    res.status(200).json(response).end();
 });
 
 /**
@@ -71,22 +73,22 @@ router.post('/addexercise', (req, res) => {
   const name = req.body.name;
   const exerciseId = uuidv1();
   const startTime = req.body.startTime;
-  const endTime = endTime;
+  const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
-
 
   if(!userId){
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
 
-  daysOfWeek.foreach(e => {
+  console.log(daysOfWeek, "daysOfWeek");
+  daysOfWeek.forEach(e => {
     let exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId, startTime: startTime,
       day: e};
 
     Exercises.addExercise(exerciseActivity);
 
   });
-  let response = { message: "Successfully created exercise", activitySuccess: true}
+  let response = { message: "Successfully created exercise", activitySuccess: true};
 
   res.status(200).json(response).end();
 });

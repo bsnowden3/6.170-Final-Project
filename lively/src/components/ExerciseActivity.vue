@@ -23,7 +23,7 @@
 
         <div class='form-group'>
           <label for='end-time'>End Time:</label>
-          <input type="text" v-model.trim="endTime" list="times">
+          <input type="text" v-model="endTime" list="times">
           <datalist id="times">
             <option v-for="endTime in times">{{endTime}}</option>
           </datalist>
@@ -32,7 +32,7 @@
         <div class="days-form-group">
           <div class='day-selection'>
             <label for='sun'>Sun</label>
-            <input id='sun' value="Sunday" type='checkbox'>
+            <input id='sun' value="Sunday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
@@ -62,11 +62,15 @@
 
           <div class="day-selection">
             <label for='Sat'>Sat</label>
-            <input id='Sat' value="Saturday" v-model="checkedDays" type='checkbox'>
+            <input id='sat' value="Saturday" v-model="checkedDays" type='checkbox'>
           </div>
         </div>
 
-      <button> Add </button>
+      <button v-on:click="addExercise"> Add </button>
+
+      <div class="success" v-if="successMessage">
+        {{ successMessage }}
+      </div>
     </div>
   </div>
 </template>
@@ -99,25 +103,25 @@ export default {
       addExercise: function() {
         const exerciseObj = {
           name: name, startTime: this.startTime,
-          endTime: this.endTime, daysOfWeek: this.daysOfWeek,
+          endTime: this.endTime, daysOfWeek: this.checkedDays,
         };
-
+        console.log(exerciseObj);
         axios.post("/api/activities/addexercise", exerciseObj)
         .then(response => {
           if (response.data.activitySuccess) {
             this.successMessage = "Successfully added exercise!"
             console.log(response);
-            eventBus.$emit('postedActivity', []);
-            setTimeout(this.clearEntries(), 3000);
           }
-        }).catch(error => { console.log(errorResponse)});
+          eventBus.$emit('postedActivity', []);
+          setTimeout(this.clearEntries(), 3000);
+        }).catch(error => { console.log(error.response)});
     },
     clearEntries: function() {
-      this.name = "";
-      this.startTime = "";
-      this.endTime = "";
+      this.name = '';
+      this.startTime = '';
+      this.endTime = '';
       this.checkedDays = [];
-      this.successMessage = "";
+      this.successMessage = '';
     }
    }
 }
@@ -155,6 +159,10 @@ export default {
  .days-form-group {
    display: flex;
    flex-wrap: wrap;
+ }
+
+ .success {
+   color: green;
  }
 
  label {

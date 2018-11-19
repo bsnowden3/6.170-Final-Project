@@ -30,11 +30,9 @@ class Exercises {
    *  @param daysOfWeek
    *  @param {Array(string)} daysOfWeek array of strings that includes days of week activity occurs
    */
-  static addExercise(name, userId, exerciseId, startTime, endTime, day) {
-    const exercise = { name: name, userId: userId, exerciseId: exerciseId,
-      startTime: startTime, endTime: endTime, day: day}
-    exerciseData.push(exercise);
-    return exercise;
+  static addExercise(exerciseActivity) {
+    exerciseData.push(exerciseActivity);
+    return exerciseActivity;
   }
 
   /**

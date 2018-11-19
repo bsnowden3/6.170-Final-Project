@@ -27,9 +27,7 @@ class Sleeps {
    *  @param wakeUpTime time user gets up for the day
    *  @param day day sleep occurs
    */
-  static addSleep(name, userId, sleepId, wakeUpTime, day) {
-    const sleep = { name: name, userId: userId, sleepId: sleepId,
-      wakeUpTime: wakeUpTime, day: day}
+  static addSleep(sleep) {
     sleepData.push(sleep);
     return sleep;
   }

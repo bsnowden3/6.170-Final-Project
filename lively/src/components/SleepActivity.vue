@@ -16,14 +16,6 @@
           </datalist>
         </div>
 
-        <div class='form-group'>
-          <label for='end-time'>End Time:</label>
-          <input type="text" v-model="endTime" list="times">
-          <datalist id="times">
-            <option v-for="endTime in times">{{endTime}}</option>
-          </datalist>
-        </div>
-
         <div class="days-form-group">
           <div class='day-selection'>
             <label for='sun'>Sun</label>
@@ -62,7 +54,10 @@
         </div>
 
       <button v-on:click="addSleep"> Add </button>
-    </form>
+      <div class="success" v-if="successMessage">
+        {{ successMessage }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -93,8 +88,10 @@ export default {
     addSleep: function() {
       const sleepObj = {
         name: name, startTime: this.startTime,
-        endTime: this.endTime, daysOfWeek: this.daysOfWeek,
+        endTime: this.endTime, daysOfWeek: this.checkedDays,
       };
+
+      console.log(sleepObj, "sleepObj")
 
       axios.post("/api/activities/addsleep", sleepObj)
       .then(response => {
@@ -104,7 +101,7 @@ export default {
         }
         eventBus.$emit('postedActivity', []);
         setTimeout(this.clearEntries(), 3000);
-      }).catch(error => { console.log(errorResponse)})
+      }).catch(error => { console.log(error.response)})
     }
   }
 };
@@ -120,6 +117,10 @@ export default {
   flex-wrap: wrap;
   padding: 10px;
   margin: 10px;
+}
+
+.success {
+  color: green,
 }
 
 /* .titleContainer {

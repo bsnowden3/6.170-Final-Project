@@ -29,9 +29,7 @@ class Meals {
    *  @param endTime
    *  @param day day of week activity occurs
    */
-  static addMeal(name, userId, mealId, mealSize,startTime, endTime, day) {
-    const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
-      startTime: startTime, endTime: endTime, day: day}
+  static addMeal(meal) {
     mealData.push(meal);
     return meal;
   }
