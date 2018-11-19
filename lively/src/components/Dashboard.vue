@@ -22,10 +22,10 @@
             </div>
 
             <!-- this will appear after the onboarding process is complete -->
-            <div v-if="drugsSavedFlag">
+            <!-- <div v-if="drugsSavedFlag">
                 <button v-on:click="editDrugs" class="button">Edit Drugs</button>
                 <button v-on:click="editActivities" class="button">Edit Activites</button>
-            </div>
+            </div> -->
         </div>
      </div>
 </template>
@@ -55,7 +55,7 @@ export default {
   created() {
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
-        drugsSavedFlag = true;
+        this.drugsSavedFlag = true;
     });
 
     eventBus.$on('generateSchedule', () => {

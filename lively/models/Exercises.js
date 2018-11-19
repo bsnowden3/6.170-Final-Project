@@ -10,6 +10,7 @@ const uuidv1 = require('uuid/v1');
  * @prop {string} exerciseId - id of exercise activity
  * @prop {string} startTime - startTime
  * @prop {string} endTime - endTime
+ * * @prop {string} day - day of Week activity occurs
  */
 
  /**
@@ -29,9 +30,9 @@ class Exercises {
    *  @param daysOfWeek
    *  @param {Array(string)} daysOfWeek array of strings that includes days of week activity occurs
    */
-  static addExercise(name, userId, exerciseId, startTime, endTime, daysOfWeek) {
+  static addExercise(name, userId, exerciseId, startTime, endTime, day) {
     const exercise = { name: name, userId: userId, exerciseId: exerciseId,
-      startTime: startTime, endTime: endTime}
+      startTime: startTime, endTime: endTime, day: day}
     exerciseData.push(exercise);
     return exercise;
   }
