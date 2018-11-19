@@ -47,9 +47,11 @@ export default {
 
   created() {
     eventBus.$on('drugsSaved', (data) => {
-      this.onboardingButtonClicked = false;
-      drugsSavedFlag = true;
+        this.onboardingButtonClicked = false;
+        drugsSavedFlag = true;
     });
+
+
   },
 
   methods: {
@@ -61,7 +63,13 @@ export default {
             this.onboarding = false;
         },
         signOut:function(){
-            //TODO
+            axios.post("/signout")
+            .then(() => {
+                eventBus.$emit("signOut-success", true);
+            })
+            .catch(errorMessage => {
+                console.log(errorMessage);
+            })
         }
     }
 

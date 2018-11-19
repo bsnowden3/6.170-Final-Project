@@ -65,13 +65,31 @@ router.post("/logIn", async function(req, res) {
   }
   else {
     const user = Users.findUser(username);
-    req.session.name = user.username;
-    req.session.id = user.id;
+    req.session.userId = user.id;
+    req.session.username = user.username;
     req.session.save();
     res.status(200);
     res.json({message: "Signed In!"});
   }
 });
+
+/**
+ * signs out a user
+ * @name POST/signout
+ */
+router.post("/signout", (req,res) =>{
+  if(req.session.username){
+      req.session.destroy();
+      res.status(200).json({
+          message: `Successfully signed-out` 
+      }).end();
+  } else{
+      res.status(400).json({
+          error: `You must first sign-in in order to sign-out`
+      }).end();
+  }
+});
+
 
 /**
  * helper function for getting a random unique id

@@ -37,6 +37,11 @@ export default {
         this.loginPage = false;
     });
 
+    eventBus.$on("signOut-success", () =>{
+        this.loginPage = true;
+    });
+
+
   }
 };
 
