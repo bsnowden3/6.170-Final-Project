@@ -65,7 +65,7 @@ router.post("/logIn", async function(req, res) {
   }
   else {
     const user = Users.findUser(username);
-    req.session.userId = user.id;
+    req.session.userId = user.userId;
     req.session.username = user.username;
     req.session.save();
     res.status(200);
