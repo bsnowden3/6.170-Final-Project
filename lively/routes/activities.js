@@ -68,7 +68,7 @@ router.get('/allActivities', (req, res) => {
       res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
     }
 
-    let meals = Meals.getAllMeals();
+    let meals = Meals.findUserMeals(userId);
     let sleeps = Sleeps.findUserSleeps(userId);
     let ex = Exercises.findUserExercises(userId);
 
