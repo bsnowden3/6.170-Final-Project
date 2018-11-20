@@ -71,7 +71,7 @@ export default {
 
   data() {
     return {
-      wakeUpTime: '',
+      startTime: '',
       successMessage: '',
       errorMessage: '',
       checkedDays: [],
@@ -88,16 +88,14 @@ export default {
     addSleep: function() {
       const sleepObj = {
         startTime: this.startTime,
-        endTime: this.endTime, daysOfWeek: this.checkedDays,
+        daysOfWeek: this.checkedDays,
       };
       console.log(sleepObj, "sleepObj")
 
       axios.post("/api/activities/addsleep", sleepObj)
       .then(response => {
-        
         this.successMessage = "Successfully added sleep!"
         console.log(response);
-        
         eventBus.$emit('postedActivity', (true));
         setTimeout(this.clearEntries(), 3000);
       })
