@@ -130,7 +130,7 @@ export default {
         setTimeout(this.clearEntries(), 3000);
       })
       .catch(errorMessage => {
-        console.log(errorMessage);
+        console.log(errorMessage.response);
       })
     },
     clearEntries: function() {
