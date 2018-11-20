@@ -1,8 +1,8 @@
 <template>
   <div class="component">
     <p>name: {{ meal.name}}</p>
+    <p>userId: {{ meal.userId }}</p>
     <p>mealId: {{ meal.mealId }}</p>
-    <p>mealId: {{ meal.userId }}</p>
     <p>Start Time: {{ meal.startTime }}</p>
     <p>EndTime: {{ meal.endTime }}</p>
   </div>

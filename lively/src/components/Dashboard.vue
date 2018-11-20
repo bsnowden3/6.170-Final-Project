@@ -21,6 +21,10 @@
               <ActivitiesMainView/>
             </div>
 
+             <div v-if="scheduleGenerated">
+              {{ userData }}
+            </div>
+
             <!-- this will appear after the onboarding process is complete -->
             <!-- <div v-if="drugsSavedFlag">
                 <button v-on:click="editDrugs" class="button">Edit Drugs</button>
@@ -48,7 +52,7 @@ export default {
         onboarding: true,
         onboardingButtonClicked: false,
         drugsSavedFlag: false,
-
+        scheduleGenerated: false,
         userData: {},
         drugData: {
   "Metformin": {
@@ -89,7 +93,7 @@ export default {
 },
         userSchedule: {},
         userMenu: {},
-        userDrugs: []
+        userDrugs: [],
 
     };
   },
@@ -254,48 +258,48 @@ export default {
 
                 //PLACE MEALS IN SCHEDULE
                 for(let y = 0; y < meals.length; y++) {
-                    let e = meals[y];
+                    // let e = meals[y];
 
-                    let startTime = ["0", "0"];
-                    let endTime = ["0", "0"];
+                    let startTime1 = ["0", "0"];
+                    let endTime1 = ["0", "0"];
 
                     // Get Start and End Times
-                    startTime = e.startTime.split(":");
-                    endTime = e.endTime.split(":");
+                    startTime1 = meals[y].startTime.split(":");
+                    endTime1 = meals[y].endTime.split(":");
 
                     //FIND SLOT FOR START
-                    let pointInDay = parseInt(startTime[0], 10) - wakeHour; 
-                    let startSlot = (pointInDay*60)/30;
+                    let pointInDay1 = parseInt(startTime1[0], 10) - wakeHour; 
+                    let startSlot1 = (pointInDay1*60)/30;
 
-                    if (parseInt(startTime[1], 10) != 0) {
-                        startSlot++;
+                    if (parseInt(startTime1[1], 10) != 0) {
+                        startSlot1++;
                     }
 
                     //FIND SLOT FOR END
-                    let endInDay = parseInt(endTime[0], 10) - wakeHour; 
-                    let endSlot = (endInDay*60)/30;
+                    let endInDay1 = parseInt(endTime1[0], 10) - wakeHour; 
+                    let endSlot1 = (endInDay1*60)/30;
 
-                    if (parseInt(endTime[1], 10) != 0) {
-                        endSlot++;
+                    if (parseInt(endTime1[1], 10) != 0) {
+                        endSlot1++;
                     }
 
                     // FILL SLOTS
-                    daySchedule[startSlot] = e;
-                    daySchedule[endSlot] = e;
+                    daySchedule[startSlot1] = meals[y];
+                    daySchedule[endSlot1] = meals[y];
 
                     // KEEP TRACK OF MEALS 
-                    if (e.name == "Breakfast"){
-                        menu[dayOfWeek]["B"] = endslot
+                    if (meals[y].name == "Breakfast"){
+                        menu[dayOfWeek]["B"] = endSlot1
                     }
-                    else if (e.name == "Lunch") {
-                        menu[dayOfWeek]["L"] = endslot
+                    else if (meals[y].name == "Lunch") {
+                        menu[dayOfWeek]["L"] = endSlot1
                     }
                     else {
-                        menu[dayOfWeek]["D"] = endslot
+                        menu[dayOfWeek]["D"] = endSlot1
                     }
 
                     //FILL IN BETWEEN SLOTS
-                    for(let b = startSlot; b <= endSlot; b++) {
+                    for(let b = startSlot1; b <= endSlot1; b++) {
                         daySchedule[b] = "eat";
                     }
 
@@ -306,6 +310,7 @@ export default {
                 // PUT IN DRUGS
 
                 this.fillDrugs(dayOfWeek);
+
 
             }
 
@@ -331,6 +336,11 @@ export default {
                     1. check for timeofDay and insert 
                     2. check dictionary to know where meals are
             */
+
+            this.onboarding = false
+            this.onboardingButtonClicked = false
+            this.drugsSavedFlag = false
+            this.scheduleGenerated =  true
         },
 
         fillDrugs: function(dayOfWeek) {
@@ -391,8 +401,6 @@ export default {
                     }  
                 }
             }
-        console.log("DONE");
-        console.log(this.userSchedule);
 
         },
         
