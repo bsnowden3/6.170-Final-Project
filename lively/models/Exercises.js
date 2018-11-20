@@ -47,7 +47,7 @@ class Exercises {
    * Find exercises associated with userId
    * @param {string} userId
    */
-   findUserExercises(userId) {
+   static findUserExercises(userId) {
      return exerciseData.filter(exercise => userId === exercise.userId);
    }
 

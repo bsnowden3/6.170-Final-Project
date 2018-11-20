@@ -1,6 +1,6 @@
 // @author Bernard Snowden
 
-let mealData = [];
+var mealData = [];
 
 const uuidv1 = require('uuid/v1');
 
@@ -46,7 +46,7 @@ class Meals {
    * Find Meals associated with userId
    * @param {string} userId
    */
-   findUserMeals(userId) {
+   static findUserMeals(userId) {
      return mealData.filter(meal => userId === meal.userId);
    }
 

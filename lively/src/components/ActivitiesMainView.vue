@@ -15,16 +15,17 @@
 
     </div>
     <div>
-      <button> Save Schedule! </button>
+      <button v-on:click="saveSchedule"> Save Schedule! </button>
     </div>
   </div>
 </template>
-
+//eventbus.emit("genera")
 <script>
 
 import MealActivity from "./MealActivity.vue";
 import ExerciseActivity from "./ExerciseActivity.vue";
 import SleepActivity from "./SleepActivity.vue";
+import axios from 'axios';
 
 export default {
   name: "ActivitiesMainView",
@@ -32,6 +33,17 @@ export default {
     MealActivity,
     ExerciseActivity,
     SleepActivity,
+  },
+  methods: {
+    saveSchedule: function() {
+      axios.get("/api/users/userData")
+      .then( (response) => {
+           console.log(response.data)
+          })
+      .catch( (errorMessage) =>{
+              console.log(errorMessage.response);
+      });
+    }
   }
 };
 </script>

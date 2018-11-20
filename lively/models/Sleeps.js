@@ -21,7 +21,6 @@ const uuidv1 = require('uuid/v1');
 class Sleeps {
 
   /**
-   *  @param name
    *  @param userId
    *  @param sleepId
    *  @param wakeUpTime time user gets up for the day
@@ -44,8 +43,8 @@ class Sleeps {
    * Find Meals associated with userId
    * @param {string} userId
    */
-   findUserSleeps(userId) {
-     return mealData.filter(sleep => userId === sleep.userId);
+   static findUserSleeps(userId) {
+     return sleepData.filter(sleep => userId === sleep.userId);
    }
 
 }
