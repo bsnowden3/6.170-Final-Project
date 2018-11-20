@@ -14,5 +14,10 @@ router.post('/saveDrugs', (req, res) => {
   res.status(200).json({message: "Drugs Saved"}).end();
 });
 
+router.get('/getAllDrugs', (req, res) => {
+  console.log(drugInfo);
+  res.status(200).json(Drugs.getDrugs()).end();
+});
+
 
 module.exports = router;

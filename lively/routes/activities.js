@@ -39,6 +39,8 @@ router.post('/addmeal', (req, res) => {
 
       Meals.addMeal(meal);
 
+      response = { message: "Successfully created meal", meal: Meals.getAllMeals(), activitySuccess: true};
+
       // if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
       //     Meals.addMeal(meal);
       // }
@@ -57,6 +59,27 @@ router.post('/addmeal', (req, res) => {
 
 
 });
+
+router.get('/allActivities', (req, res) => {
+
+  let userId = req.session.userId;
+
+    if(!userId) {
+      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+    }
+
+    let meals = Meals.getAllMeals();
+    let sleeps = Sleeps.findUserSleeps(userId);
+    let ex = Exercises.findUserExercises(userId);
+
+    let userData = { meals: meals,
+      sleeps: sleeps,
+      exercises: ex };
+
+      let response = { message: "Succesfully retrieved user data!", data: userData};
+
+    res.status(200).json(response).end();
+    });
 
 /**
  * Post sleep activity to user schedule
