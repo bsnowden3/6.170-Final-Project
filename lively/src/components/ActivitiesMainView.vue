@@ -25,6 +25,8 @@ import MealActivity from "./MealActivity.vue";
 import ExerciseActivity from "./ExerciseActivity.vue";
 import SleepActivity from "./SleepActivity.vue";
 import axios from 'axios';
+import { eventBus } from "../main";
+
 
 export default {
   name: "ActivitiesMainView",
