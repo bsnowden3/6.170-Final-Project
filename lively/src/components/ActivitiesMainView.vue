@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     saveSchedule: function() {
-      eventBus.$on("generateSchedule",[]);
+      eventBus.$emit('generateSchedule', (true));
     }
   }
 };
