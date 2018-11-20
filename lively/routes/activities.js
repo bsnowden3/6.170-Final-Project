@@ -39,7 +39,7 @@ router.post('/addmeal', (req, res) => {
 
       Meals.addMeal(meal);
 
-      response = { message: "Successfully created meal", meal: Meals.getAllMeals(), activitySuccess: true};
+      response = { message: "Successfully created meal", meal: Meals.findUserMeals(userId), activitySuccess: true};
 
       // if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
       //     Meals.addMeal(meal);
