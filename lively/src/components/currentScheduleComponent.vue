@@ -30,8 +30,8 @@
 import axios from "axios";
 import { eventBus } from "../main";
 import SleepScheduledItem from './SleepScheduledItem';
-import MealScheduledItem from './ExerciseScheduledItem';
-import ExerciseScheduledItem from './SleepScheduledItem';
+import MealScheduledItem from './MealScheduledItem';
+import ExerciseScheduledItem from './ExerciseScheduledItem';
 
 export default {
   name: "CurrentScheduleComponent",
