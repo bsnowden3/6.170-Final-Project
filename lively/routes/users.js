@@ -29,7 +29,8 @@ router.get('/userData', (req, res) => {
     sleeps: sleeps,
     exercises: ex };
 
-    let responseMessage = { message: "Succesfully retrieved user data!", userData};
+
+    let responseMessage = { message: "Succesfully retrieved user data!", userData: userData};
 
    res.status(200).json(responseMessage).end();
 });

@@ -148,7 +148,7 @@ router.post('/addsleep', (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
   const sleepId = uuidv1();
-  const startTime = req.body.wakeUpTime;
+  const startTime = req.body.startTime;
   const daysOfWeek = req.body.daysOfWeek;
 
 
