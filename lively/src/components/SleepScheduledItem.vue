@@ -1,8 +1,8 @@
 <template>
-  <div class="short-list-item component">
-    <p>Name: {{ short.name }}</p>
-    <p>URL: {{ short.url }}</p>
-    <p>Created by: {{ creatorIdentity }}</p>
+  <div class="component">
+    <p>sleepId: {{ sleep.sleepId }}</p>
+    <p>userId: {{ sleep.userId }}</p>
+    <p>Start Time: {{ sleep.startTime }}</p>
   </div>
 </template>
 
@@ -16,13 +16,17 @@ export default {
   name: "SleepScheduledItem",
 
   props: {
-    short: Object
+    sleep: Object,
   },
-
-  computed: {
-    creatorIdentity: function() {
-      return this.short.creator ? this.short.creator : "anonymous";
-    }
-  }
 };
 </script>
+
+<style scoped>
+
+.component {
+  width: 25%;
+  background-color: whitesmoke;
+  padding: 1rem;
+}
+
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="short-list-item component">
-    <p>Name: {{ exercise.name }}</p>
-    <p>mealId: {{ exercise.mealId }}</p>
+  <div class="component">
+    <p>exerciseId: {{ exercise.exerciseId }}</p>
+    <p>userId: {{ exercise.userId }}</p>
     <p>Start Time: {{ exercise.startTime }}</p>
     <p>End Time: {{ exercise.endTime }}</p>
   </div>
@@ -17,7 +17,17 @@ export default {
   name: "ExerciseScheduledItem",
 
   props: {
-    exercise: []
+    exercise: Object,
   },
 };
 </script>
+
+<style scoped>
+
+.component {
+  width: 25%;
+  background-color: whitesmoke;
+  padding: 1rem;
+}
+
+</style>

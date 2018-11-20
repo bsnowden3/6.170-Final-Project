@@ -1,8 +1,10 @@
 <template>
-  <div class="short-list-item component">
-    <p>Name: {{ short.name }}</p>
-    <p>URL: {{ short.url }}</p>
-    <p>Created by: {{ creatorIdentity }}</p>
+  <div class="component">
+    <p>name: {{ meal.name}}</p>
+    <p>mealId: {{ meal.mealId }}</p>
+    <p>mealId: {{ meal.userId }}</p>
+    <p>Start Time: {{ meal.startTime }}</p>
+    <p>EndTime: {{ meal.endTime }}</p>
   </div>
 </template>
 
@@ -16,13 +18,17 @@ export default {
   name: "MealScheduledItem",
 
   props: {
-    short: Object
+    meal: Object,
   },
-
-  computed: {
-    creatorIdentity: function() {
-      return this.short.creator ? this.short.creator : "anonymous";
-    }
-  }
 };
 </script>
+
+<style scoped>
+
+.component {
+  width: 25%;
+  background-color: whitesmoke;
+  padding: 1rem;
+}
+
+</style>
