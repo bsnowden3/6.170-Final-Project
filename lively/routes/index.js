@@ -10,8 +10,8 @@ const uuidv1 = require('uuid/v1');
  * @name GET/
  */
 router.get('/', (req, res) => {
-  //res.sendfile("index.html");
-  res.render('index.html', { title: 'Lively' });
+  res.sendfile("index.html");
+  //res.render('index.html', { title: 'Lively' });
 });
 
 
