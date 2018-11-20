@@ -87,21 +87,23 @@ export default {
   methods: {
     addSleep: function() {
       const sleepObj = {
-        name: name, startTime: this.startTime,
+        startTime: this.startTime,
         endTime: this.endTime, daysOfWeek: this.checkedDays,
       };
-
       console.log(sleepObj, "sleepObj")
 
       axios.post("/api/activities/addsleep", sleepObj)
       .then(response => {
-        if (response.data.activitySuccess) {
-          this.successMessage = "Successfully added sleep!"
-          console.log(response);
-        }
-        eventBus.$emit('postedActivity', []);
+        
+        this.successMessage = "Successfully added sleep!"
+        console.log(response);
+        
+        eventBus.$emit('postedActivity', (true));
         setTimeout(this.clearEntries(), 3000);
-      }).catch(error => { console.log(error.response)})
+      })
+      .catch(error => { 
+        console.log(error.response)
+      })
     }
   }
 };
