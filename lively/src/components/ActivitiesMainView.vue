@@ -12,7 +12,7 @@
     </div>
     <div class='selected-activites-section'>
       <h2> Current Schedule </h2>
-
+      <CurrentScheduleComponent />
     </div>
     <div>
       <button v-on:click="saveSchedule"> Save Schedule! </button>
@@ -24,6 +24,7 @@
 import MealActivity from "./MealActivity.vue";
 import ExerciseActivity from "./ExerciseActivity.vue";
 import SleepActivity from "./SleepActivity.vue";
+import CurrentScheduleComponent from "./CurrentScheduleComponent.vue"
 import axios from 'axios';
 import { eventBus } from "../main";
 
@@ -34,6 +35,7 @@ export default {
     MealActivity,
     ExerciseActivity,
     SleepActivity,
+    CurrentScheduleComponent
   },
   methods: {
     saveSchedule: function() {

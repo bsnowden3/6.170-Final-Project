@@ -95,8 +95,6 @@ router.get('/allMeals', (req, res) => {
 
     let meals = Meals.findUserMeals(userId);
 
-    let userData = { meals: meals };
-
     let responseMessage = { message: "Succesfully retrieved user meal data", meals: meals };
 
     res.status(200).json(responseMessage).end();
