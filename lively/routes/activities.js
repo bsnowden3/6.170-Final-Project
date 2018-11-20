@@ -37,18 +37,18 @@ router.post('/addmeal', (req, res) => {
     const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
       startTime: startTime, endTime: endTime, day: daysOfWeek[i]};
 
-      // Meals.addMeal(meal);
+      Meals.addMeal(meal);
 
       responseMessage = { message: "Successfully created meal", meal: Meals.findUserMeals(userId), activitySuccess: true};
 
-      if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
-          Meals.addMeal(meal);
-      }
-      else{
-        fail = true;
+      // if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
+      //     Meals.addMeal(meal);
+      // }
+      // else{
+      //   fail = true;
 
-        break;
-      }
+      //   break;
+      // }
   }
     if(fail) {
       res.status(400).json({message: "Unsuccessful activity creation! Schedule Conflicts!."}).end();
@@ -162,15 +162,15 @@ router.post('/addsleep', (req, res) => {
       startTime: startTime, day: daysOfWeek[i]};
 
 
-      // Sleeps.addSleep(sleep);
-      if(checkSleepInsert(sleep, userId)){
-        Sleeps.addSleep(sleep);
-      }
-      else{
-        fail = true;
+      Sleeps.addSleep(sleep);
+      // if(checkSleepInsert(sleep, userId)){
+      //   Sleeps.addSleep(sleep);
+      // }
+      // else{
+      //   fail = true;
 
-        break;
-      }
+      //   break;
+      // }
   }
     if(fail) {
       res.status(400).json({message: "Unsuccessful activity creation! Schedule Conflicts!."}).end();
@@ -209,16 +209,16 @@ router.post('/addexercise', (req, res) => {
     let exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId, startTime: startTime,
       endTime: endTime, day: daysOfWeek[i]};
 
-      // Exercises.addExercise(exerciseActivity);
-
-    if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
       Exercises.addExercise(exerciseActivity);
-    }
-    else{
-      fail = true;
 
-      break;
-    }
+    // if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
+    //   Exercises.addExercise(exerciseActivity);
+    // }
+    // else{
+    //   fail = true;
+
+    //   break;
+    // }
   }
 
   if(fail) {
