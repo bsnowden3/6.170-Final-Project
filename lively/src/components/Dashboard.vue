@@ -107,8 +107,6 @@ export default {
 
         this.getUserData();
 
-        console.log("DONE");
-        console.log(this.userSchedule);
     });
 
   },
@@ -210,6 +208,7 @@ export default {
                 for (let x = 0; x < arraySize; x++) {
                     newA.push("-")
                 }
+                newA[0] = "wake";
                 schedule[dayOfWeek] = newA;
 
                 const meals = this.userData.meals.filter(m => m.day == dayOfWeek);
@@ -386,6 +385,8 @@ export default {
                     }
                 }
             }
+        console.log("DONE");
+        console.log(this.userSchedule);
 
         },
         
