@@ -106,7 +106,7 @@ export default {
         console.log(this.userData);
 
         this.getUserData();
-        this.generateSchedule();
+
     });
 
   },
@@ -152,6 +152,8 @@ export default {
                         console.log(list[i]);
                     }
 
+                    this.generateSchedule();
+
                     console.log(axiosResponse.data.userData);
                 })
                 .catch( (errorMessage) =>{
@@ -186,7 +188,7 @@ export default {
                 console.log(this.userData);
                 for(let i = 0; i < this.userData.sleeps.length; i++){
                     if (this.userData.sleeps[i].day == dayOfWeek) {
-                        wakeTime = this.userData.sleeps[i].wakeTime.split(":");
+                        wakeTime = this.userData.sleeps[i].startTime.split(":");
                         break;
                     }
                 }
@@ -206,6 +208,7 @@ export default {
                 for (let x = 0; x < arraySize; x++) {
                     newA.push("-")
                 }
+                newA[0] = "wake";
                 schedule[dayOfWeek] = newA;
 
                 const meals = this.userData.meals.filter(m => m.day == dayOfWeek);
@@ -337,12 +340,12 @@ export default {
                 let dayOfWeek = week[j];
 
                 // GO THROUGH EACH DRUG
-                for(d = 0; d < this.userDrugs.length; d++) {
+                for(let d = 0; d < this.userDrugs.length; d++) {
                     let drug = this.userDrugs[d];
                     let freq = this.drugInfo[drug]["frequency"];
 
                     // TAKE DRUG FREQUENCY TIMES
-                    for(i = 0; i < freq; i++) {
+                    for(let i = 0; i < freq; i++) {
 
                         //ALWAYS CHECK BREAKFAST FIRST
                         if(i == 0 && this.userMenu[dayOfWeek]["B"] != "-"){
@@ -382,6 +385,8 @@ export default {
                     }
                 }
             }
+        console.log("DONE");
+        console.log(this.userSchedule);
 
         },
         
