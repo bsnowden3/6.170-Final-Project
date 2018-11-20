@@ -108,13 +108,14 @@ export default {
         console.log(exerciseObj);
         axios.post("/api/activities/addexercise", exerciseObj)
         .then(response => {
-          if (response.data.activitySuccess) {
             this.successMessage = "Successfully added exercise!"
             console.log(response);
-          }
-          eventBus.$emit('postedActivity', []);
+          eventBus.$emit('postedActivity', (true));
           setTimeout(this.clearEntries(), 3000);
-        }).catch(error => { console.log(error.response)});
+        })
+        .catch(error => { 
+          console.log(error)
+        });
     },
     clearEntries: function() {
       this.name = '';
