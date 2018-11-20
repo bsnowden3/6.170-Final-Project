@@ -12,7 +12,7 @@
           <label for='mealType'>Meal Type:</label>
           <input type="text" v-model="mealType" list="mealTypes">
           <datalist id="mealTypes">
-            <option v-for="mealType in mealTypes" v-bind:value="mealType.value">{{mealType}}</option>
+            <option v-for="mealType in mealTypes">{{mealType}}</option>
           </datalist>
         </div>
 
@@ -20,7 +20,7 @@
           <label for='start-time'>Start Time:</label>
           <input type="text" v-model="startTime" list="times">
           <datalist id="times">
-            <option v-for="startTime in times" v-bind:value="startTime.value">{{startTime}}</option>
+            <option v-for="startTime in times">{{startTime}}</option>
           </datalist>
         </div>
 
@@ -28,7 +28,7 @@
           <label for='end-time'>End Time:</label>
           <input type="text" v-model="endTime" list="times">
           <datalist id="times">
-            <option v-for="endTime in times" v-bind:value="endTime.value">{{endTime}}</option>
+            <option v-for="endTime in times">{{endTime}}</option>
           </datalist>
         </div>
 
@@ -36,7 +36,7 @@
           <label for='meal-size'>Meal Size:</label>
           <input type="text" v-model="mealSize" list="mealSizes">
           <datalist id="mealSizes">
-            <option v-for="mealSize in mealSizes" v-bind:value="mealSize.value">{{mealSize}}</option>
+            <option v-for="mealSize in mealSizes">{{mealSize}}</option>
           </datalist>
         </div>
 
@@ -122,11 +122,9 @@ export default {
 
       axios.post("/api/activities/addmeal", mealObj)
       .then(response => {
-        if (response.data.activitySuccess) {
-          this.successMessage = "Successfully added meal!"
-          console.log(response);
-        }
-        eventBus.$emit('postedActivity', []);
+        this.successMessage = "Successfully added meal!"
+        console.log(response);
+        eventBus.$emit('postedActivity', (true));
         setTimeout(this.clearEntries(), 3000);
       })
       .catch(errorMessage => {
