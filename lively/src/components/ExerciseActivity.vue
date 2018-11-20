@@ -5,12 +5,12 @@
   <div class="activityContainer">
     <div>
       <div class="titleContainer">
-        <h2> Exercise</h2>
+        <h2>Exercise</h2>
       </div>
 
         <div class='form-group'>
           <label for='name'> Name: </label>
-          <input id='name'  type='text' name='name'>
+          <input id='name'  type='text' name='name' v-model.trim="name">
         </div>
 
         <div class='form-group'>
@@ -85,6 +85,7 @@ export default {
 
   data() {
     return {
+      name:'',
       startTime: '',
       endTime: '',
       checkedDays: [],

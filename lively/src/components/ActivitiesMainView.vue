@@ -5,9 +5,9 @@
       <h2> Activities </h2>
       <div class='main-content'>
         <!-- Children Components -->
+        <SleepActivity />
         <MealActivity/>
         <ExerciseActivity/>
-        <SleepActivity />
       </div>
     </div>
     <div class='selected-activites-section'>

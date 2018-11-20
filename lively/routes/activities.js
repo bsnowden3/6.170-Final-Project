@@ -21,10 +21,10 @@ router.post('/addmeal', (req, res) => {
   const daysOfWeek = req.body.daysOfWeek;
 
 
-  let response = { message: "Successfully created meal", meal: mealId, activitySuccess: true};
+  let responseMessage = { message: "Successfully created meal", meal: mealId, activitySuccess: true};
 
   if(milToInt(startTime)  >= milToInt(endTime)) {
-    res.status(400).json({message: "Unsuccessful activity creation! Endtime Before Starttime!."}).end();
+    res.status(400).json({message: "Unsuccessful activity creation! Endtime Before Start time!."}).end();
   }
 
   if (!userId) {
@@ -39,7 +39,7 @@ router.post('/addmeal', (req, res) => {
 
       Meals.addMeal(meal);
 
-      response = { message: "Successfully created meal", meal: Meals.findUserMeals(userId), activitySuccess: true};
+      responseMessage = { message: "Successfully created meal", meal: Meals.findUserMeals(userId), activitySuccess: true};
 
       // if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
       //     Meals.addMeal(meal);
@@ -51,10 +51,10 @@ router.post('/addmeal', (req, res) => {
       // }
   }
     if(fail) {
-      res.status(400).json({message: "Unsuccessful activity creation! Shedule Conflicts!."}).end();
+      res.status(400).json({message: "Unsuccessful activity creation! Schedule Conflicts!."}).end();
     }
     else {
-      res.status(200).json(response).end();
+      res.status(200).json(responseMessage).end();
     }
 
 
@@ -65,7 +65,7 @@ router.get('/allActivities', (req, res) => {
   let userId = req.session.userId;
 
     if(!userId) {
-      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+      res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
     let meals = Meals.findUserMeals(userId);
@@ -76,9 +76,9 @@ router.get('/allActivities', (req, res) => {
       sleeps: sleeps,
       exercises: ex };
 
-      let response = { message: "Succesfully retrieved user data!", data: userData};
+      let responseMessage = { message: "Succesfully retrieved user data!", data: userData};
 
-    res.status(200).json(response).end();
+    res.status(200).json(responseMessage).end();
 });
 
 /**
@@ -90,16 +90,16 @@ router.get('/allMeals', (req, res) => {
   let userId = req.session.userId;
 
     if(!userId) {
-      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+      res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
     let meals = Meals.findUserMeals(userId);
 
     let userData = { meals: meals };
 
-    let response = { message: "Succesfully retrieved user meal data", meals: meals };
+    let responseMessage = { message: "Succesfully retrieved user meal data", meals: meals };
 
-    res.status(200).json(response).end();
+    res.status(200).json(responseMessage).end();
 });
 
 /**
@@ -111,14 +111,14 @@ router.get('/allSleeps', (req, res) => {
   let userId = req.session.userId;
 
     if(!userId) {
-      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+      res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
     let sleeps = Sleeps.findUserSleeps(userId);
 
-    let response = { message: "Succesfully retrieved user sleep data!", sleeps: sleeps  };
+    let responseMessage = { message: "Succesfully retrieved user sleep data!", sleeps: sleeps  };
 
-    res.status(200).json(response).end();
+    res.status(200).json(responseMessage).end();
 });
 
 /**
@@ -130,14 +130,14 @@ router.get('/allExercises', (req, res) => {
   let userId = req.session.userId;
 
     if(!userId) {
-      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+      res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
-    let exercises = Exercises.findUserExercises(userId);;
+    let exercises = Exercises.findUserExercises(userId);
 
-    let response = { message: "Succesfully retrieved user meal data", exercises: exercises };
+    let responseMessage = { message: "Succesfully retrieved user meal data", exercises: exercises };
 
-    res.status(200).json(response).end();
+    res.status(200).json(responseMessage).end();
 });
 
 /**
@@ -152,7 +152,7 @@ router.post('/addsleep', (req, res) => {
   const daysOfWeek = req.body.daysOfWeek;
 
 
-  let response = { message: "Successfully created sleep", activitySuccess: true}
+  let responseMessage = { message: "Successfully created sleep", activitySuccess: true}
   if (!userId) {
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
   }
@@ -175,10 +175,10 @@ router.post('/addsleep', (req, res) => {
       // }
   }
     if(fail) {
-      res.status(400).json({message: "Unsuccessful activity creation! Shedule Conflicts!."}).end();
+      res.status(400).json({message: "Unsuccessful activity creation! Schedule Conflicts!."}).end();
     }
     else {
-      res.status(200).json(response).end();
+      res.status(200).json(responseMessage).end();
     }
 
 });
@@ -196,10 +196,10 @@ router.post('/addexercise', (req, res) => {
   const daysOfWeek = req.body.daysOfWeek;
 
   if(milToInt(startTime)  >= milToInt(endTime)) {
-    res.status(400).json({message: "Unsuccessful activity creation! Endtime Before Starttime!."}).end();
+    res.status(400).json({message: "Unsuccessful activity creation! Endtime Before Start time!."}).end();
   }
 
-  let response = { message: "Successfully created exercise", activitySuccess: true}
+  let responseMessage = { message: "Successfully created exercise", activitySuccess: true}
 
   if(!userId){
     res.status(400).json({message: "Unsuccessful activity creation! Missing permissions."}).end();
@@ -224,10 +224,10 @@ router.post('/addexercise', (req, res) => {
   }
 
   if(fail) {
-    res.status(400).json({message: "Unsuccessful activity creation! Shedule Conflicts!."}).end();
+    res.status(400).json({message: "Unsuccessful activity creation! Schedule Conflicts!."}).end();
   }
   else {
-    res.status(200).json(response).end();
+    res.status(200).json(responseMessage).end();
   }
 
 });

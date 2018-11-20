@@ -160,10 +160,22 @@ export default {
         },
 
         generateSchedule: function(){
+            let week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                        "Friday", "Saturday"]
+
+            let schedule = {"Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [],
+                            "Friday": [], "Saturday": []};
+
+            let menu = {"Sunday": {"B":"-", "L": "-", "D": "-"}, 
+                        "Monday": {"B":"-", "L": "-", "D": "-"}, 
+                        "Tuesday": {"B":"-", "L": "-", "D": "-"}, 
+                        "Wednesday": {"B":"-", "L": "-", "D": "-"}, 
+                        "Thursday": {"B":"-", "L": "-", "D": "-"},
+                        "Friday": {"B":"-", "L": "-", "D": "-"}, 
+                        "Saturday": {"B":"-", "L": "-", "D": "-"}};
 
             // user data = {exercise, meals, sleeps}
             // ea. == objects with start and end times;
-
 
             // GO THROUGH EACH DAY OF THE WEEK TO GET SCHEDULE
             for(let i = 0; i < week.length; i++) {
@@ -303,20 +315,111 @@ export default {
                     -End of day time: get dinner end time and 2 hours to that (make this the end of the day)
                     -Length of day: subtract End of day time - Start day time
                     -DayMins: convert hours to minutes (length of day * 60 mins)
-                    -arraySize = DayMins/30
+                    -arraySize = DayMins/30 
             3. put things into the array based on their start time and add the event and slot into a dictionary
                 -How to figure out where to insert the event into the array:
                     1. pointInDay: subtract start time of event - wake time
                     2. pointInDay will equal nth hour of the day this event starts
                     3. Array slot = (pointInDay*60) / 30
-                    4. Determine length of event (endTime - startTime)
+                    4. Determine length of event (endTime - startTime) 
                     5. Determine number of slots of Array to take up, length of Event/30
                     6. Add values in the array for the event to take up the respective blocks
 
             4. go through each drug saved for User
-                    1. check for timeofDay and insert
+                    1. check for timeofDay and insert 
                     2. check dictionary to know where meals are
             */
+        },
+
+        fillDrugs: function(week) {
+            // GO THROUGH EACH DAY
+            for(let j = 0; j < week.length; j++){
+                let dayOfWeek = week[j];
+
+                // GO THROUGH EACH DRUG
+                for(d = 0; d < this.userDrugs.length; d++) {
+                    let drug = this.userDrugs[d];
+                    let freq = this.drugInfo[drug]["frequency"];
+
+                    // TAKE DRUG FREQUENCY TIMES
+                    for(i = 0; i < freq; i++) {
+
+                        //ALWAYS CHECK BREAKFAST FIRST
+                        if(i == 0 && this.userMenu[dayOfWeek]["B"] != "-"){
+                            let slot = this.userMenu[dayOfWeek]["B"];
+                            let daySchedule = this.userSchedule[dayOfWeek]
+                            if (daySchedule[slot] == "-") {
+                                daySchedule[slot] == 'take ' + drug;
+                            }
+                            else {
+                                greedyScheduler(slot, drug, daySchedule);
+                            }
+                        } 
+
+                        //CHECK LUNCH NEXT
+                        else if(i == 1 && this.userMenu[dayOfWeek]["L"] != "-"){
+                            let slot = this.userMenu[dayOfWeek]["L"];
+                            let daySchedule = this.userSchedule[dayOfWeek]
+                            if (daySchedule[slot] == "-") {
+                                daySchedule[slot] == 'take ' + drug;
+                            }
+                            else {
+                                greedyScheduler(slot, drug, daySchedule);
+                            }
+                        }
+
+                        //CHECK DINNER LAST
+                        else{
+                            let slot = this.userMenu[dayOfWeek]["D"];
+                            let daySchedule = this.userSchedule[dayOfWeek]
+                            if (daySchedule[slot] == "-") {
+                                daySchedule[slot] == 'take ' + drug;
+                            }
+                            else {
+                                greedyScheduler(slot, drug, daySchedule);
+                            }
+                        }  
+                    }
+                }
+            }
+
+        },
+        
+        greedyScheduler: function(slot, drug, daySchedule) {
+            placed = false;
+
+            // TRY AND FIND THE EARLIEST SLOT AFTER THE LAST MEAL
+            while(slot < daySchedule.length) {
+                if (daySchedule[slot] == "-") {
+                    daySchedule[slot] == 'take ' + drug;
+                    placed = true;
+                    break;
+                }
+                else {
+                    slot++;
+                }
+            }
+
+            // IF NONE EXIST FIND EARLIEST POSSIBLE
+            if (!placed) {
+                let greedSlot = 0;
+                while(greedSlot < daySchedule.length) {
+                    if (daySchedule[greedSlot] == "-") {
+                        daySchedule[greedSlot] == 'take' + drug;
+                        placed = true;
+                        break;
+                    }
+                    else {
+                        greedSlot++;
+                    }
+                }
+            }
+
+            // THIS IS A FAILED SCHEDULE (NO ROOM FOR DRUG)
+            if (!placed) {
+                //TODO SOME ERROR 
+            }
+
         }
 
 
