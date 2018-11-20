@@ -29,9 +29,9 @@ router.get('/userData', (req, res) => {
     sleeps: sleeps,
     exercises: ex };
 
-    let response = { message: "Succesfully retrieved user data!", userData};
+    let responseMessage = { message: "Succesfully retrieved user data!", userData};
 
-   res.status(200).json(response).end();
+   res.status(200).json(responseMessage).end();
 });
 
 module.exports = router;
