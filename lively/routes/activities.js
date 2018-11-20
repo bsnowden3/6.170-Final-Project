@@ -160,7 +160,7 @@ router.post('/addsleep', (req, res) => {
   let fail = false;
 
   for(let i = 0; i < daysOfWeek.length; i++) {
-    const sleep = { name: name, userId: userId, sleepId: sleepId,
+    const sleep = { userId: userId, sleepId: sleepId,
       startTime: startTime, day: daysOfWeek[i]};
 
 

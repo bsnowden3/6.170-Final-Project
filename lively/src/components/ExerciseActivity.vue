@@ -102,7 +102,7 @@ export default {
     methods: {
       addExercise: function() {
         const exerciseObj = {
-          name: name, startTime: this.startTime,
+          name: this.name, startTime: this.startTime,
           endTime: this.endTime, daysOfWeek: this.checkedDays,
         };
         console.log(exerciseObj);
