@@ -31,3 +31,36 @@ Navigate to `localhost:3000` in your browser
 11. Once you click save schedule on the activites, you will be presented with text that will tell you when to take the drugs you added. Future version of the app will look much nicer!
 
 (If you click Sign out during any part of the process, you will have to restart)
+
+
+## Authors:
+Prateek:
+    files:
+    Drugs.js
+    Sleep.js
+    drugs.js
+    Dashboard.vue
+    ExerciseActivity
+    MealActivity
+    SleepACtivity
+
+
+Chris:
+    files:
+    Exercies.js
+    Users.js
+    users.js
+    Drug.vue
+    ExerciseSchedule
+    LoginPage
+    SleepSchedule
+
+Bernard:
+    files:
+    Meals.js
+    activities.js
+    ActivitiesMainView
+    DrugsList.vue
+    JobActivity
+    MealSchedule
+    database.js
