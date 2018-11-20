@@ -24,7 +24,7 @@
 import MealActivity from "./MealActivity.vue";
 import ExerciseActivity from "./ExerciseActivity.vue";
 import SleepActivity from "./SleepActivity.vue";
-import CurrentScheduleComponent from "./currentScheduleComponent.vue"
+import CurrentScheduleComponent from "./CurrentScheduleComponent.vue"
 import axios from 'axios';
 import { eventBus } from "../main";
 
