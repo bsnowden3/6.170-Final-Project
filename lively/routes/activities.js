@@ -33,7 +33,7 @@ router.post('/addmeal', (req, res) => {
 
   let fail = false;
 
-  for(let i; i < daysOfWeek.length; i++) {
+  for(let i = 0; i < daysOfWeek.length; i++) {
     const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
       startTime: startTime, endTime: endTime, day: daysOfWeek[i]};
 
@@ -44,7 +44,7 @@ router.post('/addmeal', (req, res) => {
       // }
       // else{
       //   fail = true;
-        
+
       //   break;
       // }
   }
@@ -54,7 +54,7 @@ router.post('/addmeal', (req, res) => {
     else {
       res.status(200).json(response).end();
     }
-    
+
 
 });
 
@@ -77,18 +77,18 @@ router.post('/addsleep', (req, res) => {
 
   let fail = false;
 
-  for(let i; i < daysOfWeek.length; i++) {
+  for(let i = 0; i < daysOfWeek.length; i++) {
     const sleep = { name: name, userId: userId, sleepId: sleepId,
       startTime: startTime, day: daysOfWeek[i]};
 
 
       Sleeps.addSleep(sleep);
       // if(checkSleepInsert(sleep, userId)){
-          
+
       // }
       // else{
       //   fail = true;
-        
+
       //   break;
       // }
   }
@@ -125,18 +125,18 @@ router.post('/addexercise', (req, res) => {
 
 
   let fail = false;
-  for(let i; i < daysOfWeek.length; i++) {
+  for(let i = 0; i < daysOfWeek.length; i++) {
     let exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId, startTime: startTime,
       day: daysOfWeek[i]};
 
       Exercises.addExercise(exerciseActivity);
 
     // if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
-      
+
     // }
     // else{
     //   fail = true;
-          
+
     //   break;
     // }
   }
@@ -170,7 +170,7 @@ router.post('/addexercise', (req, res) => {
     }
     else{
       activities = Exercises.findUserExercises(userId);
-       
+
     }
 
     return checkOverlap(addition, activities);
