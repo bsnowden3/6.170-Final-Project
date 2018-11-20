@@ -82,6 +82,65 @@ router.get('/allActivities', (req, res) => {
 });
 
 /**
+ * Get meal activity to user schedule
+ * @name GET/ allMeals
+ */
+router.get('/allMeals', (req, res) => {
+
+  let userId = req.session.userId;
+
+    if(!userId) {
+      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+    }
+
+    let meals = Meals.findUserMeals(userId);
+
+    let userData = { meals: meals };
+
+    let response = { message: "Succesfully retrieved user meal data", meals: meals };
+
+    res.status(200).json(response).end();
+});
+
+/**
+ * Get sleep activity to user schedule
+ * @name POST/ meal
+ */
+router.get('/allSleeps', (req, res) => {
+
+  let userId = req.session.userId;
+
+    if(!userId) {
+      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+    }
+
+    let sleeps = Sleeps.findUserSleeps(userId);
+
+    let response = { message: "Succesfully retrieved user sleep data!", sleeps: sleeps  };
+
+    res.status(200).json(response).end();
+});
+
+/**
+ * Get meal activity to user schedule
+ * @name GET/ allMeals
+ */
+router.get('/allExercises', (req, res) => {
+
+  let userId = req.session.userId;
+
+    if(!userId) {
+      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
+    }
+
+    let exercises = Exercises.findUserExercises(userId);;
+
+    let response = { message: "Succesfully retrieved user meal data", exercises: exercises };
+
+    res.status(200).json(response).end();
+});
+
+/**
  * Post sleep activity to user schedule
  * @name POST/ meal
  */
