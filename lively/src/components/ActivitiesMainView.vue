@@ -19,7 +19,6 @@
     </div>
   </div>
 </template>
-//eventbus.emit("genera")
 <script>
 
 import MealActivity from "./MealActivity.vue";
@@ -36,13 +35,7 @@ export default {
   },
   methods: {
     saveSchedule: function() {
-      axios.get("/api/users/userData")
-      .then( (response) => {
-           console.log(response.data)
-          })
-      .catch( (errorMessage) =>{
-              console.log(errorMessage.response);
-      });
+      eventBus.$on("generateSchedule",[]);
     }
   }
 };

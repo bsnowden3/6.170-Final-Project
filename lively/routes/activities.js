@@ -79,7 +79,7 @@ router.get('/allActivities', (req, res) => {
       let response = { message: "Succesfully retrieved user data!", data: userData};
 
     res.status(200).json(response).end();
-    });
+});
 
 /**
  * Post sleep activity to user schedule
