@@ -98,12 +98,11 @@ export default {
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
+        this.userDrugs = data;
     });
 
     eventBus.$on('generateSchedule', () => {
 
-        console.log("GENERATING")
-        console.log(this.userData);
 
         this.getUserData();
 
@@ -149,12 +148,10 @@ export default {
                     let list = Object.keys(axiosResponse.data.userData);
                     for(let i = 0; i < list.length; i++) {
                         this.userData[list[i]] = axiosResponse.data.userData[list[i]];
-                        console.log(list[i]);
                     }
 
                     this.generateSchedule();
 
-                    console.log(axiosResponse.data.userData);
                 })
                 .catch( (errorMessage) =>{
                     console.log(errorMessage);
@@ -162,19 +159,21 @@ export default {
         },
 
         generateSchedule: function(){
-            let week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+            var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                         "Friday", "Saturday"]
 
             let schedule = {"Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [],
                             "Friday": [], "Saturday": []};
 
-            let menu = {"Sunday": {"B":"-", "L": "-", "D": "-"}, 
-                        "Monday": {"B":"-", "L": "-", "D": "-"}, 
-                        "Tuesday": {"B":"-", "L": "-", "D": "-"}, 
-                        "Wednesday": {"B":"-", "L": "-", "D": "-"}, 
-                        "Thursday": {"B":"-", "L": "-", "D": "-"},
-                        "Friday": {"B":"-", "L": "-", "D": "-"}, 
-                        "Saturday": {"B":"-", "L": "-", "D": "-"}};
+            let menu = {"Sunday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Monday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Tuesday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Wednesday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Thursday": {"B": 0, "L": "-", "D": "-"},
+                        "Friday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Saturday": {"B": 0, "L": "-", "D": "-"}};
+
+            let mealType = ["Breakfast", "Lunch", "Dinner"];
 
             // user data = {exercise, meals, sleeps}
             // ea. == objects with start and end times;
@@ -184,8 +183,6 @@ export default {
                 let dayOfWeek = week[i];
                 let wakeTime = ["0", "0"];
                 //FIND THE CORRECT WAKE TIME FOR THE GIVEN DAY
-                console.log("CHCKERS");
-                console.log(this.userData);
                 for(let i = 0; i < this.userData.sleeps.length; i++){
                     if (this.userData.sleeps[i].day == dayOfWeek) {
                         wakeTime = this.userData.sleeps[i].startTime.split(":");
@@ -195,7 +192,7 @@ export default {
 
                 //GET ARRAY SIZE FOR THE DAY
                 let wakeHour = parseInt(wakeTime[0],10);
-                let lengthOfDay = 23 - wakeTime[wakeHour];
+                let lengthOfDay = 23 - wakeHour;
                 let dayMins = lengthOfDay * 60;
                 let arraySize = dayMins/30;
                 if(parseInt(wakeTime[1], 10) != 0 ){
@@ -205,7 +202,7 @@ export default {
                 //MODIFY ARRAY ON GIVEN DAY TO BE ARRAY OF SIZE ARRAY SIZE WITH 
                 // DUMMY VAR "-"
                 let newA = []
-                for (let x = 0; x < arraySize; x++) {
+                for (let f = 0; f < arraySize; f++) {
                     newA.push("-")
                 }
                 newA[0] = "wake";
@@ -230,7 +227,7 @@ export default {
                     let pointInDay = parseInt(startTime[0], 10) - wakeHour; 
                     let startSlot = (pointInDay*60)/30;
 
-                    if (parseInt(startTime[0], 10) != 0) {
+                    if (parseInt(startTime[1], 10) != 0) {
                         startSlot++;
                     }
 
@@ -238,7 +235,8 @@ export default {
                     let endInDay = parseInt(endTime[0], 10) - wakeHour; 
                     let endSlot = (endInDay*60)/30;
 
-                    if (parseInt(endTime[0], 10) != 0) {
+
+                    if (parseInt(endTime[1], 10) == 30) {
                         endSlot++;
                     }
 
@@ -247,16 +245,17 @@ export default {
                     daySchedule[endSlot] = e;
 
                     //FILL IN BETWEEN SLOTS
-                    for(let x = startSlot; x <= endSlot; x++) {
-                        daySchedule[x] = "exercise";
+                    for(let z = startSlot; z <= endSlot; z++) {
+                        daySchedule[z] = "exercise";
                     }
 
 
                 }
 
                 //PLACE MEALS IN SCHEDULE
-                for(let x = 0; x < meals.length; x++) {
-                    let e = meals[x];
+                for(let y = 0; y < meals.length; y++) {
+                    let e = meals[y];
+
                     let startTime = ["0", "0"];
                     let endTime = ["0", "0"];
 
@@ -268,7 +267,7 @@ export default {
                     let pointInDay = parseInt(startTime[0], 10) - wakeHour; 
                     let startSlot = (pointInDay*60)/30;
 
-                    if (parseInt(startTime[0], 10) != 0) {
+                    if (parseInt(startTime[1], 10) != 0) {
                         startSlot++;
                     }
 
@@ -276,7 +275,7 @@ export default {
                     let endInDay = parseInt(endTime[0], 10) - wakeHour; 
                     let endSlot = (endInDay*60)/30;
 
-                    if (parseInt(endTime[0], 10) != 0) {
+                    if (parseInt(endTime[1], 10) != 0) {
                         endSlot++;
                     }
 
@@ -296,8 +295,8 @@ export default {
                     }
 
                     //FILL IN BETWEEN SLOTS
-                    for(let x = startSlot; x <= endSlot; x++) {
-                        daySchedule[x] = "eat";
+                    for(let b = startSlot; b <= endSlot; b++) {
+                        daySchedule[b] = "eat";
                     }
 
                 }
@@ -306,7 +305,7 @@ export default {
                 this.userMenu = menu;
                 // PUT IN DRUGS
 
-                this.fillDrugs(week);
+                this.fillDrugs(dayOfWeek);
 
             }
 
@@ -334,55 +333,62 @@ export default {
             */
         },
 
-        fillDrugs: function(week) {
-            // GO THROUGH EACH DAY
-            for(let j = 0; j < week.length; j++){
-                let dayOfWeek = week[j];
+        fillDrugs: function(dayOfWeek) {
 
-                // GO THROUGH EACH DRUG
-                for(let d = 0; d < this.userDrugs.length; d++) {
-                    let drug = this.userDrugs[d];
-                    let freq = this.drugInfo[drug]["frequency"];
+            // GO THROUGH EACH DRUG
+            for(let d = 0; d < this.userDrugs.length; d++) {
+                let drug = this.userDrugs[d];
+                let freq = this.drugData[drug]["frequency"];
 
-                    // TAKE DRUG FREQUENCY TIMES
-                    for(let i = 0; i < freq; i++) {
+                // TAKE DRUG FREQUENCY TIMES
+                let lastSlot = 0;
+                for(let i = 0; i < freq; i++) {
 
-                        //ALWAYS CHECK BREAKFAST FIRST
-                        if(i == 0 && this.userMenu[dayOfWeek]["B"] != "-"){
-                            let slot = this.userMenu[dayOfWeek]["B"];
-                            let daySchedule = this.userSchedule[dayOfWeek]
-                            if (daySchedule[slot] == "-") {
-                                daySchedule[slot] == 'take ' + drug;
-                            }
-                            else {
-                                greedyScheduler(slot, drug, daySchedule);
-                            }
-                        } 
-
-                        //CHECK LUNCH NEXT
-                        else if(i == 1 && this.userMenu[dayOfWeek]["L"] != "-"){
-                            let slot = this.userMenu[dayOfWeek]["L"];
-                            let daySchedule = this.userSchedule[dayOfWeek]
-                            if (daySchedule[slot] == "-") {
-                                daySchedule[slot] == 'take ' + drug;
-                            }
-                            else {
-                                greedyScheduler(slot, drug, daySchedule);
-                            }
+                    //ALWAYS CHECK BREAKFAST FIRST
+                    if(i == 0){
+                        let slot = this.userMenu[dayOfWeek]["B"];
+                        let daySchedule = this.userSchedule[dayOfWeek]
+                        if (daySchedule[slot] == "-") {
+                            daySchedule[slot] = 'take ' + drug;
                         }
+                        else {
+                            this.greedyScheduler(slot, drug, daySchedule);
+                        }
+                        lastSlot = slot;
+                    } 
 
-                        //CHECK DINNER LAST
-                        else{
-                            let slot = this.userMenu[dayOfWeek]["D"];
-                            let daySchedule = this.userSchedule[dayOfWeek]
-                            if (daySchedule[slot] == "-") {
-                                daySchedule[slot] == 'take ' + drug;
-                            }
-                            else {
-                                greedyScheduler(slot, drug, daySchedule);
-                            }
-                        }  
+                    //CHECK LUNCH NEXT
+                    else if(i == 1){
+                        let slot = this.userMenu[dayOfWeek]["L"];
+                        if(slot == "-") {
+                            slot = lastSlot;
+                        }
+                        let daySchedule = this.userSchedule[dayOfWeek]
+                        if (daySchedule[slot] == "-") {
+                            daySchedule[slot] = 'take ' + drug;
+                        }
+                        else {
+                            this.greedyScheduler(slot, drug, daySchedule);
+                        }
+                        lastSlot = slot;
                     }
+
+                    //CHECK DINNER LAST
+                    else{
+                        let slot = this.userMenu[dayOfWeek]["D"];
+                        if(slot == "-") {
+                            
+                            slot = lastSlot;
+                        }
+                        let daySchedule = this.userSchedule[dayOfWeek]
+                        if (daySchedule[slot] == "-") {
+                            daySchedule[slot] = 'take ' + drug;
+                        }
+                        else {
+                            this.greedyScheduler(slot, drug, daySchedule);
+                        }
+                        lastSlot = slot;
+                    }  
                 }
             }
         console.log("DONE");
@@ -391,14 +397,14 @@ export default {
         },
         
         greedyScheduler: function(slot, drug, daySchedule) {
-            placed = false;
+            let placed = false;
 
             // TRY AND FIND THE EARLIEST SLOT AFTER THE LAST MEAL
             while(slot < daySchedule.length) {
                 if (daySchedule[slot] == "-") {
-                    daySchedule[slot] == 'take ' + drug;
+                    daySchedule[slot] = 'take ' + drug;
                     placed = true;
-                    break;
+                    return
                 }
                 else {
                     slot++;
@@ -407,15 +413,15 @@ export default {
 
             // IF NONE EXIST FIND EARLIEST POSSIBLE
             if (!placed) {
-                let greedSlot = 0;
-                while(greedSlot < daySchedule.length) {
-                    if (daySchedule[greedSlot] == "-") {
-                        daySchedule[greedSlot] == 'take' + drug;
+                slot = 0;
+                while(slot < daySchedule.length) {
+                    if (daySchedule[slot] == "-") {
+                        daySchedule[slot] = 'take' + drug;
                         placed = true;
                         break;
                     }
                     else {
-                        greedSlot++;
+                        slot++;
                     }
                 }
             }
