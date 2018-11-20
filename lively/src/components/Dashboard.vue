@@ -109,6 +109,9 @@ export default {
 
         generateSchedule: function(){
 
+            // user data = {exercise, meals, sleeps}
+            // ea. == objects with start and end times;
+
             /*
             1. look at a user's sleep first to determine length of day for each day of the week
             2. create an array for each day of the week (maybe do a ForEach for an array of days of the week?)
@@ -122,7 +125,7 @@ export default {
                 -How to figure out where to insert the event into the array:
                     1. pointInDay: subtract start time of event - wake time
                     2. pointInDay will equal nth hour of the day this event starts
-                    3. Array slot = (DayMins - (pointInDay*60)) / 30
+                    3. Array slot = (pointInDay*60) / 30
                     4. Determine length of event (endTime - startTime) 
                     5. Determine number of slots of Array to take up, length of Event/30
                     6. Add values in the array for the event to take up the respective blocks
