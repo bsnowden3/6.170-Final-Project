@@ -22,7 +22,7 @@
             </div>
 
              <div v-if="scheduleGenerated">
-              {{ userData }}
+              {{ userSchedule }}
             </div>
 
             <!-- this will appear after the onboarding process is complete -->
