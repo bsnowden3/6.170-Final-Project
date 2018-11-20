@@ -32,7 +32,7 @@
         <div class="days-form-group">
           <div class='day-selection'>
             <label for='sun'>Sun</label>
-            <input id='sun' value="Sunday" v-model="checkedDays" type='checkbox'>
+            <input id='sun' value="Sunday" v-model="checkedDays" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
@@ -114,7 +114,7 @@ export default {
           eventBus.$emit('postedActivity', (true));
           setTimeout(this.clearEntries(), 3000);
         })
-        .catch(error => { 
+        .catch(error => {
           console.log(error)
         });
     },

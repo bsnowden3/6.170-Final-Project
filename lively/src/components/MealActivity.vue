@@ -43,7 +43,7 @@
         <div class="days-form-group">
           <div class='day-selection'>
             <label for='sun'>Sun</label>
-            <input id='sun' value="Sunday" type='checkbox'>
+            <input id='sun' value="Sunday" v-model="checkedDays" type='checkbox'>
           </div>
 
           <div class='day-selection'>
