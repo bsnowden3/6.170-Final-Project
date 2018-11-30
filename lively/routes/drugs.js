@@ -10,12 +10,12 @@ const router = express.Router();
  */
 router.post('/saveDrugs', async (req, res) => {
   const data = req.body.data;
-  Drugs.wipeDrugData(data, req.sessionID);
+  // Drugs.wipeDrugData(data, req.sessionID);
   for(let i = 0; i < data.length; i++) {
     let drug = data[i];
     // TODO: FIX STARTTIME
-    const response = await Drugs.changeData(drug, req.sessionID, "startTime");
-    
+    // const response = await Drugs.changeData(drug, req.sessionID, "startTime");
+
 
   }
  
