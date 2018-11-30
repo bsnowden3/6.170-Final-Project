@@ -131,7 +131,7 @@ router.get('/allExercises', async (req, res) => {
       res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
-    let exercises = await Exercises.findUserExercises(userId).then(res => res);
+    let exercises = await Exercises.findUserExercises(userId).then(res => res).catch(error => console.log(error));
 
     let responseMessage = { message: "Succesfully retrieved user meal data", exercises: exercises };
 
@@ -207,7 +207,7 @@ router.post('/addexercise', async (req, res) => {
   let fail = false;
   for(let i = 0; i < daysOfWeek.length; i++) {
 
-      await Exercises.addExercise(exerciseId, name, startTime, endTime, dayOfWeek[i], userId).then(res => res);
+      Exercises.addExercise(exerciseId, name, startTime, endTime, daysOfWeek[i], userId).then(res => res).catch(error => console.log(error));
 
     // if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
     //   Exercises.addExercise(exerciseActivity);

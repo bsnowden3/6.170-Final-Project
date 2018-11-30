@@ -3,6 +3,8 @@
 let exerciseData = [];
 
 const uuidv1 = require('uuid/v1');
+const database = require("../database");
+const mysql = require('mysql');
 
 /**
  * @typedef Exercise
