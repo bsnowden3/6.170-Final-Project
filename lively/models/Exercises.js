@@ -31,8 +31,6 @@ class Exercises {
    *  @param {Array(string)} daysOfWeek array of strings that includes days of week activity occurs
    */
   static async addExercise(exerciseId, name, startTime, endTime, dayOfWeek, userId) {
-    exerciseData.push(exerciseActivity);
-    return exerciseActivity;
     try {
       const sql = `INSERT INTO userExerciseDrugRegimen (exerciseId, name, startTime, endTime, dayOfWeek, userId)
       VALUES ('${exerciseId}', '${name}', '${startTime}', '${endTime}', '${dayOfWeek}', '${userId}');`;
