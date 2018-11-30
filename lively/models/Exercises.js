@@ -32,7 +32,7 @@ class Exercises {
    */
   static async addExercise(exerciseId, name, startTime, endTime, dayOfWeek, userId) {
     try {
-      const sql = `INSERT INTO userExerciseDrugRegimen (exerciseId, name, startTime, endTime, dayOfWeek, userId)
+      const sql = `INSERT INTO userExerciseRegimen (exerciseId, name, startTime, endTime, dayOfWeek, userId)
       VALUES ('${exerciseId}', '${name}', '${startTime}', '${endTime}', '${dayOfWeek}', '${userId}');`;
       const response = await database.query(sql);
       return response;
