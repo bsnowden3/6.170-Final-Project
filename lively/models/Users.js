@@ -14,6 +14,7 @@ const mysql = require('mysql');
  * all methods are static
  */ 
 class Users {
+
   /**
    * Add a User.
    * @param {string} userId - random generated id for each user
@@ -28,6 +29,20 @@ class Users {
     // userData.push(user);
     // return user;
   }
+
+  /**
+   * Add a session id to keep track of a user having an active session/logged in
+   * @param {string} sessionId - session id, long string
+   * @param {string} userId - user id, long string
+   */
+  static addSessionId(sessionId, userId){
+    return database.query(`INSERT INTO userSession(sessionId,userId) values("${sessionId}","${userId}")`);
+  }
+
+  static removeUserSession(sessionId){
+    return database.query(`DELETE from userSession where sessionId = "${sessionId}"`);
+  }
+
 
   /**
      * returns user based on provided username

@@ -96,6 +96,14 @@ class Database {
      
     await database.query(createUserExerciseRegimenTable);
 
+    let createUserSessionTable = `CREATE TABLE IF NOT EXISTS userSession(
+        sessionId VARCHAR(255) primary key not null unique,
+        userId VARCHAR(255) REFERENCES users(id)
+  )`; 
+   
+  await database.query(createUserSessionTable);
+
+
 }
 
   /* Used for testing */

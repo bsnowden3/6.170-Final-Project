@@ -35,7 +35,8 @@ router.post("/signUp", async function(req, res) {
     }).end();
   }
   else {
-    Users.addOne(userId,username, password)
+    await Users.addOne(userId,username, password)
+    await Users.addSessionId(req.session.id, userId);
     req.session.userId = userId
     req.session.username = req.body.username;
     req.session.save();
@@ -61,6 +62,7 @@ router.post("/logIn", async function(req, res) {
   else if (user[0] !== undefined) {
     req.session.userId = user[0].id;
     req.session.username = user[0].username;
+    await Users.addSessionId(req.session.id, user[0].id);
     req.session.save();
     res.status(200);
     res.json({message: "Signed In!"});
@@ -80,8 +82,9 @@ router.post("/logIn", async function(req, res) {
  * signs out a user
  * @name POST/signout
  */
-router.post("/signout", (req,res) =>{
+router.post("/signout", async function(req,res){
   if(req.session.username){
+      await Users.removeUserSession(req.session.id);
       req.session.destroy();
       res.status(200).json({
           message: `Successfully signed-out` 
