@@ -4,7 +4,7 @@ const config = require('./databaseConfig.js');
 
 class Database {
   constructor(dbConfig) {
-    this.connection = mysql.createConnection(dbConfig);
+    this.connection = mysql.createPool(dbConfig);
   }
 
   query(sql) {
