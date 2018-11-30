@@ -1,5 +1,6 @@
 let userData = [];
-
+const database = require("../database");
+const mysql = require('mysql');
 /**
  * @typedef User
  * @prop {string} id - unique id of user
@@ -15,15 +16,17 @@ let userData = [];
 class Users {
   /**
    * Add a User.
-   * @param {string} id - random generated id for each user
+   * @param {string} userId - random generated id for each user
    * @param {string} username - User's username
    * @param {string} password - User's Password
    */
   static addOne(userId,username, password) {
     //userData[name] = pass;
-    const user = {userId, username, password};
-    userData.push(user);
-    return user;
+    return database.query(`INSERT INTO users(id,username, password) values("${userId}",${mysql.escape(username)},${mysql.escape(password)})`);
+
+    // const user = {userId, username, password};
+    // userData.push(user);
+    // return user;
   }
 
   /**
@@ -32,7 +35,11 @@ class Users {
      * @return {User} if User found 
      */
     static findUser(username){
-      return userData.filter(userVal => userVal.username === username)[0];
+      
+      return database.query(`SELECT * FROM users
+        WHERE username = ${mysql.escape(username)}
+      `);
+      //return userData.filter(userVal => userVal.username === username)[0];
   }
 
 
@@ -40,11 +47,20 @@ class Users {
    * Get the accompanying password to a user.
    * @param {string} username - User's username
    */
-  static getPass(username) {
+  static getPass(username) { 
     const userFound = userData.filter(userVal => userVal.username === username)[0];
     return userFound.password;
   }
 
+   /**
+     * deletes a user
+     * @param {string} username 
+     * @return {promise}
+     */
+    static deleteUser(username){
+      return database.query(`delete from users where username = ${mysql.escape(username)}`);
+
+  }
 
 }
 
