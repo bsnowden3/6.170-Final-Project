@@ -60,7 +60,7 @@ class Database {
     let createMealsTable = `CREATE TABLE IF NOT EXISTS meals(
         id VARCHAR(255) primary key not null unique,
         name VARCHAR(255) not null unique,
-        size VARCHAR(255) not null,
+        size VARCHAR(255) not null
     )`;  
 
     await database.query(createMealsTable);
@@ -71,8 +71,7 @@ class Database {
 	    userId VARCHAR(255) REFERENCES users(id),
         startTime VARCHAR(255) not null,
         endTime VARCHAR(255) not null,	
-        dayOfWeek VARCHAR(255) not null,
-
+        dayOfWeek VARCHAR(255) not null
     )`;  
     await database.query(createUserMealsRegimenTable);
 
@@ -80,7 +79,7 @@ class Database {
         sleepId VARCHAR(255) primary key not null unique
         startTime VARCHAR(255) not null,
         dayOfWeek VARCHAR(255) not null,
-        userId VARCHAR(255) REFERENCES users(id), 
+        userId VARCHAR(255) REFERENCES users(id)
     )`;  
     await database.query(createUserSleepScheduleTable);
 
@@ -90,12 +89,9 @@ class Database {
         startTime VARCHAR(255) not null,
         endTime VARCHAR(255) not null,
         dayOfWeek VARCHAR(255) not null,
-        userId VARCHAR(255) REFERENCES users(id), 
-
+        userId VARCHAR(255) REFERENCES users(id)
     )`;  
     await database.query(createUserExerciseScheduleTable);
-
-
 
 }
 
