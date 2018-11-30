@@ -1,4 +1,6 @@
 var drugData = {};
+const database = require("../database");
+const mysql = require('mysql');
 
 var drugInfo = {
   "Metformin": {
@@ -54,8 +56,35 @@ class Drugs {
    * @param {string} name - User's username
    * @param {string} pass - User's Password
    */
-  static changeDrugData(drugs, user) {
-    drugData[user] = drugs;
+  static async wipeDrugData(username, userID, startTime) {
+    // drugData[userID] = drugs;
+
+    try {
+        const sql = `DELETE FROM userDrugsRegimen WHERE userId=(SELECT id from users WHERE username ='${username}');`;
+        const response = await database.query(sql);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+  }
+
+  static async changeData(drug, userID, startTime) {
+    // drugData[user] = drugs;
+
+    try {
+        const sql = `INSERT INTO userDrugsRegimen VALUES ('${userID}', 
+                    (SELECT id from drugs WHERE name ='${drug}'), 
+                    '${startTime}') ;`;
+        const response = await database.query(sql);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+  }
+
+  static getUserDrugs(user) {
+
+    return drugData[user];
   }
 
   static getDrugs() {
