@@ -60,13 +60,15 @@ export default {
     },
 
     saveDrugs: function() {
-      axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
-      .then(response => {
-        eventBus.$emit('drugsSaved', this.drugs);
-      })
-      .catch((errorMessage) => {
+      // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
+      // .then(response => {
+        
+      // })
+      // .catch((errorMessage) => {
 
-      });
+      // });
+
+      eventBus.$emit('drugsSaved', this.drugs);
     },
     goBack: function() {
       eventBus.$emit('drugs-back', true);

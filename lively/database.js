@@ -67,8 +67,8 @@ class Database {
 
 
     let createUserMealsRegimenTable = `CREATE TABLE IF NOT EXISTS userMealsRegimen(
-        mealId VARCHAR(255) REFERENCES meals(id), 
-	    userId VARCHAR(255) REFERENCES users(id),
+        mealId VARCHAR(255), 
+	      userId VARCHAR(255) REFERENCES users(id),
         startTime VARCHAR(255) not null,
         endTime VARCHAR(255) not null,	
         dayOfWeek VARCHAR(255) not null

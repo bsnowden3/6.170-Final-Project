@@ -99,7 +99,7 @@ export default {
   },
 
   created() {
-      
+
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
@@ -110,6 +110,13 @@ export default {
 
 
         this.getUserData();
+        // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
+      // .then(response => {
+        
+      // })
+      // .catch((errorMessage) => {
+
+      // });
 
     });
 

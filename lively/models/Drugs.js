@@ -56,11 +56,11 @@ class Drugs {
    * @param {string} name - User's username
    * @param {string} pass - User's Password
    */
-  static async wipeDrugData(username, userID, startTime) {
+  static async wipeDrugData(userID,) {
     // drugData[userID] = drugs;
 
     try {
-        const sql = `DELETE FROM userDrugsRegimen WHERE userId=(SELECT id from users WHERE username ='${username}');`;
+        const sql = `DELETE FROM userDrugsRegimen WHERE userId='${userID}';`;
         const response = await database.query(sql);
         return response;
       } catch (error) {
