@@ -76,7 +76,7 @@ class Database {
     await database.query(createUserMealsRegimenTable);
 
     let createUserSleepScheduleTable = `CREATE TABLE IF NOT EXISTS userSleepSchedule(
-        sleepId VARCHAR(255) primary key not null unique
+        sleepId VARCHAR(255) primary key not null unique,
         startTime VARCHAR(255) not null,
         dayOfWeek VARCHAR(255) not null,
         userId VARCHAR(255) REFERENCES users(id)
