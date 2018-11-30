@@ -59,7 +59,7 @@ router.post("/logIn", async function(req, res) {
     }).end();
   }
   else if (user[0] !== undefined) {
-    req.session.userId = user[0].userId;
+    req.session.userId = user[0].id;
     req.session.username = user[0].username;
     req.session.save();
     res.status(200);

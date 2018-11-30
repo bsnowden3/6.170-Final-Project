@@ -3,6 +3,8 @@
 let exerciseData = [];
 
 const uuidv1 = require('uuid/v1');
+const database = require("../database");
+const mysql = require('mysql');
 
 /**
  * @typedef Exercise
@@ -30,25 +32,43 @@ class Exercises {
    *  @param daysOfWeek
    *  @param {Array(string)} daysOfWeek array of strings that includes days of week activity occurs
    */
-  static addExercise(exerciseActivity) {
-    exerciseData.push(exerciseActivity);
-    return exerciseActivity;
+  static async addExercise(exerciseId, name, startTime, endTime, dayOfWeek, userId) {
+    try {
+      const sql = `INSERT INTO userExerciseRegimen (exerciseId, name, startTime, endTime, dayOfWeek, userId)
+      VALUES ('${exerciseId}', '${name}', '${startTime}', '${endTime}', '${dayOfWeek}', '${userId}');`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
    * Find exercise with exerciseId
    *  @param {string} exerciseId id of exercise
    */
-  static findExercise(exerciseId) {
-    return exerciseData.filter(exercise => exerciseId === exercise.exerciseId)[0];
+  static async findExercise(exerciseId) {
+    try {
+      const sql = `SELECT * FROM userExerciseRegimen WHERE exerciseId='${exerciseId}';`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
    * Find exercises associated with userId
    * @param {string} userId
    */
-   static findUserExercises(userId) {
-     return exerciseData.filter(exercise => userId === exercise.userId);
+   static async findUserExercises(userId) {
+     try {
+       const sql = `SELECT * FROM userExerciseRegimen WHERE userId='${userId}';`;
+       const response = await database.query(sql);
+       return response;
+     } catch (error) {
+       throw error;
+     }
    }
 
 }
