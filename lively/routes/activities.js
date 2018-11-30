@@ -121,9 +121,9 @@ router.get('/allSleeps', (req, res) => {
 
 /**
  * Get meal activity to user schedule
- * @name GET/ allMeals
+ * @name GET/ allExercises
  */
-router.get('/allExercises', (req, res) => {
+router.get('/allExercises', async (req, res) => {
 
   let userId = req.session.userId;
 
@@ -131,7 +131,7 @@ router.get('/allExercises', (req, res) => {
       res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
-    let exercises = Exercises.findUserExercises(userId);
+    let exercises = await Exercises.findUserExercises(userId).then(res => res);
 
     let responseMessage = { message: "Succesfully retrieved user meal data", exercises: exercises };
 
@@ -185,7 +185,7 @@ router.post('/addsleep', (req, res) => {
  * Post exercise activity to user schedule
  * @name POST/ meal
  */
-router.post('/addexercise', (req, res) => {
+router.post('/addexercise', async (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
   const exerciseId = uuidv1();
@@ -206,10 +206,8 @@ router.post('/addexercise', (req, res) => {
 
   let fail = false;
   for(let i = 0; i < daysOfWeek.length; i++) {
-    let exerciseActivity = { name: name, userId: userId, exerciseId: exerciseId, startTime: startTime,
-      endTime: endTime, day: daysOfWeek[i]};
 
-      Exercises.addExercise(exerciseActivity);
+      await Exercises.addExercise(exerciseId, name, startTime, endTime, dayOfWeek[i], userId).then(res => res);
 
     // if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
     //   Exercises.addExercise(exerciseActivity);
