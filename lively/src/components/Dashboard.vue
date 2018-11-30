@@ -99,6 +99,7 @@ export default {
   },
 
   created() {
+      
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
