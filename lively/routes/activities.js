@@ -85,7 +85,7 @@ router.get('/allActivities', (req, res) => {
  * Get meal activity to user schedule
  * @name GET/ allMeals
  */
-router.get('/allMeals', (req, res) => {
+router.get('/allMeals', async (req, res) => {
 
   let userId = req.session.userId;
 
@@ -93,7 +93,7 @@ router.get('/allMeals', (req, res) => {
       res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
-    let meals = Meals.findUserMeals(userId);
+    const meals = await Meals.findUserMeals(userId);
 
     let responseMessage = { message: "Succesfully retrieved user meal data", meals: meals };
 
