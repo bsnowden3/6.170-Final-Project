@@ -3,6 +3,8 @@
 let sleepData = [];
 
 const uuidv1 = require('uuid/v1');
+const database = require("../database");
+const mysql = require('mysql');
 
 /**
  * @typedef Sleep
@@ -26,25 +28,43 @@ class Sleeps {
    *  @param wakeUpTime time user gets up for the day
    *  @param day day sleep occurs
    */
-  static addSleep(sleep) {
-    sleepData.push(sleep);
-    return sleep;
+  static async addSleep(sleepId, startTime, dayOfWeek, userId) {
+    try {
+      const sql = `INSERT INTO userSleepRegimen (sleepId, startTime, dayOfWeek, userId)
+      VALUES ('${sleepId}', '${startTime}', '${dayOfWeek}', '${userId}');`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
    * Find sleep with sleepId
    *  @param {string} sleepId id of sleep
    */
-  static findMeal(sleepId) {
-    return sleepData.filter(sleep => sleepId === sleep.sleepId)[0];
+  static async findMeal(sleepId) {
+    try {
+      const sql = `SELECT * FROM userSleepRegimen WHERE sleepId='${sleepId}';`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
    * Find Meals associated with userId
    * @param {string} userId
    */
-   static findUserSleeps(userId) {
-     return sleepData.filter(sleep => userId === sleep.userId);
+   static async findUserSleeps(userId) {
+     try {
+       const sql = `SELECT * FROM userSleepRegimen WHERE userId='${userId}';`;
+       const response = await database.query(sql);
+       return response;
+     } catch (error) {
+       throw error;
+     }
    }
 
 }
