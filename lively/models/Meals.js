@@ -1,6 +1,7 @@
 // @author Bernard Snowden
 
-var mealData = [];
+const database = require("../database");
+const mysql = require('mysql');
 
 const uuidv1 = require('uuid/v1');
 
@@ -29,26 +30,47 @@ class Meals {
    *  @param endTime
    *  @param day day of week activity occurs
    */
-  static addMeal(meal) {
-    mealData.push(meal);
-    return meal;
+  static async addMeal(meal) {
+    // mealData.push(meal);
+
+    try {
+      const sql = `INSERT INTO userMealsRegimen (mealId, userId, startTime, endTime, dayOfWeek) VALUES (
+                  '${meal.mealId}',
+                  '${meal.userId}', 
+                  '${meal.startTime}',
+                  '${meal.endTime}',
+                  '${meal.day}') ;`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
-   * Find meal with mealId
-   *  @param {string} mealId id of meal
+   * Find meal with userId
+   *  @param {string} userId
    */
-  static findMeal(mealId) {
-    return mealData.filter(meal => mealId === meal.mealId)[0];
+  static async findUserMeals(userId) {
+    try {
+      const sql = `SELECT * FROM userMealsRegimen WHERE userId='${userId}';`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  /**
-   * Find Meals associated with userId
-   * @param {string} userId
-   */
-   static findUserMeals(userId) {
-     return mealData.filter(meal => userId === meal.userId);
-   }
+  static async deleteUserMeal(mealId) {
+    try {
+      const sql = `DELETE * FROM userMealsRegimen WHERE mealId='${mealId}';`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
 }
 
