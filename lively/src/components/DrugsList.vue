@@ -44,6 +44,17 @@ export default {
       this.drugs.push(data);
       this.drugs.sort();
     });
+
+      axios.get('/api/drugs/getAllDrugs')
+      .then(response => {
+        console.log("DRUGGOS");
+        console.log(response);
+      })
+      .catch((errorMessage) => {
+
+      });
+
+
   },
 
   methods: {

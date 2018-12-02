@@ -68,13 +68,27 @@ class Drugs {
       }
   }
 
-  static async changeData(drug, userID, startTime) {
+  static async addDrug(drug, userID) {
     // drugData[user] = drugs;
 
     try {
         const sql = `INSERT INTO userDrugsRegimen VALUES ('${userID}', 
-                    (SELECT id from drugs WHERE name ='${drug}'), 
-                    '${startTime}') ;`;
+                    '${drug}', 
+                    '000') ;`;
+        const response = await database.query(sql);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+  }
+
+  static async createDrug(drug, data) {
+    // drugData[user] = drugs;
+
+    try {
+        const sql = `INSERT INTO userDrugsRegimen VALUES ('${userID}', 
+                    '${drug}', 
+                    '000') ;`;
         const response = await database.query(sql);
         return response;
       } catch (error) {
@@ -87,9 +101,14 @@ class Drugs {
     return drugData[user];
   }
 
-  static getDrugs() {
-
-    return drugInfo;
+  static async getDrugs() {
+    try {
+      const sql = `SELECT * FROM drugs WHERE 1;`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
 
