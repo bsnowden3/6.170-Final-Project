@@ -2,6 +2,7 @@
 
 
   <div id="drugPage">
+    <h2 class="step-header">Step 1: Add your prescribed drugs</h2>
     <div id="drugSelection">
       <div id="selectionBackground">
         <select id="selectedDrugs">
@@ -104,7 +105,7 @@ export default {
   }
 
    #selectedDrugs{
-    font-size:14px;
+    font-size:20px;
     margin:10px;
   }
 

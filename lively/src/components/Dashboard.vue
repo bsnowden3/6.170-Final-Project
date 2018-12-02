@@ -9,8 +9,14 @@
          </div>
          <div class="mainSection">
             <div v-if="onboarding">
-                <button v-on:click="startOnboarding" class="dashboard-button">Start Onboarding Process</button>
-                <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled>Edit Existing Schedule</button>
+                <div>
+                    <button v-on:click="startOnboarding" class="dashboard-button">Start Onboarding Process</button>
+                    <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled>Edit Existing Schedule</button>
+                </div>
+                <!-- <div>
+                    <UserSchedule/>
+                </div> -->
+
             </div>
 
             <div v-if="onboardingButtonClicked">
@@ -40,12 +46,14 @@ import { eventBus } from "../main";
 import { setInterval } from "timers";
 import Drug  from "./Drug"
 import ActivitiesMainView from "./ActivitiesMainView"
+import UserSchedule from "./UserSchedule"
 
 export default {
   name: "Dashboard",
   components: {
     Drug,
     ActivitiesMainView,
+    UserSchedule,
   },
   data() {
     return {
@@ -104,6 +112,11 @@ export default {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
         this.userDrugs = data;
+    });
+
+    eventBus.$on('drugs-back', (data) => {
+        this.onboardingButtonClicked = false;
+        this.onboarding = true;
     });
 
     eventBus.$on('generateSchedule', () => {
