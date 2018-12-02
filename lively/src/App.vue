@@ -138,6 +138,11 @@ form {
   border-radius: 4px;
   font-size:14px;
 }
+.remove-button{
+  background-color:red;
+  color:white;
+  margin:5px;
+}
 
 .component {
   padding: 1rem;

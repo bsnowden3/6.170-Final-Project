@@ -9,8 +9,8 @@
          </div>
          <div class="mainSection">
             <div v-if="onboarding">
-                <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
-                <button v-on:click="signOut" class="button">Sign Out</button>
+                <button v-on:click="startOnboarding" class="dashboard-button">Start Onboarding Process</button>
+                <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled>Edit Existing Schedule</button>
             </div>
 
             <div v-if="onboardingButtonClicked">
@@ -491,6 +491,15 @@ export default {
     color: #4257b2;
     text-decoration: underline;
     text-decoration-color: #4257b2;
+}
+
+.dashboard-button{
+    width:300px;
+    height:100px;
+    font-size:24px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin:10px;
 }
 
 </style>
