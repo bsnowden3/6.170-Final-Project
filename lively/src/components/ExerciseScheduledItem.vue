@@ -44,7 +44,7 @@ export default {
   background-color: whitesmoke;
   padding: 1rem;
   border-radius: 5px;
-  margin-top: 10px;
+  margin: 5px;
 }
 
 .removeButtonContainer {

@@ -16,8 +16,10 @@
       <h2> Current Schedule </h2>
       <CurrentScheduleComponent />
     </div>
-    <div>
-      <button class="button save-schedule" v-on:click="saveSchedule"> Save Schedule! </button>
+    <div class="buttonContainer">
+      <div class="save-schedule">
+        <button class="button" v-on:click="saveSchedule"> Save Schedule! </button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +48,7 @@ export default {
     },
     generateDefaultSchedule: function() {
       eventBus.$emit('generateDefaultSchedule', (true));
-    }
+    },
   }
 };
 </script>
@@ -68,6 +70,7 @@ export default {
     background-color: "black";
     width: auto;
     height: auto;
+    align-self: flex-end;
   }
 
   .def-schedule {
@@ -76,6 +79,9 @@ export default {
     background-color: "black";
     width: auto;
     height: auto;
+  }
+  .save-schedule {
+    align-self: flex-end;
   }
   .main-content {
     display: flex;
@@ -87,5 +93,10 @@ export default {
   .activities-addition-section {
     display: flex;
     flex-direction: column;
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
   }
 </style>
