@@ -153,7 +153,7 @@ export default {
           console.log(errorMessage.response);
         });
 
-        const quickMealLunch =  { name: "Dinner",
+        const quickMealLunch =  { name: "Lunch",
           startTime: "12:00",
           endTime: "12:30",
           mealSize: "light",

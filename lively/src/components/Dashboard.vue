@@ -14,9 +14,9 @@
                 </div>
                 <div v-if="scheduleGenerated">
                     <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled v-show="scheduleGenerated">Edit Existing Schedule</button>
-                    <div class="schedule-data">
+                    <!-- <div class="schedule-data">
                         {{ userSchedule }}
-                    </div>
+                    </div> -->
                     <UserSchedule/>
                 </div>
 
@@ -149,8 +149,6 @@ export default {
                         statusText: fullResponse.statusText,
                     };
                     // this.userData = axiosResponse.data.userData;
-                    console.log("LOOKIT");
-                    console.log(axiosResponse)
                     let list = Object.keys(axiosResponse.data.userData);
                     for(let i = 0; i < list.length; i++) {
                         this.userData[list[i]] = axiosResponse.data.userData[list[i]];
@@ -330,6 +328,7 @@ export default {
             axios.delete('/api/drugs/wipeDrugs')
             .then(response => {
                 this.saveDrugInfo();
+                eventBus.$emit('scheduleIncoming', this.userSchedule);
                 
             })
             .catch((errorMessage) => {
@@ -363,6 +362,8 @@ export default {
             this.onboardingButtonClicked = false
             this.drugsSavedFlag = false
             this.scheduleGenerated =  true
+
+            
         },
 
         fillDrugs: function(dayOfWeek) {

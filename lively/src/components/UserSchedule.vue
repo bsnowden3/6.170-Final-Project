@@ -1,6 +1,18 @@
 <template>
   
     <div class="schedulePage">
+        <div id="practiceTable">
+
+            <div class="col">{{userSchedule.Monday}} </div>
+            <div class="col"> {{userSchedule.Tuesday}} </div>
+            <div class="col"> {{userSchedule.Wednesday}} </div>
+            <div class="col"> {{userSchedule.Thursday}} </div>
+            <div class="col"> {{userSchedule.Friday}} </div>
+            <div class="col"> {{userSchedule.Saturday}} </div>
+            <div class="col"> {{userSchedule.Sunday}} </div>
+            
+        
+        </div>
         <table>
             <thead class="calendar-days">
             <th class="calendar-header">Monday</th>
@@ -52,11 +64,20 @@ export default {
     return {
         data:[],
         days:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+        userSchedule: {}
     };
   },
 
   created() {
     eventBus.$on('TBD', (data) => {
+    //   this.drugs.push(data);
+    //   this.drugs.sort();
+    });
+
+    eventBus.$on('scheduleIncoming', (data) => {
+        console.log("LOOKL:J");
+        console.log(data);
+        this.userSchedule = data;
     //   this.drugs.push(data);
     //   this.drugs.sort();
     });
@@ -111,6 +132,19 @@ export default {
 
 
 <style>
+
+#practiceTable{
+    display: flex;
+    width: 100%;
+    height: 800px;
+    justify-content: space-between;
+}
+
+.col {
+    height: 100%;
+    width: 75px;
+    background-color: lightblue;
+}
 
 .schedulePage{
     margin-top:20px;

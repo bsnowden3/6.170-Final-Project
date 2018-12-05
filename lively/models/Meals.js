@@ -34,12 +34,13 @@ class Meals {
     // mealData.push(meal);
 
     try {
-      const sql = `INSERT INTO userMealsRegimen (mealId, userId, startTime, endTime, dayOfWeek) VALUES (
+      const sql = `INSERT INTO userMealsRegimen (mealId, userId, startTime, endTime, dayOfWeek, name) VALUES (
                   '${meal.mealId}',
                   '${meal.userId}',
                   '${meal.startTime}',
                   '${meal.endTime}',
-                  '${meal.day}') ;`;
+                  '${meal.day}',
+                  '${meal.name}') ;`;
       const response = await database.query(sql);
       return response;
     } catch (error) {
