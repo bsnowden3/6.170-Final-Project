@@ -35,4 +35,15 @@ router.get('/userData', async (req, res) => {
    res.status(200).json(responseMessage).end();
 });
 
+router.post('/saveonboarding', async (req, res) => {
+  let userId = req.session.userId;
+
+   if(!(userId === undefined)) {
+     let response = await Users.saveUserOnboardingStatus(userId);
+     res.status(200).json(response).end();
+   } else {
+    res.status(400).json({ message: "Error userId not found" }).end();
+   }
+});
+
 module.exports = router;

@@ -47,8 +47,6 @@ export default {
 
       axios.get('/api/drugs/getAllDrugs')
       .then(response => {
-        console.log("DRUGGOS");
-        console.log(response);
       })
       .catch((errorMessage) => {
 

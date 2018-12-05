@@ -14,14 +14,13 @@ const router = express.Router();
 router.post('/addmeal', (req, res) => {
   const name = req.body.name;
   const userId = req.session.userId;
-  const mealId = uuidv1();
   const mealSize = req.body.mealSize
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
 
 
-  let responseMessage = { message: "Successfully created meal", meal: mealId, activitySuccess: true};
+  //let responseMessage = { message: "Successfully created meal", meal: mealId, activitySuccess: true};
 
   if(milToInt(startTime)  >= milToInt(endTime)) {
     res.status(400).json({message: "Unsuccessful activity creation! Endtime Before Start time!."}).end();
@@ -34,6 +33,7 @@ router.post('/addmeal', (req, res) => {
   let fail = false;
 
   for(let i = 0; i < daysOfWeek.length; i++) {
+    let mealId = uuidv1();
     const meal = { name: name, userId: userId, mealId: mealId, mealSize: mealSize,
       startTime: startTime, endTime: endTime, day: daysOfWeek[i]};
 
@@ -56,8 +56,6 @@ router.post('/addmeal', (req, res) => {
     else {
       res.status(200).json(responseMessage).end();
     }
-
-
 });
 
 router.get('/allActivities', async (req, res) => {
@@ -145,7 +143,6 @@ router.get('/allExercises', async (req, res) => {
 router.post('/addsleep', async (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
-  const sleepId = uuidv1();
   const startTime = req.body.startTime;
   const daysOfWeek = req.body.daysOfWeek;
 
@@ -159,6 +156,7 @@ router.post('/addsleep', async (req, res) => {
 
   for(let i = 0; i < daysOfWeek.length; i++) {
 
+      let sleepId = uuidv1();
       await Sleeps.addSleep(sleepId, startTime, daysOfWeek[i], userId).then(res => res).catch(error => console.log(error));
       // if(checkSleepInsert(sleep, userId)){
       //   Sleeps.addSleep(sleep);
@@ -185,7 +183,6 @@ router.post('/addsleep', async (req, res) => {
 router.post('/addexercise', async (req, res) => {
   const userId = req.session.userId;
   const name = req.body.name;
-  const exerciseId = uuidv1();
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const daysOfWeek = req.body.daysOfWeek;
@@ -203,7 +200,7 @@ router.post('/addexercise', async (req, res) => {
 
   let fail = false;
   for(let i = 0; i < daysOfWeek.length; i++) {
-
+      let exerciseId = uuidv1();
       Exercises.addExercise(exerciseId, name, startTime, endTime, daysOfWeek[i], userId).then(res => res).catch(error => console.log(error));
 
     // if(!sleepActivityCheck(exerciseActivity, userId) && !activityCheck(exerciseActivity, userId, "exercise")){
