@@ -2,6 +2,7 @@
 
 
   <div id="drugPage">
+    <h2 class="step-header">Step 1: Add your prescribed drugs</h2>
     <div id="drugSelection">
       <div id="selectionBackground">
         <select id="selectedDrugs">
@@ -9,7 +10,7 @@
             {{ drug }}
           </option>
         </select>
-        <button v-on:click="addDrug()">Add Drug</button>
+        <button class="button" v-on:click="addDrug()">Add Drug</button>
       </div>
 
     </div>
@@ -38,7 +39,7 @@ export default {
 
   data() {
     return {
-      drugs: ["GLP-1 receptor agonists",
+      drugs: ["GLP-1 Receptor Agonists",
               "Metformin",
               "Prandin",
               "Sulfonylureas",
@@ -96,12 +97,16 @@ export default {
     align-items: center;
     padding: 5px; 
     min-height: 75px;
-    max-width: 250px;
-    background-color: #f2f2f2;
+    /* max-width: 250px; */
   }
 
   #steps {
     background-color: grey;
+  }
+
+   #selectedDrugs{
+    font-size:20px;
+    margin:10px;
   }
 
 

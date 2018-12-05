@@ -136,14 +136,24 @@ form {
 .button{
   cursor: pointer;
   border-radius: 4px;
-  font-size:14px;
+  font-size:16px;
+}
+.remove-button{
+  background-color:red;
+  color:white;
+  margin:5px;
 }
 
 .component {
   padding: 1rem;
 }
 
-
+.step-header{
+  text-align:center;
+  color:white;
+  margin:20px;
+  font-size:1.8em;
+}
 
 
 

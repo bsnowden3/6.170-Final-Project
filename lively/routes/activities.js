@@ -60,7 +60,7 @@ router.post('/addmeal', (req, res) => {
 
 });
 
-router.get('/allActivities', (req, res) => {
+router.get('/allActivities', async (req, res) => {
 
   let userId = req.session.userId;
 
@@ -68,9 +68,9 @@ router.get('/allActivities', (req, res) => {
       res.status(400).json({ message: "Unsuccessful activity creation! Schedule Conflicts!." }).end();
     }
 
-    let meals = Meals.findUserMeals(userId);
-    let sleeps = Sleeps.findUserSleeps(userId);
-    let ex = Exercises.findUserExercises(userId);
+    const meals = await Meals.findUserMeals(userId);
+    const sleeps = await Sleeps.findUserSleeps(userId);
+    const ex = await Exercises.findUserExercises(userId);
 
     let userData = { meals: meals,
       sleeps: sleeps,

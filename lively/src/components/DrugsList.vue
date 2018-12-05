@@ -6,11 +6,14 @@
           <div class="picHolder">{{ drug }}</div>
           <div class="infoBox">{{ descriptions[drug] }}</div>
         </div>
-        <button v-on:click="removeDrug(drug)">Remove Drug</button>
+        <button class="remove-button button" v-on:click="removeDrug(drug)">Remove Drug</button>
       </div> 
     </div>
-    <button v-on:click="goBack()">Back</button>
-    <button v-on:click="saveDrugs()">Next Step</button>
+    <div>
+        <button class="button step-button-left" v-on:click="goBack()">Back</button>
+        <button class="button step-button-right" v-on:click="saveDrugs()">Next Step</button>
+    </div>
+    
   </div>
 
 </template>
@@ -27,11 +30,11 @@ export default {
   data() {
     return {
       drugs: [],
-      descriptions: {"Metformin": "descrip1",
-                     "Sulfonylureas": "descrip2",
-                     "Thiazolidinediones": "descrip3",
-                     "GLP-1 receptor agonists": "descrip4",
-                     "Prandin": "descrip5"}
+      descriptions: {"Metformin": "Side-effects include: Nausea, Vomiting, Diarrhea, Chills, Heartburn",
+                     "Sulfonylureas": "Side-effects include: Hepatitis, Leukopenia, Porphyria",
+                     "Thiazolidinediones": "Side-effects include: Congestive Heart Failure, Edema, Fractures",
+                     "GLP-1 Receptor Agonists": "Side-effects include: Immunogenecity, Hypoglycemia",
+                     "Prandin": "Side-effects include: Hypoglycemia, Weight Gain"}
 
     };
   },
@@ -41,6 +44,17 @@ export default {
       this.drugs.push(data);
       this.drugs.sort();
     });
+
+      axios.get('/api/drugs/getAllDrugs')
+      .then(response => {
+        console.log("DRUGGOS");
+        console.log(response);
+      })
+      .catch((errorMessage) => {
+
+      });
+
+
   },
 
   methods: {
@@ -93,41 +107,47 @@ export default {
     background-color: whitesmoke;
     justify-content: center;
     align-items: center;
-    height: 250px;
+    height: 180px;
     width: 250px;
     margin: 20px;
     flex: 0 0 auto;
-    border: black 4px solid;
-    
+    border: black 1px solid;
+    border-radius: 4px;
   }
 
   #controlPanel{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
   }
 
   .picHolder {
-    height: 25%;
-    width: 80%;
-    margin-bottom: 4px;
-    border: black 1px solid;
+    /* height: 60%;
+    width: 100%; */
+    margin: 10px;
+    /* border: black 1px solid; */
   }
 
   .infoBox{
     height: 65%;
-    width: 90%;
-    border: black 1px solid;
+    width: 90%; 
+    /* border: black 1px solid;  */
   }
 
   .drugInfo {
     display: flex;
-    height: 100%;
+    height: 60%;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-
+  .step-button-right{
+    float:right;
+  }
+  .step-button-left{
+    float:left;
+  }
+ 
 </style>

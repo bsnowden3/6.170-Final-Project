@@ -14,16 +14,16 @@ const router = express.Router();
  * given a user ID get a user's sleeps, meals, drugs, and exercises
  * @name GET/
  */
-router.get('/userData', (req, res) => {
+router.get('/userData', async (req, res) => {
   let userId = req.session.userId;
 
    if(!userId) {
      res.status(400).json({ message: "Unsuccessful activity creation! Shedule Conflicts!." }).end();
    }
 
-   let meals = Meals.findUserMeals(userId);
-   let sleeps = Sleeps.findUserSleeps(userId);
-   let ex = Exercises.findUserExercises(userId);
+   const meals = await Meals.findUserMeals(userId);
+   const sleeps = await Sleeps.findUserSleeps(userId);
+   const ex = await Exercises.findUserExercises(userId);
 
    let userData = { meals: meals,
     sleeps: sleeps,

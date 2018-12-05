@@ -9,8 +9,14 @@
          </div>
          <div class="mainSection">
             <div v-if="onboarding">
-                <button v-on:click="startOnboarding" class="button">Start Onboarding Process</button>
-                <button v-on:click="signOut" class="button">Sign Out</button>
+                <div>
+                    <button v-on:click="startOnboarding" class="dashboard-button">Start Onboarding Process</button>
+                    <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled>Edit Existing Schedule</button>
+                </div>
+                <!-- <div>
+                    <UserSchedule/>
+                </div> -->
+
             </div>
 
             <div v-if="onboardingButtonClicked">
@@ -40,12 +46,14 @@ import { eventBus } from "../main";
 import { setInterval } from "timers";
 import Drug  from "./Drug"
 import ActivitiesMainView from "./ActivitiesMainView"
+import UserSchedule from "./UserSchedule"
 
 export default {
   name: "Dashboard",
   components: {
     Drug,
     ActivitiesMainView,
+    UserSchedule,
   },
   data() {
     return {
@@ -54,43 +62,7 @@ export default {
         drugsSavedFlag: false,
         scheduleGenerated: false,
         userData: {},
-        drugData: {
-  "Metformin": {
-      "frequency": 1,
-      "withFood": false,
-      "sideEffects": "Nausea, Vomiting, Diarrhea, Chills, Heartburn",
-      "timeOfDay": "MORNING"
-
-  },
-
-  "Sulfonylureas": {
-      "frequency": 1,
-      "withFood": true,
-      "sideEffects": "Hepatitis, Leukopenia, Porphyria",
-      "timeOfDay": "MORNING"
-  },
-
-  "Thiazolidinediones": {
-      "frequency": 1,
-      "withFood": false,
-      "sideEffects": "Congestive Heart Failure, Edema, Fractures",
-      "timeOfDay": "ANY"
-  },
-
-  "GLP-1 receptor agonists": {
-      "frequency": 2,
-      "withFood": true,
-      "sideEffects": "Immunogenecity, Hypoglycemia",
-      "timeOfDay": "ANY"
-  },
-
-  "Prandin": {
-      "frequency": 3,
-      "withFood": true,
-      "sideEffects": "Hypoglycemia, Weight Gain",
-      "timeOfDay": "ANY"
-  }
-},
+        drugData: {},
         userSchedule: {},
         userMenu: {},
         userDrugs: [],
@@ -100,10 +72,28 @@ export default {
 
   created() {
 
+      axios.get('/api/drugs/getAllDrugs')
+      .then(res =>{
+          console.log(res.data);
+          let total = Object.keys(res.data);
+        //   for (let x = 0; x < total.length; x++) {
+        //       this.
+        //   }
+          this.drugData = res.data
+      })
+      .catch((e) => {
+
+      });
+
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
         this.userDrugs = data;
+    });
+
+    eventBus.$on('drugs-back', (data) => {
+        this.onboardingButtonClicked = false;
+        this.onboarding = true;
     });
 
     eventBus.$on('generateSchedule', () => {
@@ -157,6 +147,8 @@ export default {
                         statusText: fullResponse.statusText,
                     };
                     // this.userData = axiosResponse.data.userData;
+                    console.log("LOOKIT");
+                    console.log(axiosResponse)
                     let list = Object.keys(axiosResponse.data.userData);
                     for(let i = 0; i < list.length; i++) {
                         this.userData[list[i]] = axiosResponse.data.userData[list[i]];
@@ -317,10 +309,23 @@ export default {
                 this.userMenu = menu;
                 // PUT IN DRUGS
 
+
                 this.fillDrugs(dayOfWeek);
+
+                
+
 
 
             }
+
+            axios.delete('/api/drugs/wipeDrugs')
+            .then(response => {
+                this.saveDrugInfo();
+                
+            })
+            .catch((errorMessage) => {
+
+            });
 
             /*
             1. look at a user's sleep first to determine length of day for each day of the week
@@ -356,6 +361,7 @@ export default {
             // GO THROUGH EACH DRUG
             for(let d = 0; d < this.userDrugs.length; d++) {
                 let drug = this.userDrugs[d];
+
                 let freq = this.drugData[drug]["frequency"];
 
                 // TAKE DRUG FREQUENCY TIMES
@@ -409,6 +415,22 @@ export default {
                     }  
                 }
             }
+
+        },
+
+        saveDrugInfo: function() {
+            for(let d = 0; d < this.userDrugs.length; d++) {
+                let drug = this.userDrugs[d];
+
+                axios.post('/api/drugs/saveDrugs', {'data': drug})
+                .then(response => {
+                    
+                })
+                .catch((errorMessage) => {
+
+                });
+            }
+
 
         },
         
@@ -491,6 +513,15 @@ export default {
     color: #4257b2;
     text-decoration: underline;
     text-decoration-color: #4257b2;
+}
+
+.dashboard-button{
+    width:300px;
+    height:100px;
+    font-size:24px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin:10px;
 }
 
 </style>
