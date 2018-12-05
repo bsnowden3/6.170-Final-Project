@@ -8,14 +8,17 @@
              </ul>
          </div>
          <div class="mainSection">
-            <div v-if="onboarding">
-                <div>
-                    <button v-on:click="startOnboarding" class="dashboard-button">Start Onboarding Process</button>
-                    <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled>Edit Existing Schedule</button>
+            <div class="dashboard-data">
+                <div v-if="onboarding">
+                    <button v-on:click="startOnboarding" class="dashboard-button" v-show="!scheduleGenerated">Start Onboarding Process</button>
                 </div>
-                <!-- <div>
+                <div v-if="scheduleGenerated">
+                    <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled v-show="scheduleGenerated">Edit Existing Schedule</button>
+                    <div class="schedule-data">
+                        {{ userSchedule }}
+                    </div>
                     <UserSchedule/>
-                </div> -->
+                </div>
 
             </div>
 
@@ -27,9 +30,9 @@
               <ActivitiesMainView/>
             </div>
 
-             <div v-if="scheduleGenerated">
+             <!-- <div v-if="scheduleGenerated">
               {{ userSchedule }}
-            </div>
+            </div> -->
 
             <!-- this will appear after the onboarding process is complete -->
             <!-- <div v-if="drugsSavedFlag">
@@ -522,6 +525,13 @@ export default {
     cursor: pointer;
     border-radius: 4px;
     margin:10px;
+}
+.schedule-data{
+    margin:20px;
+}
+.dashboard-data{
+    display:flex;
+    flex-direction: column;
 }
 
 </style>

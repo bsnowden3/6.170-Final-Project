@@ -114,9 +114,10 @@ export default {
 
 .schedulePage{
     margin-top:20px;
+    align-self: center;
 }
 .mainCalendar{
-    display: flex !important; 
+    /* display: flex !important;  */
 }
 #scheduleGrid{
     display:grid;
@@ -124,7 +125,7 @@ export default {
     grid-template-columns: repeat(7, 100px);
     grid-gap: 13px;
     color:white;
-    float: right;
+    /* float: right; */
 
 }
 .time-label-table{
