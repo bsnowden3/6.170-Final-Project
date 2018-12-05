@@ -57,6 +57,14 @@ class Users {
       //return userData.filter(userVal => userVal.username === username)[0];
   }
 
+  static findUserByID(id){
+
+    return database.query(`SELECT * FROM users
+      WHERE id = "${id}"
+    `);
+    //return userData.filter(userVal => userVal.username === username)[0];
+}
+
 
    /**
    * Get the accompanying password to a user.

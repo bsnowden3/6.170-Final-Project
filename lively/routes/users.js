@@ -46,4 +46,10 @@ router.post('/saveonboarding', async (req, res) => {
    }
 });
 
+router.get('/checkOnbBoarding',async (req, res) => {
+  let userId = req.session.userId;
+  let response = await Users.findUserByID(userId);
+  res.status(200).json(response).end();
+});
+
 module.exports = router;

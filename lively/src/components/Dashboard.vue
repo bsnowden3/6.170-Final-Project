@@ -87,6 +87,19 @@ export default {
 
       });
 
+       axios.get('/api/users/checkOnbBoarding')
+      .then(res =>{
+          console.log("CHECKERONI");
+          console.log(res);
+          if(res.data[0].onboardingComplete == 1) {
+              this.onboarding = false;
+              this.getUserData();
+          }
+      })
+      .catch((e) => {
+
+      });
+
     eventBus.$on('drugsSaved', (data) => {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
