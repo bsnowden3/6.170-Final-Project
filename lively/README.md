@@ -13,6 +13,11 @@ npm start
 ```
 Navigate to `localhost:3000` in your browser
 
+## Available Test Account
+If you would like to see a completed drug regimen without going through the process, use this account:
+username: "test5"
+password: "test5"
+
 ### Please note that all of error checking has not been implemented, so here are instructions on how to use Lively
 1. first create an account with a username and password
 2. click onboarding to kick off the process to create a drug regimen
