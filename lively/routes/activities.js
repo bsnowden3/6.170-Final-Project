@@ -225,6 +225,55 @@ router.post('/addexercise', async (req, res) => {
 
 });
 
+/**
+ * Delete exercise activity from user schedule
+ * @name DELETE exercise
+ */
+router.delete('/removeExercise', async (req, res) => {
+  if(!(req.session.userId === undefined)) {
+    console.log("Printing response body", req);
+    console.log(req.body.exerciseId);
+    let response = await Exercises.deleteExercise(req.body.exerciseId);
+    console.log(response);
+    res.status(200).json(response).end();
+  } else {
+    let error = {message: "Error! userId undefined"}
+    res.status(400).json(error).end();
+  }
+});
+
+/**
+ * Delete sleep activity from user schedule
+ * @name DELETE sleep
+ */
+router.delete('/removeSleep', async (req, res) => {
+  if(!(req.session.userId === undefined)) {
+    console.log("Printing response body", req);
+    console.log(req.body.sleepId);
+    let response = await Sleeps.deleteSleep(req.body.sleepId);
+    console.log(response);
+    res.status(200).json(response).end();
+  } else {
+    let error = {message: "Error! userId undefined"}
+    res.status(400).json(error).end();
+  }
+});
+
+/**
+ * Delete meal activity from user schedule
+ * @name DELETE meal
+ */
+router.delete('/removeMeal', async (req, res) => {
+  if(!(req.session.userId === undefined)) {
+    console.log(req.body.mealId);
+    let response = await Meals.deleteUserMeal(req.body.mealId);
+    res.status(200).json(response).end();
+  } else {
+    let error = {message: "Error! userId undefined"}
+    res.status(400).json(error).end();
+  }
+});
+
   function sleepActivityCheck(addition, userId) {
     let currentSleep = Sleeps.findUserSleeps(userId);
     for(let i = 0; i < currentSleep.length; i++) {

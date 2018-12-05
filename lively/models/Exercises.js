@@ -71,6 +71,20 @@ class Exercises {
      }
    }
 
+   /**
+    * Delete exercises associated with exerciseId
+    * @param {string} exerciseId
+    */
+    static async deleteExercise(exerciseId) {
+      try {
+        const sql = `DELETE FROM userExerciseRegimen WHERE exerciseId='${exerciseId}';`;
+        const response = await database.query(sql);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+    }
+
 }
 
 module.exports = Exercises;

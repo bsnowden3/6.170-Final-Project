@@ -112,6 +112,11 @@ export default {
       mealSizes: ["small", "medium", "large"],
     };
   },
+  created() {
+    eventBus.$on("generateDefaultSchedule", () => {
+    this.generateQuickMealSchedule();
+    });
+  },
   methods: {
     addMeals: function() {
      const mealObj =  { name: this.mealType,
@@ -140,6 +145,52 @@ export default {
       this.mealType = '';
       this.successMessage = "";
     },
+    generateQuickMealSchedule: function() {
+      const quickMealBreakfast =  { name: "Breakfast",
+        startTime: "7:00",
+        endTime: "8:00",
+        mealSize: "light",
+        daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] };
+
+        axios.post("/api/activities/addmeal", quickMealBreakfast)
+        .then(response => {
+          console.log(response);
+          eventBus.$emit('postedActivity', (true));
+        })
+        .catch(errorMessage => {
+          console.log(errorMessage.response);
+        });
+
+        const quickMealLunch =  { name: "Dinner",
+          startTime: "12:00",
+          endTime: "12:30",
+          mealSize: "light",
+          daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] };
+
+          axios.post("/api/activities/addmeal", quickMealLunch)
+          .then(response => {
+            console.log(response);
+            eventBus.$emit('postedActivity', (true));
+          })
+          .catch(errorMessage => {
+            console.log(errorMessage.response);
+          });
+
+          const quickMealDinner =  { name: "Dinner",
+            startTime: "18:00",
+            endTime: "19:00",
+            mealSize: "light",
+            daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] };
+
+            axios.post("/api/activities/addmeal", quickMealDinner)
+            .then(response => {
+              console.log(response);
+              eventBus.$emit('postedActivity', (true));
+            })
+            .catch(errorMessage => {
+              console.log(errorMessage.response);
+            });
+    }
   }
 };
 </script>

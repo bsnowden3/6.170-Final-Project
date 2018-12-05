@@ -67,6 +67,20 @@ class Sleeps {
      }
    }
 
+   /**
+    * Delete sleeps associated with sleepId
+    * @param {string} sleepId
+    */
+    static async deleteSleep(sleepId) {
+      try {
+        const sql = `DELETE FROM userSleepRegimen WHERE sleepId='${sleepId}';`;
+        const response = await database.query(sql);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+    }
+
 }
 
 module.exports = Sleeps;

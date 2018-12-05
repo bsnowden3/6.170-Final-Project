@@ -9,6 +9,9 @@
         <MealActivity/>
         <ExerciseActivity/>
       </div>
+    <div v-on:click="generateDefaultSchedule" class="defaultScheduleButton">
+      <button> Generate Quick Schedule! </button>
+    </div>
     </div>
     <div class='selected-activites-section'>
       <h2> Current Schedule </h2>
@@ -40,6 +43,9 @@ export default {
   methods: {
     saveSchedule: function() {
       eventBus.$emit('generateSchedule', (true));
+    },
+    generateDefaultSchedule: function() {
+      eventBus.$emit('generateDefaultSchedule', (true));
     }
   }
 };
@@ -48,6 +54,9 @@ export default {
 <style scoped>
   .activities-main-view {
     flex-wrap: wrap;
+  }
+  .defaultScheduleButton {
+    border-radius: 5px;
   }
   .main-content {
     display: flex;

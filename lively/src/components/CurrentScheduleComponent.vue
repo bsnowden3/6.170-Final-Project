@@ -58,6 +58,11 @@ export default {
       this.loadMeals();
       this.loadExercises();
     });
+    eventBus.$on('deletedActivity', () => {
+      this.loadSleeps();
+      this.loadMeals();
+      this.loadExercises();
+    });
   },
 
   methods: {

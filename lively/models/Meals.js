@@ -36,7 +36,7 @@ class Meals {
     try {
       const sql = `INSERT INTO userMealsRegimen (mealId, userId, startTime, endTime, dayOfWeek) VALUES (
                   '${meal.mealId}',
-                  '${meal.userId}', 
+                  '${meal.userId}',
                   '${meal.startTime}',
                   '${meal.endTime}',
                   '${meal.day}') ;`;
@@ -63,7 +63,7 @@ class Meals {
 
   static async deleteUserMeal(mealId) {
     try {
-      const sql = `DELETE * FROM userMealsRegimen WHERE mealId='${mealId}';`;
+      const sql = `DELETE FROM userMealsRegimen WHERE mealId='${mealId}';`;
       const response = await database.query(sql);
       return response;
     } catch (error) {
