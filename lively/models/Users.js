@@ -31,6 +31,14 @@ class Users {
   }
 
   /**
+   * 
+   * @param {string} userId 
+   */
+  static checkUserInSession(userId){
+    return database.query(`SELECT * FROM userSession WHERE userId = "${userId}"`);
+  }
+
+  /**
    * Add a session id to keep track of a user having an active session/logged in
    * @param {string} sessionId - session id, long string
    * @param {string} userId - user id, long string
@@ -38,7 +46,19 @@ class Users {
   static addSessionId(sessionId, userId){
     return database.query(`INSERT INTO userSession(sessionId,userId) values("${sessionId}","${userId}")`);
   }
+  /**
+   * updates an exisiting session so there are many sessions for the same user
+   * @param {string} sessionId 
+   * @param {string} userId 
+   */
+  static updateSessionId(sessionId, userId){
+    return database.query(`UPDATE userSession SET sessionId = "${sessionId}" WHERE userId = "${userId}"`);
+  }
 
+  /**
+   * deletes a session
+   * @param {string} sessionId 
+   */
   static removeUserSession(sessionId){
     return database.query(`DELETE from userSession where sessionId = "${sessionId}"`);
   }

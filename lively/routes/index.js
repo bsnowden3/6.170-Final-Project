@@ -66,7 +66,12 @@ router.post("/logIn", async function(req, res) {
   else if (user[0] !== undefined) {
     req.session.userId = user[0].id;
     req.session.username = user[0].username;
-    await Users.addSessionId(req.session.id, user[0].id);
+    const userCheck = await Users.checkUserInSession(user[0].id);
+    if(userCheck[0] !== undefined){
+      await Users.updateSessionId(req.session.id, user[0].id);
+    } else{
+      await Users.addSessionId(req.session.id, user[0].id);
+    }
     req.session.save();
     res.status(200);
     res.json({message: "Signed In!"});
