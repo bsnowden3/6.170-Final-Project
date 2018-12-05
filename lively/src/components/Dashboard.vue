@@ -186,9 +186,12 @@ export default {
             for(let i = 0; i < week.length; i++) {
                 let dayOfWeek = week[i];
                 let wakeTime = ["0", "0"];
+                let indicator = "wake?";
                 //FIND THE CORRECT WAKE TIME FOR THE GIVEN DAY
                 for(let i = 0; i < this.userData.sleeps.length; i++){
-                    if (this.userData.sleeps[i].day == dayOfWeek) {
+                    if (this.userData.sleeps[i].dayOfWeek == dayOfWeek) {
+                        console.log(this.userData.sleeps[i]);
+                        indicator = this.userData.sleeps[i];
                         wakeTime = this.userData.sleeps[i].startTime.split(":");
                         break;
                     }
@@ -209,7 +212,7 @@ export default {
                 for (let f = 0; f < arraySize; f++) {
                     newA.push("-")
                 }
-                newA[0] = "wake";
+                newA[0] = indicator;
                 schedule[dayOfWeek] = newA;
                 
                 // const menu = this.userData.meals;
