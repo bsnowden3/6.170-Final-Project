@@ -43,6 +43,7 @@ export default {
   methods: {
     saveSchedule: function() {
       eventBus.$emit('generateSchedule', (true));
+      axios.post('/api/users/saveonboarding', {});
     },
     generateDefaultSchedule: function() {
       eventBus.$emit('generateDefaultSchedule', (true));
