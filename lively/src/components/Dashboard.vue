@@ -74,7 +74,6 @@ export default {
 
       axios.get('/api/drugs/getAllDrugs')
       .then(res =>{
-          console.log(res.data);
           let total = Object.keys(res.data);
         //   for (let x = 0; x < total.length; x++) {
         //       this.
@@ -211,9 +210,16 @@ export default {
                 }
                 newA[0] = "wake";
                 schedule[dayOfWeek] = newA;
+                
+                // const menu = this.userData.meals;
+                const meals = this.userData.meals.filter(m => m.dayOfWeek == dayOfWeek);
+                // for (let food = 0; food <menu.length; food++){
+                //     let item = menu[food];
+                //     if item.
 
-                const meals = this.userData.meals.filter(m => m.day == dayOfWeek);
-                const exercise = this.userData.exercises.filter(e => e.day == dayOfWeek);
+                // }
+                
+                const exercise = this.userData.exercises.filter(e => e.dayOfWeek == dayOfWeek);
 
                 let daySchedule = schedule[dayOfWeek];
 
