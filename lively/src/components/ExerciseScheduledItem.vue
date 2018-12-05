@@ -1,7 +1,10 @@
 <template>
   <div class="component">
-    <p>exerciseId: {{ exercise.exerciseId }}</p>
-    <p>userId: {{ exercise.userId }}</p>
+    <div class="removeButtonContainer">
+      <button v-on:click="removeItem(exercise.exerciseId)"> Remove </button>
+    </div>
+    <p> Name: {{exercise.name}} </p>
+    <p> Day: {{exercise.dayOfWeek}} </p>
     <p>Start Time: {{ exercise.startTime }}</p>
     <p>End Time: {{ exercise.endTime }}</p>
   </div>
@@ -19,15 +22,35 @@ export default {
   props: {
     exercise: Object,
   },
+
+  methods: {
+    removeItem: function(exerciseId) {
+      console.log("ExerciseScheduledItem", exerciseId);
+      const deletedExercise = { exerciseId: exerciseId };
+      axios.delete("/api/activities/removeExercise", { data: deletedExercise })
+      .then((response) => {
+        eventBus.$emit('deletedActivity', []);
+      })
+      .catch(error => console.log(error));
+    },
+  }
 };
 </script>
 
 <style scoped>
 
 .component {
-  width: 25%;
+  width: auto;
   background-color: whitesmoke;
   padding: 1rem;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.removeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 </style>

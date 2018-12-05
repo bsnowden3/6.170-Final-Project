@@ -1,8 +1,9 @@
 <template>
   <div class="component">
-    <p>name: {{ meal.name}}</p>
-    <p>userId: {{ meal.userId }}</p>
-    <p>mealId: {{ meal.mealId }}</p>
+    <div class="removeButtonContainer">
+      <button v-on:click="removeItem(meal.mealId)"> Remove </button>
+    </div>
+    <p>Day: {{meal.dayOfWeek}} </p>
     <p>Start Time: {{ meal.startTime }}</p>
     <p>EndTime: {{ meal.endTime }}</p>
   </div>
@@ -20,15 +21,35 @@ export default {
   props: {
     meal: Object,
   },
+
+  methods: {
+    removeItem: function(mealId) {
+      console.log("ExerciseScheduledItem", mealId);
+      const deletedMeal = { mealId: mealId };
+      axios.delete("/api/activities/removeMeal", { data: deletedMeal })
+      .then((response) => {
+        eventBus.$emit('deletedActivity', []);
+      })
+      .catch(error => console.log(error));
+    }
+  }
 };
 </script>
 
 <style scoped>
 
 .component {
-  width: 25%;
+  width: auto;
   background-color: whitesmoke;
   padding: 1rem;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.removeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 </style>

@@ -84,13 +84,18 @@ export default {
     };
   },
 
+  created() {
+    eventBus.$on("generateDefaultSchedule", () => {
+      this.generateQuickSleepSchedule();
+    });
+  },
+
   methods: {
     addSleep: function() {
       const sleepObj = {
         startTime: this.startTime,
         daysOfWeek: this.checkedDays,
       };
-      console.log(sleepObj, "sleepObj")
 
       axios.post("/api/activities/addsleep", sleepObj)
       .then(response => {
@@ -101,7 +106,22 @@ export default {
       })
       .catch(error => {
         console.log(error.response)
+      });
+    },
+    generateQuickSleepSchedule: function() {
+      const sleepObj = {
+        startTime: "6:00",
+        daysOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      };
+
+      axios.post("/api/activities/addsleep", sleepObj)
+      .then(response => {
+        console.log(response);
+        eventBus.$emit('postedActivity', (true));
       })
+      .catch(error => {
+        console.log(error.response)
+      });
     }
   }
 };

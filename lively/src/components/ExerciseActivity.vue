@@ -98,8 +98,11 @@ export default {
   "18:00", "18:30","19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00",
   "22:30", "23:00", "23:30"],
     };
+  }, created() {
+    eventBus.$on("generateDefaultSchedule", () => {
+      this.generateQuickExerciseSchedule();
+    });
   },
-
     methods: {
       addExercise: function() {
         const exerciseObj = {
@@ -124,6 +127,20 @@ export default {
       this.endTime = '';
       this.checkedDays = [];
       this.successMessage = '';
+    },
+    generateQuickExerciseSchedule: function () {
+      const exerciseObj = {
+        name: "Jog", startTime: "17:00",
+        endTime: "18:00", daysOfWeek: ["Monday", "Wednesday", "Friday"]
+      };
+      axios.post("/api/activities/addexercise", exerciseObj)
+      .then(response => {
+          console.log(response);
+        eventBus.$emit('postedActivity', (true));
+      })
+      .catch(error => {
+        console.log(error)
+      });
     }
    }
 }

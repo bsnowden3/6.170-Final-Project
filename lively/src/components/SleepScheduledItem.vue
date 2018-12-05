@@ -1,9 +1,11 @@
 <template>
-  <div class="component">
-    <p>sleepId: {{ sleep.sleepId }}</p>
-    <p>userId: {{ sleep.userId }}</p>
-    <p>Start Time: {{ sleep.startTime }}</p>
-  </div>
+    <div class="component">
+      <div class="removeButtonContainer">
+        <button <button v-on:click="removeItem(sleep.sleepId)" > Remove </button>
+      </div>
+      <p>Wake Up Time: {{ sleep.startTime }}</p>
+      <p>Day: {{ sleep.dayOfWeek }}</p>
+    </div>
 </template>
 
 <script>
@@ -18,15 +20,35 @@ export default {
   props: {
     sleep: Object,
   },
+
+  methods: {
+    removeItem: function(sleepId) {
+      console.log("ExerciseScheduledItem", sleepId);
+      const deletedSleep = { sleepId: sleepId };
+      axios.delete("/api/activities/removeSleep", { data: deletedSleep })
+      .then((response) => {
+        eventBus.$emit('deletedActivity', []);
+      })
+      .catch(error => console.log(error));
+    }
+  }
 };
 </script>
 
 <style scoped>
 
 .component {
-  width: 25%;
+  width: auto;
   background-color: whitesmoke;
   padding: 1rem;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.removeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 </style>

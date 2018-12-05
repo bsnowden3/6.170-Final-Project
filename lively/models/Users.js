@@ -12,7 +12,7 @@ const mysql = require('mysql');
  * @class Users
  * stores all users
  * all methods are static
- */ 
+ */
 class Users {
 
   /**
@@ -46,11 +46,11 @@ class Users {
 
   /**
      * returns user based on provided username
-     * @param {string} username 
-     * @return {User} if User found 
+     * @param {string} username
+     * @return {User} if User found
      */
     static findUser(username){
-      
+
       return database.query(`SELECT * FROM users
         WHERE username = ${mysql.escape(username)}
       `);
@@ -62,19 +62,27 @@ class Users {
    * Get the accompanying password to a user.
    * @param {string} username - User's username
    */
-  static getPass(username) { 
+  static getPass(username) {
     const userFound = userData.filter(userVal => userVal.username === username)[0];
     return userFound.password;
   }
 
    /**
      * deletes a user
-     * @param {string} username 
+     * @param {string} username
      * @return {promise}
      */
     static deleteUser(username){
       return database.query(`delete from users where username = ${mysql.escape(username)}`);
 
+  }
+
+  /**
+  * Save user onboardingStatus
+  * @param {string} userId - User's id
+  */
+  static async saveUserOnboardingStatus(userId) {
+    return database.query(`UPDATE users SET onboardingComplete = 1 WHERE id='${userId}';`);
   }
 
 }
