@@ -54,4 +54,17 @@ router.get('/checkOnbBoarding',async (req, res) => {
   res.status(200).json(response).end();
 });
 
+
+router.get('/checkSession', async (req, res) => {
+  const userId = req.session.userId;
+  let response = await Users.checkUserInSession(userId);
+  if(response[0] !== undefined){
+    res.status(200).json("true").end();
+  } else{
+    res.status(200).json("false").end();
+  }
+})
+
+
+
 module.exports = router;

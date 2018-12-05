@@ -30,6 +30,27 @@ export default {
   },
 
   created: function(){
+    
+    /**
+     * check the database to see if use session exists, so on refresh the UI doesn't look like the user
+     * is loggged out
+     */
+    axios.get('/api/users/checkSession')
+      .then(res =>{
+          console.log("session checking");
+          console.log(res);
+          if(res.data == "true") {
+              this.loginPage = false;
+          }else{
+            this.loginPage = true;
+          }
+      })
+      .catch((e) => {
+          console.log("session call didn't work");
+      });
+    
+    
+    
     /**
      * updating ui after creating user or logging in user
      */
