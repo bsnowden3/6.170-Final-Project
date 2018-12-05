@@ -1,15 +1,14 @@
 <template>
   <div class='activities-main-view'>
-    <h1> Enter Your Daily Schedule </h1>
     <div class='activities-addition-section'>
-      <h2> Activities </h2>
+      <h2 class="header"> Step 2: Enter your Daily Schedule </h2>
       <div class='main-content'>
         <!-- Children Components -->
         <SleepActivity />
         <MealActivity/>
         <ExerciseActivity/>
       </div>
-    <div v-on:click="generateDefaultSchedule" class="defaultScheduleButton">
+    <div class="def-schedule" v-on:click="generateDefaultSchedule" class="defaultScheduleButton">
       <button> Generate Quick Schedule! </button>
     </div>
     </div>
@@ -18,7 +17,7 @@
       <CurrentScheduleComponent />
     </div>
     <div>
-      <button v-on:click="saveSchedule"> Save Schedule! </button>
+      <button class="button save-schedule" v-on:click="saveSchedule"> Save Schedule! </button>
     </div>
   </div>
 </template>
@@ -55,15 +54,34 @@ export default {
 <style scoped>
   .activities-main-view {
     flex-wrap: wrap;
+    justify-content: center;
   }
-  .defaultScheduleButton {
+
+  h2.header {
+    color: white;
+    align-self: center;
+  }
+
+  .button {
+    font-size: 16px;
     border-radius: 5px;
+    background-color: "black";
+    width: auto;
+    height: auto;
+  }
+
+  .def-schedule {
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: "black";
+    width: auto;
+    height: auto;
   }
   .main-content {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
   }
 
   .activities-addition-section {

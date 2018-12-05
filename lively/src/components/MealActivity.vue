@@ -8,13 +8,13 @@
         <h2> Meals</h2>
       </div>
 
-        <div class='form-group'>
+      <div class='form-group'>
           <label for='mealType'>Meal Type:</label>
           <input type="text" v-model="mealType" list="mealTypes">
-          <datalist id="mealTypes">
-            <option v-for="mealType in mealTypes">{{mealType}}</option>
-          </datalist>
-        </div>
+         <datalist id="mealTypes">
+           <option v-for="mealType in mealTypes">{{mealType}}</option>
+         </datalist>
+      </div>
 
         <div class='form-group'>
           <label for='start-time'>Start Time:</label>
@@ -29,14 +29,6 @@
           <input type="text" v-model="endTime" list="times">
           <datalist id="times">
             <option v-for="endTime in times">{{endTime}}</option>
-          </datalist>
-        </div>
-
-        <div class='form-group'>
-          <label for='meal-size'>Meal Size:</label>
-          <input type="text" v-model="mealSize" list="mealSizes">
-          <datalist id="mealSizes">
-            <option v-for="mealSize in mealSizes">{{mealSize}}</option>
           </datalist>
         </div>
 
