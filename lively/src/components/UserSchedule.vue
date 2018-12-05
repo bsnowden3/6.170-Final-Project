@@ -3,13 +3,13 @@
     <div class="schedulePage">
         <div id="practiceTable">
 
-            <div class="col">{{userSchedule.Monday}} </div>
-            <div class="col"> {{userSchedule.Tuesday}} </div>
-            <div class="col"> {{userSchedule.Wednesday}} </div>
-            <div class="col"> {{userSchedule.Thursday}} </div>
-            <div class="col"> {{userSchedule.Friday}} </div>
-            <div class="col"> {{userSchedule.Saturday}} </div>
-            <div class="col"> {{userSchedule.Sunday}} </div>
+            <div class="col">{{drugTaking.Monday}} </div>
+            <div class="col"> {{drugTaking.Tuesday}} </div>
+            <div class="col"> {{drugTaking.Wednesday}} </div>
+            <div class="col"> {{drugTaking.Thursday}} </div>
+            <div class="col"> {{drugTaking.Friday}} </div>
+            <div class="col"> {{drugTaking.Saturday}} </div>
+            <div class="col"> {{drugTaking.Sunday}} </div>
             
         
         </div>
@@ -64,7 +64,8 @@ export default {
     return {
         data:[],
         days:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-        userSchedule: {}
+        userSchedule: {},
+        drugTaking: {}
     };
   },
 
@@ -75,16 +76,80 @@ export default {
     });
 
     eventBus.$on('scheduleIncoming', (data) => {
-        console.log("LOOKL:J");
-        console.log(data);
-        this.userSchedule = data;
-    //   this.drugs.push(data);
-    //   this.drugs.sort();
+        // this.userSchedule = data;
+        for(let i = 0; i < this.days.length; i++){
+            let day = this.days[i];
+            this.userSchedule[day] = [];
+            for (let x = 0; x < data[day].length; x++){
+                if (typeof data[day][x] != "string") {
+                    let obj = data[day][x];
+                    let keys = Object.keys(obj);
+                    let newObj = {}
+                    for (let j = 0; j < keys.length; j++) {
+                        newObj[keys[j]] = obj[keys[j]];
+                    }
+                    this.userSchedule[day].push(newObj);
+                }
+                else {
+                    this.userSchedule[day].push(data[day][x])
+                }
+                
+            }
+        }
+        this.displaySchedule()
     });
   },
 
   methods: {
     displaySchedule: function() {
+
+        for(let i = 0; i < this.days.length; i++){
+            let day = this.days[i];
+            let itenerary = []
+            let schedule = this.userSchedule[day];
+            let sleeper = schedule[0];
+
+            let wakeTime = ["0", "0"];
+            if (sleeper == "wake?"){
+                wakeTime = ["0", "0"];
+                
+            }
+            else {
+                let dood = Object.keys(sleeper)
+
+
+                let lengthOfDay = schedule.length;
+                wakeTime = [((23 - (Math.floor(lengthOfDay/2)))).toString(), "0"];
+                if (lengthOfDay % 2 != 0) {
+                    wakeTime[1] = "30";
+                }
+                // wakeTime = sleeper.startTime.split(":");
+            }
+
+            for(let x = 1; x < schedule.length; x++) {
+                let object = schedule[x];
+                console.log(object);
+                if(object.split(" ")[0] == "take"){
+                    let newtime = [wakeTime[0], wakeTime[1]];
+                    newtime[0] = (parseInt(newtime[0]) + Math.floor(x/2)).toString();
+                    if(((x/2) % 2) != 0) {
+                        newtime[1] = parseInt(newtime[1] + Math.floor(x/2)).toString();
+                        if(newtime[1] == "60") {
+                            newtime[0] = (parseInt(newtime[0]) + 1).toString();
+                            newtime[1] = "30";
+                        }
+                    }
+                    itenerary.push(object + " at " + newtime[0] + ":" + newtime[1]);
+                }
+            }
+            this.drugTaking[day] = itenerary;
+        }
+
+
+
+
+
+
         //creating table
         // const table_size = 7;
         // let schedule_table = document.getElementById('schedule').children[1];
@@ -124,7 +189,7 @@ export default {
     }
   },
   mounted(){
-    this.displaySchedule()
+    
  },
 };
 </script>

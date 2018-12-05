@@ -89,8 +89,6 @@ export default {
 
        axios.get('/api/users/checkOnbBoarding')
       .then(res =>{
-          console.log("CHECKERONI");
-          console.log(res);
           if(res.data[0].onboardingComplete == 1) {
               this.onboarding = false;
               this.getUserData();
@@ -166,6 +164,7 @@ export default {
                     for(let i = 0; i < list.length; i++) {
                         this.userData[list[i]] = axiosResponse.data.userData[list[i]];
                     }
+                    console.log(this.userData);
 
                     this.generateSchedule();
 
@@ -203,7 +202,6 @@ export default {
                 //FIND THE CORRECT WAKE TIME FOR THE GIVEN DAY
                 for(let i = 0; i < this.userData.sleeps.length; i++){
                     if (this.userData.sleeps[i].dayOfWeek == dayOfWeek) {
-                        console.log(this.userData.sleeps[i]);
                         indicator = this.userData.sleeps[i];
                         wakeTime = this.userData.sleeps[i].startTime.split(":");
                         break;
@@ -480,7 +478,7 @@ export default {
                 slot = 0;
                 while(slot < daySchedule.length) {
                     if (daySchedule[slot] == "-") {
-                        daySchedule[slot] = 'take' + drug;
+                        daySchedule[slot] = 'take ' + drug;
                         placed = true;
                         break;
                     }

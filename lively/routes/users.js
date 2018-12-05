@@ -24,10 +24,12 @@ router.get('/userData', async (req, res) => {
    const meals = await Meals.findUserMeals(userId);
    const sleeps = await Sleeps.findUserSleeps(userId);
    const ex = await Exercises.findUserExercises(userId);
+   const drugs = await Drugs.getUserDrugs(userId);
 
    let userData = { meals: meals,
     sleeps: sleeps,
-    exercises: ex };
+    exercises: ex,
+    drugs: drugs };
 
 
     let responseMessage = { message: "Succesfully retrieved user data!", userData: userData};
