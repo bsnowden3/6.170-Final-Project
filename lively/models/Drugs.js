@@ -96,9 +96,15 @@ class Drugs {
       }
   }
 
-  static getUserDrugs(user) {
+  static async getUserDrugs(userId) {
 
-    return drugData[user];
+    try {
+      const sql = `SELECT * FROM userDrugsRegimen WHERE userId='${userId}';`;
+      const response = await database.query(sql);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   static async getDrugs() {

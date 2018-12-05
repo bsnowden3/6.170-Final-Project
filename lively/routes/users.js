@@ -24,10 +24,12 @@ router.get('/userData', async (req, res) => {
    const meals = await Meals.findUserMeals(userId);
    const sleeps = await Sleeps.findUserSleeps(userId);
    const ex = await Exercises.findUserExercises(userId);
+   const drugs = await Drugs.getUserDrugs(userId);
 
    let userData = { meals: meals,
     sleeps: sleeps,
-    exercises: ex };
+    exercises: ex,
+    drugs: drugs };
 
 
     let responseMessage = { message: "Succesfully retrieved user data!", userData: userData};
@@ -45,5 +47,24 @@ router.post('/saveonboarding', async (req, res) => {
     res.status(400).json({ message: "Error userId not found" }).end();
    }
 });
+
+router.get('/checkOnbBoarding',async (req, res) => {
+  let userId = req.session.userId;
+  let response = await Users.findUserByID(userId);
+  res.status(200).json(response).end();
+});
+
+
+router.get('/checkSession', async (req, res) => {
+  const userId = req.session.userId;
+  let response = await Users.checkUserInSession(userId);
+  if(response[0] !== undefined){
+    res.status(200).json("true").end();
+  } else{
+    res.status(200).json("false").end();
+  }
+})
+
+
 
 module.exports = router;

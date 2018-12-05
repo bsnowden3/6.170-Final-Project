@@ -35,9 +35,10 @@ router.delete('/wipeDrugs', async (req, res) => {
 
 });
 
-router.get('/getUserDrugs', (req, res) => {
+router.get('/getUserDrugs', async (req, res) => {
+  let response = await Drugs.getUserDrugs(req.session.userId);
   
-  // res.status(200).json(Drugs.getDrugs()).end();
+  res.status(200).json(response).end();
 });
 
 router.get('/getAllDrugs', async (req, res) => {
