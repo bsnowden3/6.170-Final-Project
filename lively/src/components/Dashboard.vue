@@ -115,7 +115,7 @@ export default {
         this.getUserData();
         // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
       // .then(response => {
-        
+
       // })
       // .catch((errorMessage) => {
 
@@ -181,12 +181,12 @@ export default {
             let schedule = {"Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [],
                             "Friday": [], "Saturday": []};
 
-            let menu = {"Sunday": {"B": 0, "L": "-", "D": "-"}, 
-                        "Monday": {"B": 0, "L": "-", "D": "-"}, 
-                        "Tuesday": {"B": 0, "L": "-", "D": "-"}, 
-                        "Wednesday": {"B": 0, "L": "-", "D": "-"}, 
+            let menu = {"Sunday": {"B": 0, "L": "-", "D": "-"},
+                        "Monday": {"B": 0, "L": "-", "D": "-"},
+                        "Tuesday": {"B": 0, "L": "-", "D": "-"},
+                        "Wednesday": {"B": 0, "L": "-", "D": "-"},
                         "Thursday": {"B": 0, "L": "-", "D": "-"},
-                        "Friday": {"B": 0, "L": "-", "D": "-"}, 
+                        "Friday": {"B": 0, "L": "-", "D": "-"},
                         "Saturday": {"B": 0, "L": "-", "D": "-"}};
 
             let mealType = ["Breakfast", "Lunch", "Dinner"];
@@ -217,7 +217,7 @@ export default {
                     arraySize--;
                 }
 
-                //MODIFY ARRAY ON GIVEN DAY TO BE ARRAY OF SIZE ARRAY SIZE WITH 
+                //MODIFY ARRAY ON GIVEN DAY TO BE ARRAY OF SIZE ARRAY SIZE WITH
                 // DUMMY VAR "-"
                 let newA = []
                 for (let f = 0; f < arraySize; f++) {
@@ -225,7 +225,7 @@ export default {
                 }
                 newA[0] = indicator;
                 schedule[dayOfWeek] = newA;
-                
+
                 // const menu = this.userData.meals;
                 const meals = this.userData.meals.filter(m => m.dayOfWeek == dayOfWeek);
                 // for (let food = 0; food <menu.length; food++){
@@ -233,7 +233,7 @@ export default {
                 //     if item.
 
                 // }
-                
+
                 const exercise = this.userData.exercises.filter(e => e.dayOfWeek == dayOfWeek);
 
                 let daySchedule = schedule[dayOfWeek];
@@ -249,7 +249,7 @@ export default {
                     endTime = e.endTime.split(":");
 
                     //FIND SLOT FOR START
-                    let pointInDay = parseInt(startTime[0], 10) - wakeHour; 
+                    let pointInDay = parseInt(startTime[0], 10) - wakeHour;
                     let startSlot = (pointInDay*60)/30;
 
                     if (parseInt(startTime[1], 10) != 0) {
@@ -257,7 +257,7 @@ export default {
                     }
 
                     //FIND SLOT FOR END
-                    let endInDay = parseInt(endTime[0], 10) - wakeHour; 
+                    let endInDay = parseInt(endTime[0], 10) - wakeHour;
                     let endSlot = (endInDay*60)/30;
 
 
@@ -289,7 +289,7 @@ export default {
                     endTime1 = meals[y].endTime.split(":");
 
                     //FIND SLOT FOR START
-                    let pointInDay1 = parseInt(startTime1[0], 10) - wakeHour; 
+                    let pointInDay1 = parseInt(startTime1[0], 10) - wakeHour;
                     let startSlot1 = (pointInDay1*60)/30;
 
                     if (parseInt(startTime1[1], 10) != 0) {
@@ -297,7 +297,7 @@ export default {
                     }
 
                     //FIND SLOT FOR END
-                    let endInDay1 = parseInt(endTime1[0], 10) - wakeHour; 
+                    let endInDay1 = parseInt(endTime1[0], 10) - wakeHour;
                     let endSlot1 = (endInDay1*60)/30;
 
                     if (parseInt(endTime1[1], 10) != 0) {
@@ -308,7 +308,7 @@ export default {
                     daySchedule[startSlot1] = meals[y];
                     daySchedule[endSlot1] = meals[y];
 
-                    // KEEP TRACK OF MEALS 
+                    // KEEP TRACK OF MEALS
                     if (meals[y].name == "Breakfast"){
                         menu[dayOfWeek]["B"] = endSlot1
                     }
@@ -333,7 +333,7 @@ export default {
 
                 this.fillDrugs(dayOfWeek);
 
-                
+
 
 
 
@@ -343,7 +343,7 @@ export default {
             .then(response => {
                 this.saveDrugInfo();
                 eventBus.$emit('scheduleIncoming', this.userSchedule);
-                
+
             })
             .catch((errorMessage) => {
 
@@ -357,18 +357,18 @@ export default {
                     -End of day time: get dinner end time and 2 hours to that (make this the end of the day)
                     -Length of day: subtract End of day time - Start day time
                     -DayMins: convert hours to minutes (length of day * 60 mins)
-                    -arraySize = DayMins/30 
+                    -arraySize = DayMins/30
             3. put things into the array based on their start time and add the event and slot into a dictionary
                 -How to figure out where to insert the event into the array:
                     1. pointInDay: subtract start time of event - wake time
                     2. pointInDay will equal nth hour of the day this event starts
                     3. Array slot = (pointInDay*60) / 30
-                    4. Determine length of event (endTime - startTime) 
+                    4. Determine length of event (endTime - startTime)
                     5. Determine number of slots of Array to take up, length of Event/30
                     6. Add values in the array for the event to take up the respective blocks
 
             4. go through each drug saved for User
-                    1. check for timeofDay and insert 
+                    1. check for timeofDay and insert
                     2. check dictionary to know where meals are
             */
 
@@ -377,7 +377,7 @@ export default {
             this.drugsSavedFlag = false
             this.scheduleGenerated =  true
 
-            
+
         },
 
         fillDrugs: function(dayOfWeek) {
@@ -403,7 +403,7 @@ export default {
                             this.greedyScheduler(slot, drug, daySchedule);
                         }
                         lastSlot = slot;
-                    } 
+                    }
 
                     //CHECK LUNCH NEXT
                     else if(i == 1){
@@ -425,7 +425,7 @@ export default {
                     else{
                         let slot = this.userMenu[dayOfWeek]["D"];
                         if(slot == "-") {
-                            
+
                             slot = lastSlot;
                         }
                         let daySchedule = this.userSchedule[dayOfWeek]
@@ -436,7 +436,7 @@ export default {
                             this.greedyScheduler(slot, drug, daySchedule);
                         }
                         lastSlot = slot;
-                    }  
+                    }
                 }
             }
 
@@ -448,7 +448,7 @@ export default {
 
                 axios.post('/api/drugs/saveDrugs', {'data': drug})
                 .then(response => {
-                    
+
                 })
                 .catch((errorMessage) => {
 
@@ -457,7 +457,7 @@ export default {
 
 
         },
-        
+
         greedyScheduler: function(slot, drug, daySchedule) {
             let placed = false;
 
@@ -490,7 +490,7 @@ export default {
 
             // THIS IS A FAILED SCHEDULE (NO ROOM FOR DRUG)
             if (!placed) {
-                //TODO SOME ERROR 
+                //TODO SOME ERROR
             }
 
         }

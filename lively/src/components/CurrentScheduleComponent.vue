@@ -1,22 +1,26 @@
 <template>
 
   <div class="dataContainer">
-    <div class="list">
+    <div class="container">
     <h5> Sleep Activities</h5>
-    <SleepScheduledItem v-for="sleep in sleeps" v-bind:sleep='sleep'/>
+      <div class="list">
+        <SleepScheduledItem v-for="sleep in sleeps" v-bind:sleep='sleep'/>
+      </div>
 
     </div>
 
-    <div class="list">
+    <div class="container">
       <h5> Meal Activities</h5>
-      <MealScheduledItem v-for="meal in meals"  v-bind:meal='meal'/>
-
+      <div class="list">
+        <MealScheduledItem v-for="meal in meals"  v-bind:meal='meal'/>
+      </div>
     </div>
 
-    <div class="list">
+    <div class="container">
       <h5> Exercise  Activities</h5>
+      <div class="list">
       <ExerciseScheduledItem v-for="exercise in exercises"  v-bind:exercise='exercise'/>
-
+      </div>
     </div>
   </div>
 
@@ -185,13 +189,21 @@ export default {
 <style>
  .dataContainer {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    justify-content: space-between;
+ }
+
+ .container {
+   display: flex;
+   flex-direction: column;
  }
 
  .list {
    display: flex;
-   flex-direction: column;
+   flex-direction: row;
+   flex-wrap: wrap;
+   padding: 5px;
+   margin: 20px;
  }
 
 </style>
