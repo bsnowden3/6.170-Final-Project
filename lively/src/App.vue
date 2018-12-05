@@ -63,6 +63,12 @@ export default {
     });
 
 
+        eventBus.$on('test', (data) => {
+        console.log("TEST")
+    //   this.drugs.push(data);
+    //   this.drugs.sort();
+    });
+
   }
 };
 

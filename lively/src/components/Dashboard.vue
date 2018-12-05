@@ -109,10 +109,22 @@ export default {
         this.onboarding = true;
     });
 
+
+    
+
     eventBus.$on('generateSchedule', () => {
 
+            axios.delete('/api/drugs/wipeDrugs')
+            .then(response => {
+                this.saveDrugInfo();
+                this.getUserData();
+                
+                
+            })
+            .catch((errorMessage) => {
 
-        this.getUserData();
+            });
+
         // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
       // .then(response => {
         
@@ -165,6 +177,12 @@ export default {
                         this.userData[list[i]] = axiosResponse.data.userData[list[i]];
                     }
                     console.log(this.userData);
+                    let totalDrugs = axiosResponse.data.userData.drugs;
+                    this.userDrugs = [];
+                    for (let r = 0; r < totalDrugs.length; r++) {
+                        this.userDrugs.push(totalDrugs[r].drugId);
+                    }
+                    console.log(this.userDrugs);
 
                     this.generateSchedule();
 
@@ -338,16 +356,8 @@ export default {
 
 
             }
+            
 
-            axios.delete('/api/drugs/wipeDrugs')
-            .then(response => {
-                this.saveDrugInfo();
-                eventBus.$emit('scheduleIncoming', this.userSchedule);
-                
-            })
-            .catch((errorMessage) => {
-
-            });
 
             /*
             1. look at a user's sleep first to determine length of day for each day of the week
@@ -376,6 +386,18 @@ export default {
             this.onboardingButtonClicked = false
             this.drugsSavedFlag = false
             this.scheduleGenerated =  true
+            
+            axios.get()
+            
+            axios.get("/api/drugs/getUserDrugs")
+            .then(response => {
+                eventBus.$emit('scheduleIncoming', this.userSchedule);
+            })
+            .catch(err => {
+
+            });
+            
+            
 
             
         },
@@ -385,6 +407,7 @@ export default {
             // GO THROUGH EACH DRUG
             for(let d = 0; d < this.userDrugs.length; d++) {
                 let drug = this.userDrugs[d];
+                console.log(drug);
 
                 let freq = this.drugData[drug]["frequency"];
 

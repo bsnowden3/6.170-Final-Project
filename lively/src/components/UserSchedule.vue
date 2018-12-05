@@ -3,17 +3,45 @@
     <div class="schedulePage">
         <div id="practiceTable">
 
-            <div class="col">{{drugTaking.Monday}} </div>
-            <div class="col"> {{drugTaking.Tuesday}} </div>
-            <div class="col"> {{drugTaking.Wednesday}} </div>
-            <div class="col"> {{drugTaking.Thursday}} </div>
-            <div class="col"> {{drugTaking.Friday}} </div>
-            <div class="col"> {{drugTaking.Saturday}} </div>
-            <div class="col"> {{drugTaking.Sunday}} </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Monday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Tuesday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Wednesday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Thursday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Friday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Saturday">
+                {{ drug }}
+                </div>
+            </div>
+            <div v-if="flag" class="col">
+                <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Sunday">
+                {{ drug }}
+                </div>
+            </div>
             
         
         </div>
-        <table>
+        <!-- <table>
             <thead class="calendar-days">
             <th class="calendar-header">Monday</th>
             <th class="calendar-header">Tuesday</th>
@@ -24,8 +52,8 @@
             <th class="calendar-header">Sunday</th>
             </thead>
             
-        </table>
-        <div class="mainCalender">
+        </table> -->
+        <!-- <div class="mainCalender"> -->
             <!-- <div class="time-label-table">
                 <div class="time-labels">12:00 AM</div>
                 <div class="time-labels">1:00 AM</div>
@@ -41,11 +69,11 @@
                 <div class="time-labels">11:00 AM</div>
                 <div class="time-labels">12:00 PM</div>
             </div> -->
-            <div id="scheduleGrid" class="grid">
+            <!-- <div id="scheduleGrid" class="grid"> -->
 
-        </div>
+        <!-- </div> -->
 
-        </div>
+        <!-- </div> -->
     
     </div>
 
@@ -65,18 +93,17 @@ export default {
         data:[],
         days:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
         userSchedule: {},
-        drugTaking: {}
+        drugTaking: {},
+        flag: false
     };
   },
 
   created() {
-    eventBus.$on('TBD', (data) => {
-    //   this.drugs.push(data);
-    //   this.drugs.sort();
-    });
+    eventBus.$emit('scheduleRequest', "request");
 
     eventBus.$on('scheduleIncoming', (data) => {
         // this.userSchedule = data;
+        console.log("SCHEDULE RECIEVED")
         for(let i = 0; i < this.days.length; i++){
             let day = this.days[i];
             this.userSchedule[day] = [];
@@ -115,15 +142,15 @@ export default {
                 
             }
             else {
-                let dood = Object.keys(sleeper)
+                // let dood = Object.keys(sleeper)
 
 
-                let lengthOfDay = schedule.length;
-                wakeTime = [((23 - (Math.floor(lengthOfDay/2)))).toString(), "0"];
-                if (lengthOfDay % 2 != 0) {
-                    wakeTime[1] = "30";
-                }
-                // wakeTime = sleeper.startTime.split(":");
+                // let lengthOfDay = schedule.length;
+                // wakeTime = [((23 - (Math.floor(schedule.length/2)))).toString(), "0"];
+                // if (schedule.length % 2 != 0) {
+                //     wakeTime[1] = "30";
+                // }
+                wakeTime = sleeper.startTime.split(":");
             }
 
             for(let x = 1; x < schedule.length; x++) {
@@ -132,21 +159,33 @@ export default {
                 if(object.split(" ")[0] == "take"){
                     let newtime = [wakeTime[0], wakeTime[1]];
                     newtime[0] = (parseInt(newtime[0]) + Math.floor(x/2)).toString();
-                    if(((x/2) % 2) != 0) {
-                        newtime[1] = parseInt(newtime[1] + Math.floor(x/2)).toString();
-                        if(newtime[1] == "60") {
-                            newtime[0] = (parseInt(newtime[0]) + 1).toString();
+                    // if(((x/2) % 2) != 0) {
+                    //     newtime[1] = parseInt(newtime[1] + Math.floor(x/2)).toString();
+                    //     if(newtime[1] == "60") {
+                    //         newtime[0] = (parseInt(newtime[0]) + 1).toString();
+                    //         newtime[1] = "30";
+                    //     }
+                    // }
+                    if (parseInt(wakeTime[1]) == 0) {
+                        if(x % 2 != 0) {
+                            newtime[1] = "30";
+                        }
+                    }
+                    else {
+                        if(x % 2 == 0) {
                             newtime[1] = "30";
                         }
                     }
                     itenerary.push(object + " at " + newtime[0] + ":" + newtime[1]);
                 }
             }
+            console.log(itenerary);
             this.drugTaking[day] = itenerary;
         }
 
 
-
+        console.log(this.drugTaking);
+        this.flag = true;
 
 
 
@@ -207,8 +246,13 @@ export default {
 
 .col {
     height: 100%;
-    width: 75px;
+    width: 14%;
     background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+}
+.iteneraryItem {
+    border: 2px solid black;
 }
 
 .schedulePage{
