@@ -59,6 +59,10 @@ router.post("/logIn", async function(req, res) {
       error: `Missing Credentials`
     }).end();
   }
+  else if(!bcrypt.compareSync(password, user[0].password) ){
+    res.status(404);
+    res.json({message: "Wrong Password"}).end();
+  }
   else if (user[0] !== undefined) {
     req.session.userId = user[0].id;
     req.session.username = user[0].username;
@@ -68,10 +72,7 @@ router.post("/logIn", async function(req, res) {
     res.json({message: "Signed In!"});
   }
 
-  else if(!bcrypt.compareSync(password, user[0].password) ){
-    res.status(404);
-    res.json({message: "Wrong Password"}).end();
-  }
+ 
   else {
     res.status(404).json({message: "User Does Not Exist"}).end();
 
