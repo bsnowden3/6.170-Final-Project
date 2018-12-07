@@ -122,7 +122,6 @@ export default {
     this.allActivities();
     this.sortActivitiesByDay();
     eventBus.$emit('postedActivity',(true));
-    console.log(this.activitiesByDay);
   },
   created() {
     this.sortActivitiesByDay();
@@ -144,16 +143,16 @@ export default {
 
   methods: {
       loadSleeps: async function() {
-        await axios.get('/api/activities/allSleeps').then((response) => { console.log(response); this.sleeps = response.data.sleeps; } );
+        await axios.get('/api/activities/allSleeps').then((response) => { this.sleeps = response.data.sleeps; } );
       },
       loadMeals: async function() {
-        await axios.get('/api/activities/allMeals').then((response) => { console.log(response); this.meals = response.data.meals; } );
+        await axios.get('/api/activities/allMeals').then((response) => {  this.meals = response.data.meals; } );
       },
       loadExercises: async function() {
-        await axios.get('/api/activities/allExercises').then((response) => { console.log(response); this.exercises = response.data.exercises; });
+        await axios.get('/api/activities/allExercises').then((response) => {  this.exercises = response.data.exercises; });
       },
       allActivities: function() {
-          axios.get('/api/activities/allActivities').then((response) => { console.log(response); this.activities = response.data; });
+          axios.get('/api/activities/allActivities').then((response) => { this.activities = response.data; });
       },
       sortActivitiesByDay: async function() {
         this.activitiesByDay = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [],
@@ -161,7 +160,6 @@ export default {
 
         let day;
         for(day in this.activitiesByDay) {
-          console.log(this.meals.length);
           for(let i = 0; i < this.meals.length; i++) {
             if(day == this.meals[i].dayOfWeek) {
               this.activitiesByDay[day].push({time: this.meals[i].startTime, activityType: "meal", data: this.meals[i]})
@@ -180,7 +178,6 @@ export default {
             }
           }
         }
-        console.log(this.activitiesByDay);
       },
     }
 };

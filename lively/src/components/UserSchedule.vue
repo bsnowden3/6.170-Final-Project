@@ -103,7 +103,6 @@ export default {
 
     eventBus.$on('scheduleIncoming', (data) => {
         // this.userSchedule = data;
-        console.log("SCHEDULE RECIEVED")
         for(let i = 0; i < this.days.length; i++){
             let day = this.days[i];
             this.userSchedule[day] = [];
@@ -123,6 +122,7 @@ export default {
                 
             }
         }
+        console.log(this.userSchedule)
         this.displaySchedule()
     });
   },
@@ -142,30 +142,15 @@ export default {
                 
             }
             else {
-                // let dood = Object.keys(sleeper)
 
-
-                // let lengthOfDay = schedule.length;
-                // wakeTime = [((23 - (Math.floor(schedule.length/2)))).toString(), "0"];
-                // if (schedule.length % 2 != 0) {
-                //     wakeTime[1] = "30";
-                // }
                 wakeTime = sleeper.startTime.split(":");
             }
 
             for(let x = 1; x < schedule.length; x++) {
                 let object = schedule[x];
-                console.log(object);
                 if(object.split(" ")[0] == "take"){
                     let newtime = [wakeTime[0], wakeTime[1]];
                     newtime[0] = (parseInt(newtime[0]) + Math.floor(x/2)).toString();
-                    // if(((x/2) % 2) != 0) {
-                    //     newtime[1] = parseInt(newtime[1] + Math.floor(x/2)).toString();
-                    //     if(newtime[1] == "60") {
-                    //         newtime[0] = (parseInt(newtime[0]) + 1).toString();
-                    //         newtime[1] = "30";
-                    //     }
-                    // }
                     if (parseInt(wakeTime[1]) == 0) {
                         if(x % 2 != 0) {
                             newtime[1] = "30";
@@ -179,7 +164,6 @@ export default {
                     itenerary.push(object + " at " + newtime[0] + ":" + newtime[1]);
                 }
             }
-            console.log(itenerary);
             this.drugTaking[day] = itenerary;
         }
 
