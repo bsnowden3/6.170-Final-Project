@@ -54,6 +54,29 @@ export default {
       this.drugs.push(data);
       this.drugs.sort();
     });
+
+    axios.get('/api/drugs/getUserDrugs')
+      .then(response => {
+          let drugs = response.data;
+          let newDrugs = [];
+          for(let i = 0; i < drugs.length; i++) {
+            let drug = drugs[i];
+            newDrugs.push(drug.drugId);
+            eventBus.$emit('select-drug', drug.drugId);
+
+          }
+
+      this.drugs = newDrugs;
+
+      this.drugs.sort();
+
+      
+      
+
+      })
+      .catch((errorMessage) => {
+
+      });
   },
 
   methods: {

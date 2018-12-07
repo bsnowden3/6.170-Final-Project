@@ -46,18 +46,7 @@ export default {
       this.drugs.sort();
     });
 
-      // axios.get('/api/drugs/getAllDrugs')
-      // .then(response => {
-      //     let total = Object.keys(res.data);
-      //   //   for (let x = 0; x < total.length; x++) {
-      //   //       this.
-      //   //   }
-      //     this.drugData = res.data
-
-      // })
-      // .catch((errorMessage) => {
-
-      // });
+      
 
 
   },
