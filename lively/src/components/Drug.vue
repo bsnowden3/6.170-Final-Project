@@ -55,28 +55,22 @@ export default {
       this.drugs.sort();
     });
 
-    axios.get('/api/drugs/getUserDrugs')
-      .then(response => {
-          let drugs = response.data;
-          let newDrugs = [];
-          for(let i = 0; i < drugs.length; i++) {
-            let drug = drugs[i];
-            newDrugs.push(drug.drugId);
-            eventBus.$emit('select-drug', drug.drugId);
 
-          }
+ axios.get('/api/drugs/getUserDrugs')
+              .then(response => {
+                  let drugs = response.data;
+                  let newDrugs = [];
+                  for(let i = 0; i < drugs.length; i++) {
+                    let drug = drugs[i].drugId;
+                    this.putDrug(drug);
+                  }
 
-      this.drugs = newDrugs;
 
-      this.drugs.sort();
+              })
+              .catch((errorMessage) => {
 
-      
-      
+              });
 
-      })
-      .catch((errorMessage) => {
-
-      });
   },
 
   methods: {
@@ -99,6 +93,25 @@ export default {
 
       eventBus.$emit('select-drug', selection);
 
+    },
+
+    putDrug: function(drug) {
+
+      let selection = drug;
+
+      let newDrugs = [];
+
+      for( var i = 0; i < this.drugs.length; i++){ 
+        if ( this.drugs[i] != selection) {
+           newDrugs.push(this.drugs[i])
+        }
+      }
+
+      this.drugs = newDrugs;
+
+      this.drugs.sort();
+
+      eventBus.$emit('select-drug', selection);
     }
   }
 };

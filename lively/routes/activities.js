@@ -41,6 +41,7 @@ router.post('/addmeal', (req, res) => {
 
       responseMessage = { message: "Successfully created meal", meal: Meals.findUserMeals(userId), activitySuccess: true};
 
+      // sleepActivityCheck(meal, userId);
       // if(!sleepActivityCheck(meal, userId) && !activityCheck(meal, userId, "meal")){
       //     Meals.addMeal(meal);
       // }
@@ -271,10 +272,11 @@ router.delete('/removeMeal', async (req, res) => {
   }
 });
 
-  function sleepActivityCheck(addition, userId) {
-    let currentSleep = Sleeps.findUserSleeps(userId);
+  async function sleepActivityCheck(addition, userId) {
+    const currentSleep = await Sleeps.findUserSleeps(userId);
+    console.log(currentSleep);
     for(let i = 0; i < currentSleep.length; i++) {
-      if(currentSleep[i].day == addition.day){
+      if(currentSleep[i].dayOfWeek == addition.day){
         if (milToInt(currentSleep[i].startTime) >= milToInt(addition.startTime)){
           return true;
         }
