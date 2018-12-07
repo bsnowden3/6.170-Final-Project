@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       drugs: [],
+      drugData:{},
       descriptions: {"Metformin": "Side-effects include: Nausea, Vomiting, Diarrhea, Chills, Heartburn",
                      "Sulfonylureas": "Side-effects include: Hepatitis, Leukopenia, Porphyria",
                      "Thiazolidinediones": "Side-effects include: Congestive Heart Failure, Edema, Fractures",
@@ -45,12 +46,18 @@ export default {
       this.drugs.sort();
     });
 
-      axios.get('/api/drugs/getAllDrugs')
-      .then(response => {
-      })
-      .catch((errorMessage) => {
+      // axios.get('/api/drugs/getAllDrugs')
+      // .then(response => {
+      //     let total = Object.keys(res.data);
+      //   //   for (let x = 0; x < total.length; x++) {
+      //   //       this.
+      //   //   }
+      //     this.drugData = res.data
 
-      });
+      // })
+      // .catch((errorMessage) => {
+
+      // });
 
 
   },

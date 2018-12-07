@@ -13,6 +13,11 @@ npm start
 ```
 Navigate to `localhost:3000` in your browser
 
+## Available Test Account
+If you would like to see a completed drug regimen without going through the process, use this account:
+username: "test5"
+password: "test5"
+
 ### Please note that all of error checking has not been implemented, so here are instructions on how to use Lively
 1. first create an account with a username and password
 2. click onboarding to kick off the process to create a drug regimen
@@ -21,6 +26,9 @@ Navigate to `localhost:3000` in your browser
 ### Rules for Adding Activites 
 4. After adding a drug, you get to an activities page. This is where you add your sleep, eating, and exercise schedule. 
 5. Please note we do not have error checking for the Activities page implemented. 
+
+Note: To speed up testing we have a quick schedule generation button - we advise you use that.
+
 6. For each activity, do not enter an End time that is before the Start Time. 
 7. A meal's start time cannot overlap with an exercise time.
 8. You can cannot have a meal or exercise before wake up time. 
@@ -28,9 +36,10 @@ Navigate to `localhost:3000` in your browser
 10. once you've added some activites - click save schedule
 
 ### Seeing your schedule
-11. Once you click save schedule on the activites, you will be presented with text that will tell you when to take the drugs you added. Future version of the app will look much nicer!
+11. Once you click save schedule on the activites, you will be presented with a UI that will tell you when to take the drugs you added. 
+12. Future version of the app will allow you to edit your schedule and will have an even better UI. 
 
-(If you click Sign out during any part of the process, you will have to restart)
+Note: If you click Sign out during any part of the onboarding process (before generating a schedule), you will have to restart from the beginning when you return. 
 
 
 ## Authors:
