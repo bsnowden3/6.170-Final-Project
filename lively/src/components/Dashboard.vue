@@ -476,9 +476,9 @@ export default {
         },
 
         editExistingSchedule: function() {
-          this.onboarding = true;
+          this.onboarding = false;
           this.drugsSavedFlag = false;
-          this.onboardingButtonClicked = false;
+          this.onboardingButtonClicked = true;
           this.scheduleGenerated = false;
         },
 
