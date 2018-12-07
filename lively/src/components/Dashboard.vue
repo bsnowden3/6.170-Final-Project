@@ -399,14 +399,7 @@ export default {
             this.drugsSavedFlag = false
             this.scheduleGenerated =  true
 
-            axios.get()
-<<<<<<< HEAD
-
-            axios.get("/api/drugs/getUserDrugs")
-=======
-
             axios.get("/api/users/checkOnbBoarding")
->>>>>>> 4b40fabe83f78efc37e2d9a57da17559c3be7ccf
             .then(response => {
                 eventBus.$emit('scheduleIncoming', this.userSchedule);
             })
