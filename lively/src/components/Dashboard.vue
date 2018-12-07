@@ -102,6 +102,15 @@ export default {
         this.onboardingButtonClicked = false;
         this.drugsSavedFlag = true;
         this.userDrugs = data;
+
+        axios.delete('/api/drugs/wipeDrugs')
+        .then(response => {
+            this.saveDrugInfo();
+
+        })
+        .catch((errorMessage) => {
+
+        });
     });
 
     eventBus.$on('drugs-back', (data) => {
@@ -120,24 +129,20 @@ export default {
 
     eventBus.$on('generateSchedule', () => {
 
-            axios.delete('/api/drugs/wipeDrugs')
-            .then(response => {
-                this.saveDrugInfo();
-                this.getUserData();
+        this.getUserData();
+
+            // axios.delete('/api/drugs/wipeDrugs')
+            // .then(response => {
+            //     this.saveDrugInfo();
 
 
-            })
-            .catch((errorMessage) => {
 
-            });
+            // })
+            // .catch((errorMessage) => {
 
-        // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
-      // .then(response => {
+            // });
 
-      // })
-      // .catch((errorMessage) => {
 
-      // });
 
     });
 
@@ -395,8 +400,13 @@ export default {
             this.scheduleGenerated =  true
 
             axios.get()
+<<<<<<< HEAD
 
             axios.get("/api/drugs/getUserDrugs")
+=======
+
+            axios.get("/api/users/checkOnbBoarding")
+>>>>>>> 4b40fabe83f78efc37e2d9a57da17559c3be7ccf
             .then(response => {
                 eventBus.$emit('scheduleIncoming', this.userSchedule);
             })
@@ -480,6 +490,8 @@ export default {
         },
 
         saveDrugInfo: function() {
+            console.log("SAVING DRUGGOS");
+            console.log(this.userDrugs);
             for(let d = 0; d < this.userDrugs.length; d++) {
                 let drug = this.userDrugs[d];
 

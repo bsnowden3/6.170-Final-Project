@@ -79,13 +79,7 @@ export default {
     },
 
     saveDrugs: function() {
-      // axios.post('/api/drugs/saveDrugs', {'data': this.drugs})
-      // .then(response => {
-        
-      // })
-      // .catch((errorMessage) => {
 
-      // });
 
       eventBus.$emit('drugsSaved', this.drugs);
     },
