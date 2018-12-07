@@ -13,7 +13,7 @@
                     <button v-on:click="startOnboarding" class="dashboard-button" v-show="!scheduleGenerated">Start Onboarding Process</button>
                 </div>
                 <div v-if="scheduleGenerated">
-                    <button id="edit-schedule" v-on:click="signOut" class="dashboard-button" disabled v-show="scheduleGenerated">Edit Existing Schedule</button>
+                    <button id="edit-schedule" v-on:click="editExistingSchedule" class="dashboard-button" v-show="scheduleGenerated">Edit Existing Schedule</button>
                     <!-- <div class="schedule-data">
                         {{ userSchedule }}
                     </div> -->
@@ -109,8 +109,14 @@ export default {
         this.onboarding = true;
     });
 
+    eventBus.$on('activitiesBack', (data) => {
+        this.onboardingButtonClicked = true;
+        this.drugsSavedFlag = false;
+        this.onboarding = false;
+    });
 
-    
+
+
 
     eventBus.$on('generateSchedule', () => {
 
@@ -118,8 +124,8 @@ export default {
             .then(response => {
                 this.saveDrugInfo();
                 this.getUserData();
-                
-                
+
+
             })
             .catch((errorMessage) => {
 
@@ -356,7 +362,7 @@ export default {
 
 
             }
-            
+
 
 
 
@@ -387,9 +393,9 @@ export default {
             this.onboardingButtonClicked = false
             this.drugsSavedFlag = false
             this.scheduleGenerated =  true
-            
+
             axios.get()
-            
+
             axios.get("/api/drugs/getUserDrugs")
             .then(response => {
                 eventBus.$emit('scheduleIncoming', this.userSchedule);
@@ -397,8 +403,8 @@ export default {
             .catch(err => {
 
             });
-            
-            
+
+
 
 
         },
@@ -464,6 +470,13 @@ export default {
                 }
             }
 
+        },
+
+        editExistingSchedule: function() {
+          this.onboarding = true;
+          this.drugsSavedFlag = false;
+          this.onboardingButtonClicked = false;
+          this.scheduleGenerated = false;
         },
 
         saveDrugInfo: function() {

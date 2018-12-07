@@ -17,6 +17,9 @@
       <CurrentScheduleComponent />
     </div>
     <div class="buttonContainer">
+      <div class="back-button">
+        <button class="button" v-on:click="goBack"> Back </button>
+      </div>
       <div class="save-schedule">
         <button class="button" v-on:click="saveSchedule"> Save Schedule! </button>
       </div>
@@ -49,6 +52,9 @@ export default {
     generateDefaultSchedule: function() {
       eventBus.$emit('generateDefaultSchedule', (true));
     },
+    goBack: function() {
+      eventBus.$emit('activitiesBack',(true));
+    }
   }
 };
 </script>

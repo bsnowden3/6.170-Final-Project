@@ -141,6 +141,35 @@ export default {
       this.sortActivitiesByDay();
     });
   },
+  computed: {
+    mondayActivities: function() {
+      return this.activitiesByDay["Monday"];
+    },
+    activitiesByDay: function() {
+      let day;
+      for(day in this.activitiesByDay) {
+        console.log(this.meals.length);
+        for(let i = 0; i < this.meals.length; i++) {
+          if(day == this.meals[i].dayOfWeek) {
+            this.activitiesByDay[day].push({time: this.meals[i].startTime, activityType: "meal", data: this.meals[i]})
+          }
+        }
+
+        for(let j = 0; j < this.sleeps.length; j++) {
+          if(day == this.sleeps[j].dayOfWeek) {
+            this.activitiesByDay[day].push({time: this.sleeps[j].startTime, activityType: "sleep", data: this.sleeps[j]})
+          }
+        }
+
+        for(let k = 0; k < this.exercises.length; k++) {
+          if(day == this.exercises[k].dayOfWeek) {
+            this.activitiesByDay[day].push({time: this.exercises[k].startTime, activityType: "exercise", data: this.exercises[k]})
+          }
+        }
+      }
+      console.log(this.activitiesByDay);
+    }
+  },
 
   methods: {
       loadSleeps: async function() {
@@ -152,13 +181,10 @@ export default {
       loadExercises: async function() {
         await axios.get('/api/activities/allExercises').then((response) => { console.log(response); this.exercises = response.data.exercises; });
       },
-      allActivities: function() {
+      allActivities: async function() {
           axios.get('/api/activities/allActivities').then((response) => { console.log(response); this.activities = response.data; });
       },
-      sortActivitiesByDay: async function() {
-        this.activitiesByDay = {"Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [],
-        "Friday": [], "Saturday": [], "Sunday": []};
-
+      sortActivitiesByDay: function() {
         let day;
         for(day in this.activitiesByDay) {
           console.log(this.meals.length);
