@@ -483,7 +483,6 @@ export default {
         },
 
         saveDrugInfo: function() {
-            console.log("SAVING DRUGGOS");
             console.log(this.userDrugs);
             for(let d = 0; d < this.userDrugs.length; d++) {
                 let drug = this.userDrugs[d];

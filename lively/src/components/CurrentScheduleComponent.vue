@@ -2,7 +2,7 @@
 
   <div class="dataContainer">
     <div class="container">
-    <h5> Sleep Activities</h5>
+    <h5 class="activity-list-header"> Sleep Activities</h5>
       <div class="list">
         <SleepScheduledItem v-for="sleep in sleeps" v-bind:sleep='sleep'/>
       </div>
@@ -10,14 +10,14 @@
     </div>
 
     <div class="container">
-      <h5> Meal Activities</h5>
+      <h5 class="activity-list-header"> Meal Activities</h5>
       <div class="list">
         <MealScheduledItem v-for="meal in meals"  v-bind:meal='meal'/>
       </div>
     </div>
 
     <div class="container">
-      <h5> Exercise  Activities</h5>
+      <h5 class="activity-list-header"> Exercise  Activities</h5>
       <div class="list">
       <ExerciseScheduledItem v-for="exercise in exercises"  v-bind:exercise='exercise'/>
       </div>
@@ -227,6 +227,11 @@ export default {
    flex-wrap: wrap;
    padding: 5px;
    margin: 20px;
+ }
+ .activity-list-header{
+   color:white;
+   font-size:16px;
+   margin-left:30px;
  }
 
 </style>

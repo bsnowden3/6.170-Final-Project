@@ -8,12 +8,12 @@
         <MealActivity/>
         <ExerciseActivity/>
       </div>
-    <div class="def-schedule" v-on:click="generateDefaultSchedule" class="defaultScheduleButton">
-      <button> Generate Quick Schedule! </button>
+    <div class="def-schedule" v-on:click="generateDefaultSchedule">
+      <button class="defaultScheduleButton"> Generate Quick Schedule! </button>
     </div>
     </div>
     <div class='selected-activites-section'>
-      <h2> Current Schedule </h2>
+      <h2 class="added-list-header"> Added Schedule Events </h2>
       <CurrentScheduleComponent />
     </div>
     <div class="buttonContainer">
@@ -77,6 +77,7 @@ export default {
     width: auto;
     height: auto;
     align-self: flex-end;
+    margin:5px;
   }
 
   .def-schedule {
@@ -85,6 +86,7 @@ export default {
     background-color: "black";
     width: auto;
     height: auto;
+    margin:5px;
   }
   .save-schedule {
     align-self: flex-end;
@@ -104,5 +106,21 @@ export default {
   .buttonContainer {
     display: flex;
     flex-direction: row;
+    float:right;
   }
+  .defaultScheduleButton{
+    font-size:14px;
+    margin-left:20px;
+    font-weight: bold;
+  }
+
+.selected-activites-section{
+  margin-top:30px;
+}
+  .added-list-header{
+    color:white;
+    margin-left:20px;
+    text-align:center;
+  }
+  
 </style>

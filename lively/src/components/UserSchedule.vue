@@ -4,36 +4,43 @@
         <div id="practiceTable">
 
             <div v-if="flag" class="col">
+                <div class="day-label">Monday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Monday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Tuesday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Tuesday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Wednesday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Wednesday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Thursday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Thursday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Friday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Friday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Saturday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Saturday">
                 {{ drug }}
                 </div>
             </div>
             <div v-if="flag" class="col">
+                <div class="day-label">Sunday</div>
                 <div class="iteneraryItem" v-bind:key='drug' v-for="drug in drugTaking.Sunday">
                 {{ drug }}
                 </div>
@@ -41,40 +48,7 @@
             
         
         </div>
-        <!-- <table>
-            <thead class="calendar-days">
-            <th class="calendar-header">Monday</th>
-            <th class="calendar-header">Tuesday</th>
-            <th class="calendar-header">Wednesday</th>
-            <th class="calendar-header">Thursday</th>
-            <th class="calendar-header">Friday</th>
-            <th class="calendar-header">Saturday</th>
-            <th class="calendar-header">Sunday</th>
-            </thead>
-            
-        </table> -->
-        <!-- <div class="mainCalender"> -->
-            <!-- <div class="time-label-table">
-                <div class="time-labels">12:00 AM</div>
-                <div class="time-labels">1:00 AM</div>
-                <div class="time-labels">2:00 AM</div>
-                <div class="time-labels">3:00 AM</div>
-                <div class="time-labels">4:00 AM</div>
-                <div class="time-labels">5:00 AM</div>
-                <div class="time-labels">6:00 AM</div>
-                <div class="time-labels">7:00 AM</div>
-                <div class="time-labels">8:00 AM</div>
-                <div class="time-labels">9:00 AM</div>
-                <div class="time-labels">10:00 AM</div>
-                <div class="time-labels">11:00 AM</div>
-                <div class="time-labels">12:00 PM</div>
-            </div> -->
-            <!-- <div id="scheduleGrid" class="grid"> -->
 
-        <!-- </div> -->
-
-        <!-- </div> -->
-    
     </div>
 
 </template>
@@ -224,19 +198,32 @@ export default {
 #practiceTable{
     display: flex;
     width: 100%;
-    height: 800px;
+    height: 350px;
     justify-content: space-between;
+    border-radius: 5px;
 }
-
+.day-label{
+    text-align: center;
+    font-size:1.2em;
+    font-weight: bold;
+    margin-top:10px;
+    margin-bottom:10px;
+}
 .col {
     height: 100%;
     width: 14%;
-    background-color: lightblue;
     display: flex;
     flex-direction: column;
+    border-radius:5px;
+    background:white;
 }
 .iteneraryItem {
-    border: 2px solid black;
+    border: 2px solid white;
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:5px;
+    background:lavenderblush;
+    text-align: center;
 }
 
 .schedulePage{

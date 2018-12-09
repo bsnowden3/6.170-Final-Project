@@ -5,7 +5,7 @@
   <div class="activityContainer">
     <div>
       <div class="titleContainer">
-        <h2> Sleep </h2>
+        <h2 class="list-header"> Sleep </h2>
       </div>
 
         <div class='form-group'>
@@ -128,16 +128,19 @@ export default {
 </script>
 
 <style scoped>
+/* .titleContainer{
+  text-align: center;
+}
 .activityContainer {
   display: flex;
   height: 20%;
   width: 20%;
-  background-color: silver;
+  background-color: lavenderblush;
   flex-direction: column;
   flex-wrap: wrap;
   padding: 10px;
-  margin: 10px;
-}
+  margin-left: 20px;
+} */
 
 .success {
   color: green,
