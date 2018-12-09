@@ -1,0 +1,11 @@
+/*
+  high level css
+*/
+
+html {
+  --light-border: 1px solid lightgray;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background:#FC4445;
+  color: black;
+}
+
