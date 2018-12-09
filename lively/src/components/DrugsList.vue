@@ -99,7 +99,7 @@ export default {
     width: 250px;
     margin: 20px;
     flex: 0 0 auto;
-    border: black 1px solid;
+    border: white 1px solid;
     border-radius: 4px;
   }
 
