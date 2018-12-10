@@ -182,7 +182,22 @@ form {
   font-size:1.8em;
 }
 
+.activityContainer {
+  display: flex;
+  height: 20%;
+  width: 20%;
+  background-color: lavenderblush;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-left: 20px;
+  margin-right:20px;
+  border-radius:5px;
+}
 
+.titleContainer{
+  text-align: center;
+}
 
 </style>
 

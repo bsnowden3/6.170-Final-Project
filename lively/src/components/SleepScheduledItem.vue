@@ -1,7 +1,7 @@
 <template>
     <div class="component">
       <div class="removeButtonContainer">
-        <button <button v-on:click="removeItem(sleep.sleepId)" > Remove </button>
+        <button <button class="remove-button" v-on:click="removeItem(sleep.sleepId)" > Remove </button>
       </div>
       <p>Wake Up Time: {{ sleep.startTime }}</p>
       <p>Day: {{ sleep.dayOfWeek }}</p>

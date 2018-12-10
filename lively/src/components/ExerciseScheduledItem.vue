@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <div class="removeButtonContainer">
-      <button v-on:click="removeItem(exercise.exerciseId)"> Remove </button>
+      <button class="remove-button" v-on:click="removeItem(exercise.exerciseId)"> Remove </button>
     </div>
     <p> Name: {{exercise.name}} </p>
     <p> Day: {{exercise.dayOfWeek}} </p>

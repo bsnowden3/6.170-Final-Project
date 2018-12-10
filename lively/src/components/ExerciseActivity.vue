@@ -5,7 +5,7 @@
   <div class="activityContainer">
     <div>
       <div class="titleContainer">
-        <h2>Exercise</h2>
+        <h2 class="list-header">Exercise</h2>
       </div>
 
         <div class='form-group'>
@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style scoped>
- .activityContainer {
+ /* .activityContainer {
    display: flex;
    height: 20%;
    width: 20%;
@@ -156,7 +156,7 @@ export default {
    flex-wrap: wrap;
    padding: 10px;
    margin: 10px;
- }
+ } */
 
  /* .titleContainer {
    margin-left: 25px;
